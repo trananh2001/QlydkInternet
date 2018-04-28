@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 style="margin-top: 64px;">TẠO HỢP ĐỒNG MỚI</h2>
+<hr />
+<div class="ui grid">
+    <div class="eight wide column">
+        <h4>Thông tin khách hàng</h4>
+        <hr />
+        <form class="ui form">
+            <div class="inline field">
+                <label>Họ tên</label>
+                <input type="text" name="first-name" style="width: 300px; margin-left:101px">
+            </div>
+            <div class="inline field">
+                <label>Ngày sinh</label>
+                <input type="text" name="bird_day" placeholder="dd/mm/yyyy" style="width: 300px; margin-left:85px">
+            </div>
+            <div class="inline field">
+                <label>Số điện thoại</label>
+                <input type="text" name="phone_number" style="width: 300px; margin-left:66px">
+            </div>
+            <div class="inline field">
+                <label>Nghề nghiệp</label>
+                <input type="text" name="job" style="width: 300px; margin-left:68px">
+            </div>
+            <div class="inline field">
+                <label>Email</label>
+                <input type="text" name="email" style="width: 300px; margin-left:110px">
+            </div>
+            <div class="inline field">
+                <label>Địa chỉ</label>
+                <input type="text" name="address" style="width: 300px; margin-left:104px">
+            </div>
+            <div class="inline field">
+                <label>CMND</label>
+                <input type="text" name="id_card" style="width: 300px; margin-left:102px">
+            </div>
+            <button class="ui button">
+                Lưu
+            </button>
+            <div class="below_button" style="margin-top:20px ">
+                <button class="ui primary button">
+                    Trở về
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="eight wide column">
+        <h4>Thông tin đăng ký</h4>
+        <hr />
+        <form class="ui form">
+            <div class="inline field">
+                <label>Ngày đăng ký</label>
+                <input type="text" name="sign_date" style="width: 300px; margin-left:100px">
+            </div>
+            <div class="inline field">
+                <label>Ngày áp dụng</label>
+                <input type="text" name="apply_date" placeholder="dd/mm/yyyy" style="width: 300px; margin-left:100px">
+            </div>
+            <div class="inline field">
+                <label>Đối tượng</label>
+                <input type="text" name="Object" style="width: 300px; margin-left:116px">
+            </div>
+            <div class="inline field">
+                <label>Địa chỉ cài đặt</label>
+                <input type="text" name="installing_address" style="width: 300px; margin-left:97px">
+            </div>
+            <div class="inline field">
+                <label>Địa chỉ gửi hóa đơn</label>
+                <input type="text" name="Sending_Address" style="width: 300px; margin-left:67px">
+            </div>           
+                <div class="inline fields">
+                        <label>Loại thanh toán</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="month"  >
+                                <label>1 tháng</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="month">
+                                <label>6 tháng</label>
+                            </div>
+                        </div>
+                  </div>        
+            <div class="inline field">
+                <label>Mã gói cước</label>
+                <select class="ui fluid dropdown"></select>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+
+
+

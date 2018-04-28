@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "ChinhSua";
+}
+
+<h2 style="margin-top: 64px">CHỈNH SỬA</h2>
+<hr />
+<form class="ui form">
+    <div class="inline field">
+        <label>Đối tượng</label>
+        <input type="text" name="Object" style="width: 300px; margin-left:116px">
+    </div>
+    <div class="inline field">
+        <label>Địa chỉ cài đặt</label>
+        <input type="text" name="installing_address" style="width: 300px; margin-left:97px">
+    </div>
+    <div class="inline field">
+        <label>Địa chỉ gửi hóa đơn</label>
+        <input type="text" name="Sending_Address" style="width: 300px; margin-left:67px">
+    </div>
+    <div class="inline fields">
+        <label>Loại thanh toán</label>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="month">
+                <label>1 tháng</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="month">
+                <label>6 tháng</label>
+            </div>
+        </div>
+    </div>
+    <div class="inline field">
+        <label>Mã gói cước</label>
+        <select class="ui fluid dropdown"></select>
+    </div>
+    <button class="ui button">
+        Lưu
+    </button>
+    <div class="below_button" style="margin-top:20px ">
+        <button class="ui primary button">
+            Trở về
+        </button>
+    </div>
+</form>
+
+
