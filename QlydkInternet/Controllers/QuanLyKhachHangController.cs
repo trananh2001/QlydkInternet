@@ -6,14 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace QlydkInternet.Controllers
 {
-    public class HoaDonController : Controller
+    public class QuanLyKhachHangController : Controller
     {
-        public IActionResult TaoHoaDon()
+        public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult ChiTiet()
+        public IActionResult SuaThongTinKhachHang()
         {
             return View();
         }
