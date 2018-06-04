@@ -3,71 +3,46 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - QlydkInternet</title>
+    <title>@ViewData["Title"] - QLĐKInternet</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/site.min.css" />
+        <link rel="stylesheet" href="~/lib/semantic/dist/semantic.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/lib/semantic/dist/semantic.min.css" />
-        <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script type="text/javascript" src="~/lib/semantic/dist/semantic.min.js"></script>
+        <link rel="stylesheet" href="~/css/KhachHang.css" />
+        <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="~/lib/semantic/dist/semantic.js"></script>
+        <script src="~/js/site.js"></script>
     </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <environment names="Staging,Production">
+        <!--stating environment-->
     </environment>
+    @RenderSection("Additional", false)
 </head>
 <body>
     <!--Responsive sidebar menu-->
-    <div class="ui sidebar inverted vertical menu">
-        <div class="item">
-        </div>
-        <a class="active gray item" asp-controller="" asp-action="">
-            Tổng Quan
-        </a>
-        <a class="item" asp-controller="" asp-action="">
-            Bán Hàng
-            <div class="ui label">11</div>
-        </a>
-        <a class="item" asp-controller="" asp-action="">
-            Đơn Hàng
-            <div class="ui label">22</div>
-        </a>
-        <a class="item" asp-controller="" asp-action="">
-            Khách Hàng
-        </a>
-        <a class="item" asp-controller="HangHoa" asp-action="Index">
-            Hàng Hóa
-        </a>
-        <a class="item" asp-controller="BaoCao" asp-action="Index">
-            Báo Cáo
-        </a>
-    </div>
+    
 
-    @*<div class="pusher">*@
-        @*<div class="ui top attached purple progress">
+    <div class="pusher">
+        <div class="ui top attached purple progress">
             <div class="bar"></div>
-        </div>*@
-        @*<div class="ui grid container">*@
+        </div>
+        <div class="ui grid container">
             <div class="ui left fixed vertical inverted menu" id="controller-menu">
-                <div class="item">
-                </div>
-                <a class="gray item" asp-controller="Dashboard" asp-action="Index">
-                    <span><i class="home icon"></i>TỔNG QUAN</span>
+                <a class="item" asp-controller="Dashboard" asp-action="Index">
+                    <span><i class="home icon"></i>DASHBOARD</span>
                 </a>
-                <a class="item" asp-controller="Sale" asp-action="Index">
-                    <span><i class="add to cart icon"></i>BÁN HÀNG</span>
+                <a class="item" asp-controller="HopDong" asp-action="Index">
+                    <span><i class="users icon"></i>QUẢN LÝ HỢP ĐỒNG</span>
                 </a>
-                <a class="item" asp-controller="DonHang" asp-action="Index">
-                    <span><i class="file text icon"></i>ĐƠN HÀNG</span>
+                <a class="item" asp-controller="GoiCuoc" asp-action="Index">
+                    <span><i class="add to cart icon"></i>QUẢN LÝ GÓI CƯỚC</span>
                 </a>
-                <a class="item" asp-controller="Customer" asp-action="Index">
-                    <span><i class="users icon"></i>KHÁCH HÀNG</span>
+                <a class="item" asp-controller="KhuyenMai" asp-action="Index">
+                    <span><i class="file text icon"></i>QUẢN LÝ KHUYẾN MÃI</span>
                 </a>
-                <a class="item" asp-controller="HangHoa" asp-action="Index">
-                    <span><i class="database icon"></i>HÀNG HÓA</span>
+                <a class=" item" asp-controller="HoaDon" asp-action="Index">
+                    <span><i class="database icon"></i>QUẢN LÝ HÓA ĐƠN</span>
                 </a>
                 <a class="item" asp-controller="BaoCao" asp-action="Index">
                     <span><i class="area chart layout icon"></i>BÁO CÁO</span>
@@ -76,13 +51,12 @@
                     <span><i class="spy icon"></i>ADMIN</span>
                 </a>
             </div>
-
+            @RenderSection("menu", false)
             <div class="ui main centered stackable grid">
 
-                @RenderSection("menu", false)
                 @RenderBody()
             </div>
-        @*</div>
-    </div>*@
+        </div>
+    </div>
 </body>
 </html>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QlydkInternet.Models;
+using QlydkInternet.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace QlydkInternet
@@ -24,6 +25,8 @@ namespace QlydkInternet
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<QUANLYDANGKYINTERNETContext>(options => options.UseSqlServer(Configuration.GetConnectionString("QldkDatabase")));
+            services.AddScoped<IServices, DataServices>();
+            services.AddScoped<IViewRenderService, ViewRenderService>();
             services.AddMvc();
         }
 

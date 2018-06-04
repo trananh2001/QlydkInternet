@@ -9,31 +9,26 @@ using QlydkInternet.Services;
 
 namespace QlydkInternet.Controllers
 {
-    public class HoaDonController : Controller
+    public class HopDongController : Controller
     {
         private IServices services;
 
-        public HoaDonController(IServices iservice)
+        public HopDongController(IServices iservice)
         {
             services = iservice;
         }
         public async Task<IActionResult> Index(int? page,
                                                int? firstShowedPage, int? lastShowedPage)
         {
-            var goicuoc = services.GetAllHoaDon();
+            var goicuoc = services.GetAllHopDong();
             int pageSize = 8;
             int numberOfDisplayPages = 5;
             // page = 1;
-            var result = await PaginatedList<HoaDonViewModel>.
+            var result = await PaginatedList<HopDongViewModel>.
                         CreateAsync(goicuoc, page ?? 1, pageSize,
                                     numberOfDisplayPages,
                                     firstShowedPage, lastShowedPage);
             return View(result);
-        }
-
-        public IActionResult ChiTiet()
-        {
-            return View();
         }
     }
 }

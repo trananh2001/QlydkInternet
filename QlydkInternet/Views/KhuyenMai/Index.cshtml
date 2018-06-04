@@ -1,0 +1,141 @@
+﻿@model PaginatedList<QlydkInternet.ViewModels.KhuyenMaiViewModel>
+
+@{
+    ViewData["Title"] = "khuyến mãi";
+}
+
+@section menu{
+<div class="ui left fixed vertical inverted menu" id="controller-menu">
+    <a class="ui active item" asp-controller="Dashboard" asp-action="Index">
+        <span><i class="home icon"></i>DASHBOARD</span>
+    </a>
+    <a class="item" id="qlhd">
+        <span><i class="users icon"></i>QUẢN LÝ HỢP ĐỒNG</span>
+    </a>
+    <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px">
+        <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hợp đồng</span>
+    </a>
+    <a id="taohd" class="item" style="padding-left: 25px">
+        <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hợp đồng</span>
+    </a>
+    <a class="item" id="qlgc">
+        <span><i class="add to cart icon"></i>QUẢN LÝ GÓI CƯỚC</span>
+    </a>
+    <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="item" style="padding-left: 25px">
+        <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách gói cước</span>
+    </a>
+    <a id="taogc" class="item" style="padding-left: 25px">
+        <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo gói cước</span>
+    </a>
+    <a id="qlkm" class="item">
+        <span><i class="file text icon"></i>QUẢN LÝ KHUYẾN MÃI</span>
+    </a>
+    <a id="dskm" asp-controller="KhuyenMai" asp-action="Index" class="ui active item" style="padding-left: 25px">
+        <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách khuyến mãi</span>
+    </a>
+    <a id="taokm" class="item" style="padding-left: 25px">
+        <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo khuyến mãi</span>
+    </a>
+    <a id="qlhdon" class="item">
+        <span><i class="database icon"></i>QUẢN LÝ HÓA ĐƠN</span>
+    </a>
+    <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="item" style="padding-left: 25px">
+        <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hóa đơn</span>
+    </a>
+    <a id="taohdon" class="item" style="padding-left: 25px">
+        <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hóa đơn</span>
+    </a>
+    <a class="item" asp-controller="BaoCao" asp-action="Index">
+        <span><i class="area chart layout icon"></i>BÁO CÁO</span>
+    </a>
+    <a class="item" asp-controller="Admin" asp-action="Index">
+        <span><i class="spy icon"></i>ADMIN</span>
+    </a>
+</div>
+}
+
+<h2>Danh sách khuyến mãi</h2>
+<div class="row">
+    <div class="sixteen wide column">
+        <div class="ui secondary menu four item">
+            <a class="active item"
+               asp-controller="PhieuThu"
+               asp-action="Index">
+                <i class="list layout icon"></i>
+                Danh sách khuyến mãi
+            </a>
+            <a class="item"
+               asp-controller="PhieuThu"
+               asp-action="Create">
+                <i class="add square icon"></i>
+                Thêm mới khuyến mãi
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row" id="context">
+    <div class="sixteen wide column" style="padding:0">
+        <table class="ui selectable teal table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">
+                        Mã khuyến mãi
+                    </th>
+                    <th style="width: 10%">
+                        Tên khuyến mãi
+                    </th>
+                    <th style="width: 15%">
+                        Loại gói cước
+                    </th>
+                    <th style="width: 10%">
+                        Trị giá
+                    </th>
+                    <th style="width: 10%">
+                        Ngày bắt đầu
+                    </th>
+                    <th>
+                        Ngày kết thúc
+                    </th>
+                    <th>
+                        Mô tả
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                <tr class="selectable">
+                    <td style="padding-left: 11px">
+                        <a asp-action="Details" asp-route-id="@customer.makm">
+                            @customer.makm
+                        </a>
+                    </td>
+                    <td style="padding-left: 11px">
+                        @customer.tenkm
+                    </td>
+                    <td style="padding-left: 11px">
+                        @customer.tenloaigc
+                    </td>
+                    <td style="padding-left: 11px">
+                        @(((int)customer.trigia).ToString("N0") + " ₫")
+                    </td>
+                    <td style="padding-left: 11px">
+                        @customer.ngbd.ToString("dd/MM/yyyy")
+                    </td>
+                    <td style="padding-left: 11px">
+                        @customer.ngkt.Value.ToString("dd/MM/yyyy")
+                    </td>
+                    <td style="padding-left: 11px">
+                        @customer.mota
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        @Html.Partial("_Paginated", Model)
+    </div>
+</div>
+
+
+
+

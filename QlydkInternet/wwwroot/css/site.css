@@ -1,35 +1,130 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿@font-face {
+    font-family: 'bookstrore-gdi';
+    src: url('fonts/gdi.woff') format('woff');
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+/* MAIN STYLES */
+
+*, body {
+    margin: 0;
+    padding: 0;
+    font-family: bookstrore-gdi,Arial,Helvetica,sans-serif;
+    /*font-size: 16px;*/
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.ui.header, .title, h1, h2, h3, h4, h5,
+.ui.modal > .header,
+.ui.message .header {
+    font-family: bookstrore-gdi,Arial,Helvetica,sans-serif !important;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
+
+.ui.selection.dropdown {
+    min-width: 0 !important;
+    line-height: 1.25em !important;
+}
+
+
+
+/*body {
+    background-color: #F5F5F5 !important;
+}*/
+
+.ui.main.grid {
+    left: 10.5%;
+    position: relative;
     width: 100%;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+.ui.fixed.main.menu.responsive {
+    display: none;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
+.ui.left.fixed.vertical.menu {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* smartphone */
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .ui.main.grid .row {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .ui.left.fixed.vertical.menu {
         display: none;
     }
+
+    .ui.fixed.main.menu.responsive {
+        display: block;
+    }
+
+    .ui.main.grid {
+        left: 0%;
+        margin: 0 auto;
+        padding: 2.75rem 0 0;
+        position: relative;
+        width: 100%;
+    }
+}
+
+
+/* tablet */
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .ui.header.datetime {
+        margin: 3rem 0 1rem;
+    }
+
+    .ui.left.fixed.vertical.menu {
+        display: none;
+    }
+
+    .ui.fixed.main.menu.responsive {
+        display: block;
+    }
+
+    .ui.main.grid {
+        left: 0%;
+        padding-top: 2.75rem !important;
+        position: relative;
+        width: 100%;
+    }
+}
+
+
+/*PC Only*/
+
+@media only screen and (min-width: 992px) {
+    .ui.fixed.main.menu.responsive {
+        display: none;
+    }
+
+    .ui.left.fixed.menu {
+        display: block;
+    }
+}
+
+
+.ui.fixed.top.menu {
+    background-color: #FFFFFF;
+    padding-top: 10px;
+    transition: all 0.5s ease;
+}
+
+.ui.sticky.menu {
+    transition: all 0.5s ease;
+}
+
+@media only screen and (min-width: 768px) {
+    .ui.tiny.modal {
+        width: 50%;
+        margin: 0em 0em 0em -25%;
+    }
+}
+
+#controller-menu span i {
+    margin-right: 15px;
 }

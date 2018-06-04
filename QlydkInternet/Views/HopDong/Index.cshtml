@@ -1,7 +1,7 @@
-﻿@model PaginatedList<QlydkInternet.ViewModels.HoaDonViewModel>
+﻿@model PaginatedList<QlydkInternet.ViewModels.HopDongViewModel>
 
 @{
-    ViewData["Title"] = "Hóa Đơn";
+    ViewData["Title"] = "Hợp Đồng";
 }
 
 @section menu{
@@ -12,7 +12,7 @@
     <a class="item" id="qlhd">
         <span><i class="users icon"></i>QUẢN LÝ HỢP ĐỒNG</span>
     </a>
-    <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px">
+    <a id="dshd" asp-controller="HopDong" asp-action="Index" class="ui active item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hợp đồng</span>
     </a>
     <a id="taohd" class="item" style="padding-left: 25px">
@@ -39,7 +39,7 @@
     <a id="qlhdon" class="item">
         <span><i class="database icon"></i>QUẢN LÝ HÓA ĐƠN</span>
     </a>
-    <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="ui active item" style="padding-left: 25px">
+    <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hóa đơn</span>
     </a>
     <a id="taohdon" class="item" style="padding-left: 25px">
@@ -54,7 +54,7 @@
 </div>
 }
 
-<h2>Danh sách hóa đơn</h2>
+<h2>Danh sách hợp đồng</h2>
 <div class="row">
     <div class="sixteen wide column">
         <div class="ui secondary menu four item">
@@ -62,43 +62,42 @@
                asp-controller="PhieuThu"
                asp-action="Index">
                 <i class="list layout icon"></i>
-                Danh sách hóa đơn
+                Danh sách hợp đồng
             </a>
             <a class="item"
                asp-controller="PhieuThu"
                asp-action="Create">
                 <i class="add square icon"></i>
-                Thêm mới hóa đơn
+                Thêm mới hợp đồng
             </a>
         </div>
     </div>
 </div>
-
 <div class="row" id="context">
     <div class="sixteen wide column" style="padding:0">
         <table class="ui selectable teal table">
             <thead>
                 <tr>
                     <th style="width: 15%">
-                        Số hóa đơn
+                        Mã hợp đồng
                     </th>
                     <th style="width: 15%">
-                        Ngày in
+                        Ngày đăng ký
                     </th>
                     <th style="width: 15%">
-                        Ngày thanh toán
-                    </th>
-                    <th style="width: 15%">
-                        Trị giá
+                        Ngày áp dụng
                     </th>
                     <th style="width: 15%">
                         Tên khách hàng
                     </th>
                     <th style="width: 15%">
-                        Tên nhân viên
+                        Tên gói cước
                     </th>
                     <th style="width: 15%">
-                        Hạn hóa đơn
+                        Loại thanh toán
+                    </th>
+                    <th>
+                        Tình trạng
                     </th>
                 </tr>
             </thead>
@@ -109,27 +108,27 @@
                     <tr class="selectable">
 
                         <td style="padding-left: 11px">
-                            <a asp-action="Details" asp-route-id="@customer.sohd">
-                                @customer.sohd
+                            <a asp-action="Details" asp-route-id="@customer.mahd">
+                                @customer.mahd
                             </a>
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.ngin.ToString("dd/MM/yyyy")
+                            @customer.ngdk.ToString("dd/MM/yyyy")
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.ngthanhtoan.Value.ToString("dd/MM/yyyy")
-                        </td>
-                        <td style="padding-left: 11px">
-                            @(((int)customer.trigia).ToString("N0") + " ₫")
+                            @customer.ngad.ToString("dd/MM/yyyy")
                         </td>
                         <td style="padding-left: 11px">
                             @customer.tenkh
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.tennv
+                            @customer.tengc
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.hanhoadon.ToShortDateString()
+                            @customer.loaitt
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tinhtrang
                         </td>
 
                     </tr>
@@ -139,60 +138,7 @@
         @Html.Partial("_Paginated", Model)
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-        document.getElementById("dshd").style.display = "none";
-        document.getElementById("dsgc").style.display = "none";
-        document.getElementById("dskm").style.display = "none";
-        document.getElementById("taohd").style.display = "none";
-        document.getElementById("taogc").style.display = "none";
-        document.getElementById("taokm").style.display = "none";
-        $("#qlhd").click(function () {
-            if (document.getElementById("dshd").style.display === "block") {
-                document.getElementById("dshd").style.display = "none";
-                document.getElementById("taohd").style.display = "none";
-            }
-            else {
-                document.getElementById("dshd").style.display = "block";
-                document.getElementById("taohd").style.display = "block";
-            }
-            document.getElementById("dsgc").style.display = "none";
-            document.getElementById("dskm").style.display = "none";
-            document.getElementById("taogc").style.display = "none";
-            document.getElementById("taokm").style.display = "none";
-        })
-        $("#qlgc").click(function () {
-            if (document.getElementById("dsgc").style.display === "block") {
-                document.getElementById("dsgc").style.display = "none";
-                document.getElementById("taogc").style.display = "none";
-            }
-            else {
-                document.getElementById("dsgc").style.display = "block";
-                document.getElementById("taogc").style.display = "block";
-            }
 
-            document.getElementById("dshd").style.display = "none";
-            document.getElementById("dskm").style.display = "none";
-            document.getElementById("taohd").style.display = "none";
-            document.getElementById("taokm").style.display = "none";
-        })
-        $("#qlkm").click(function () {
-            if (document.getElementById("dskm").style.display === "block") {
-                document.getElementById("taokm").style.display = "none";
-                document.getElementById("dskm").style.display = "none";
-            }
-            else {
-                document.getElementById("taokm").style.display = "block";
-                document.getElementById("dskm").style.display = "block";
-            }
-
-            document.getElementById("dshd").style.display = "none";
-            document.getElementById("dsgc").style.display = "none";
-            document.getElementById("taohd").style.display = "none";
-            document.getElementById("taogc").style.display = "none";
-        })
-    })
-</script>
 
 
 
