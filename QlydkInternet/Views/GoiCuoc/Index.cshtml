@@ -6,7 +6,7 @@
 
 @section menu{
 <div class="ui left fixed vertical inverted menu" id="controller-menu">
-    <a class="ui active item" asp-controller="Dashboard" asp-action="Index">
+    <a class=" item" asp-controller="Dashboard" asp-action="Index">
         <span><i class="home icon"></i>DASHBOARD</span>
     </a>
     <a class="item" id="qlhd">
@@ -21,10 +21,10 @@
     <a class="item" id="qlgc">
         <span><i class="add to cart icon"></i>QUẢN LÝ GÓI CƯỚC</span>
     </a>
-    <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="item" style="padding-left: 25px">
+    <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="ui active item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách gói cước</span>
     </a>
-    <a id="taogc" asp-controller="GoiCuoc" asp-action="Create" class="ui active item" style="padding-left: 25px">
+    <a id="taogc" asp-controller="GoiCuoc" asp-action="Create" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo gói cước</span>
     </a>
     <a id="qlkm" class="item">

@@ -18,5 +18,6 @@ namespace QlydkInternet.Services
         GoiCuocViewModel TimGoiCuocTheoMa(string ma);
         KhuyenMaiViewModel TimKhuyenMaiTheoMa(string ma);
         void TaoKhuyenMai(Khuyenmai km);
+        HopDongViewModel TimHopDongTheoMa(string ma);
     }
 }

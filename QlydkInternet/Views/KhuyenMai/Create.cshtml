@@ -9,7 +9,7 @@
 <script src="~/lib/semantic/calendar.js"></script>
 @section menu{
     <div class="ui left fixed vertical inverted menu" id="controller-menu">
-        <a class="ui active item" asp-controller="Dashboard" asp-action="Index">
+        <a class=" item" asp-controller="Dashboard" asp-action="Index">
             <span><i class="home icon"></i>DASHBOARD</span>
         </a>
         <a class="item" id="qlhd">
@@ -65,7 +65,7 @@
                 <label>Tên khuyến mãi</label>
                 <div class="ui search" id="provider-search">
                     <input class="prompt"
-                           id="tengc"
+                           id="tenkm"
                            asp-for="@Model.tenkm"
                            placeholder="Tên gói cước">
                     <div class="results"></div>
@@ -92,7 +92,7 @@
                 <input type="number"
                        placeholder="Trị giá"
                        asp-for="@Model.trigia"
-                       id="giacuoc"
+                       id="trigia"
                        value="1000">
             </div>
             <div class="two fields" style="padding-left: 7px;padding-right: 7px;">
@@ -139,7 +139,7 @@
             <div class="field">
                 
             </div>
-            <button class="ui primary submit button" type="submit" id="btnThem">Thêm</button>
+            <button class="ui primary submit button" id="btnThem">Thêm</button>
             <div class="ui reset button" id="btnXoa">Hủy</div>
         </form>
     </div>
@@ -158,7 +158,7 @@
 <script>
     
     $(document).ready(function () {
-        //$('#ngbd').val() = @DateTime.Now
+        
         $('#rangestart').calendar({
             type: 'date',
             endCalendar: $('#rangeend'),
@@ -175,7 +175,6 @@
                 var newValue = text;
                 //alert(newValue)
                 $('#ngbd').val(newValue);
-                alert($('#ngbd').val())
             },
         });
         $('#rangeend').calendar({
@@ -195,9 +194,50 @@
                 var newValue = text;
                 //alert(newValue)
                 $('#ngkt').val(newValue);
-                alert($('#ngkt').val())
             },
         });
+        $('#btnThem').on("click", function () {
+            var url = $("#createform").attr("action");
+            var tenkm = $("#tenkm").val();
+            var loaikm = $("#tenkm").val();
+            var loaigc = $("#loaigc").val();
+            var ngbd = $("#ngbd").val();
+            var ngkt = $("#ngkt").val();
+            var trigia = $("#trigia").val();
+            var mota = $("#mota").val();
+            var token = $('#createform input').val();
+            console.log(ngbd)
+            var data = {
+                tenkm: tenkm,
+                loaikm: loaikm,
+                loaigc: loaigc,
+                ngbd: ngbd,
+                ngkt: ngkt,
+                trigia: trigia,
+                mota: mota,
+                __RequestVerificationToken: token
+            }
+            $.ajax({
+                type: "post",
+                url: url,
+                data: data,
+                success: function (result, status, xhr) {
+                    if (status === 'success') {
+                        //window.location.reload();
+                        //alert(result.str);
+                        $('#notify-modal').html(result);
+                        $('#notify-modal').modal('show');
+                        setTimeout(function () {
+                            $('#notify-modal').modal('hide');
+                        }, 1000);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    //idk what to do right here
+                    //inactive dimmer
+                }
+            });
+         })
         $('#btnXoa').on("click", function () {
             $('#tengc').val() = "";
             $('#loaigc').val() = 1;
@@ -207,12 +247,10 @@
         })
 
         document.getElementById("dshd").style.display = "none";
-        document.getElementById("dsgc").style.display = "block";
-        document.getElementById("dskm").style.display = "none";
+        document.getElementById("dsgc").style.display = "none";
         document.getElementById("dshdon").style.display = "none";
         document.getElementById("taohd").style.display = "none";
-        document.getElementById("taogc").style.display = "block";
-        document.getElementById("taokm").style.display = "none";
+        document.getElementById("taogc").style.display = "none";
         document.getElementById("taohdon").style.display = "none";
         $("#qlhd").click(function () {
             if (document.getElementById("dshd").style.display === "block") {
@@ -223,20 +261,19 @@
                 document.getElementById("dshd").style.display = "block";
                 document.getElementById("taohd").style.display = "block";
             }
-            document.getElementById("dskm").style.display = "none";
+            document.getElementById("dsgc").style.display = "none";
             document.getElementById("dshdon").style.display = "none";
-            document.getElementById("taokm").style.display = "none";
+            document.getElementById("taogc").style.display = "none";
             document.getElementById("taohdon").style.display = "none";
         })
-
-        $("#qlkm").click(function () {
-            if (document.getElementById("dskm").style.display === "block") {
-                document.getElementById("taokm").style.display = "none";
-                document.getElementById("dskm").style.display = "none";
+        $("#qlgc").click(function () {
+            if (document.getElementById("dsgc").style.display === "block") {
+                document.getElementById("dsgc").style.display = "none";
+                document.getElementById("taogc").style.display = "none";
             }
             else {
-                document.getElementById("taokm").style.display = "block";
-                document.getElementById("dskm").style.display = "block";
+                document.getElementById("dsgc").style.display = "block";
+                document.getElementById("taogc").style.display = "block";
             }
 
             document.getElementById("dshd").style.display = "none";
@@ -253,11 +290,10 @@
                 document.getElementById("taohdon").style.display = "block";
                 document.getElementById("dshdon").style.display = "block";
             }
-
             document.getElementById("dshd").style.display = "none";
-            document.getElementById("dskm").style.display = "none";
+            document.getElementById("dsgc").style.display = "none";
             document.getElementById("taohd").style.display = "none";
-            document.getElementById("taokm").style.display = "none";
+            document.getElementById("taogc").style.display = "none";
         })
     })
 </script>

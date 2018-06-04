@@ -48,20 +48,18 @@ namespace QlydkInternet.Controllers
         public async Task<IActionResult> Create(string tengc, string loaigc, string tocdo, decimal giacuoc, string mota)
         {
             Goicuoc goicuoc = new Goicuoc();
-            goicuoc.Magc = DateTime.Now.ToString("dd") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            goicuoc.Magc = "GC"+DateTime.Now.ToString("dd") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
             goicuoc.Tengc = tengc;
             goicuoc.Loaigc = loaigc;
             goicuoc.Tocdo = tocdo;
             goicuoc.Giacuoc = giacuoc;
-            goicuoc.Mota = mota;
-            services.TaoGoiCuoc(goicuoc);
-            var noti = new Notification
+            if (mota != null)
             {
-                Title = "Thành Công",
-                Content = "Tạo phiếu trả hàng thành công",
-                Icon = "checkmark",
-                MessageType = "positive",
-            };
+                goicuoc.Mota = mota;
+            }
+            else
+                goicuoc.Mota = "Không có mô tả";
+            services.TaoGoiCuoc(goicuoc);
             return RedirectToAction("Details", new RouteValueDictionary(
     new { controller = "GoiCuoc", action = "Main", id = goicuoc.Magc }));
         }

@@ -15,6 +15,7 @@ namespace QlydkInternet.ViewModels
         public string taikhoan { get; set; }
         public string matkhau { get; set; }
         public string loaitt { get; set; }
+        public string tenloaitt { get; set; }
         public string tinhtrang { get; set; }
         public string makh { get; set; }
         public string tenkh { get; set; }

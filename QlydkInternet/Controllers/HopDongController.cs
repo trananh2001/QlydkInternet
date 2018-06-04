@@ -30,5 +30,11 @@ namespace QlydkInternet.Controllers
                                     firstShowedPage, lastShowedPage);
             return View(result);
         }
+
+        public IActionResult Details(string id)
+        {
+            var hopdong = services.TimHopDongTheoMa(id);
+            return View(hopdong);
+        }
     }
 }

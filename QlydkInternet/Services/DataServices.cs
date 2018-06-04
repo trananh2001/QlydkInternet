@@ -62,6 +62,8 @@ namespace QlydkInternet.Services
                      on hopdong.Makh equals khachhang.Makh
                      join goicuoc in _context.Goicuoc
                      on hopdong.Magc equals goicuoc.Magc
+                     join loaitt in _context.Loaithanhtoan
+                     on hopdong.Loaitt equals loaitt.Maloai
                      select new HopDongViewModel
                      {
                          mahd = hopdong.Maphieu,
@@ -72,6 +74,7 @@ namespace QlydkInternet.Services
                          taikhoan = hopdong.Taikhoan,
                          matkhau = hopdong.Matkhau,
                          loaitt = hopdong.Loaitt,
+                         tenloaitt = loaitt.Tenloai,
                          tinhtrang = hopdong.Tinhtrang,
                          makh = hopdong.Makh,
                          tenkh = khachhang.Hoten,
@@ -163,6 +166,34 @@ namespace QlydkInternet.Services
                          mota = khuyenmai.Mota,
                          ngbd = khuyenmai.Ngbd,
                          ngkt = khuyenmai.Ngkt
+                     };
+            return re.First();
+        }
+        public HopDongViewModel TimHopDongTheoMa(string ma)
+        {
+            var re = from hopdong in _context.Phieudangky
+                     join khachhang in _context.Khachhang
+                     on hopdong.Makh equals khachhang.Makh
+                     join goicuoc in _context.Goicuoc
+                     on hopdong.Magc equals goicuoc.Magc
+                     join loaitt in _context.Loaithanhtoan
+                     on hopdong.Loaitt equals loaitt.Maloai
+                     select new HopDongViewModel
+                     {
+                         mahd = hopdong.Maphieu,
+                         ngdk = hopdong.Ngdk,
+                         ngad = hopdong.Ngad,
+                         doituong = hopdong.Doituong,
+                         dccaidat = hopdong.Dccaidat,
+                         taikhoan = hopdong.Taikhoan,
+                         matkhau = hopdong.Matkhau,
+                         loaitt = hopdong.Loaitt,
+                         tenloaitt = loaitt.Tenloai,
+                         tinhtrang = hopdong.Tinhtrang,
+                         makh = hopdong.Makh,
+                         tenkh = khachhang.Hoten,
+                         magc = hopdong.Magc,
+                         tengc = goicuoc.Tengc
                      };
             return re.First();
         }

@@ -1,6 +1,6 @@
-﻿@model QlydkInternet.ViewModels.KhuyenMaiViewModel
+﻿@model QlydkInternet.ViewModels.HopDongViewModel
 @{
-    ViewData["Title"] = "Chi tiết khuyến mãi";
+    ViewData["Title"] = "Chi tiết hợp đồng";
 }
 
 @section menu{
@@ -8,7 +8,7 @@
         <a class=" item" asp-controller="Dashboard" asp-action="Index">
             <span><i class="home icon"></i>DASHBOARD</span>
         </a>
-        <a class="item" id="qlhd">
+        <a class="ui active item" id="qlhd">
             <span><i class="users icon"></i>QUẢN LÝ HỢP ĐỒNG</span>
         </a>
         <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px">
@@ -17,7 +17,7 @@
         <a id="taohd" asp-controller="HopDong" asp-action="Create" class="item" style="padding-left: 25px">
             <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hợp đồng</span>
         </a>
-        <a class="item" id="qlgc">
+        <a class=" item" id="qlgc">
             <span><i class="add to cart icon"></i>QUẢN LÝ GÓI CƯỚC</span>
         </a>
         <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="item" style="padding-left: 25px">
@@ -26,7 +26,7 @@
         <a id="taogc" asp-controller="GoiCuoc" asp-action="Create" class=" item" style="padding-left: 25px">
             <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo gói cước</span>
         </a>
-        <a id="qlkm" class="ui active item">
+        <a id="qlkm" class="item">
             <span><i class="file text icon"></i>QUẢN LÝ KHUYẾN MÃI</span>
         </a>
         <a id="dskm" asp-controller="KhuyenMai" asp-action="Index" class="item" style="padding-left: 25px">
@@ -53,7 +53,7 @@
     </div>
 }
 
-<h2>Chi tiết khuyến mãi</h2>
+<h2>Chi tiết hợp đồng</h2>
 
 <div class="ui centered grid equal width" style="width:100%;">
     <div class="sixteen wide column">
@@ -62,14 +62,14 @@
     <div class="row">
         <div class="column">
             <h3 class="ui dividing header">
-                Mã khuyến mãi
-                <div class="sub header" style="font-size:2rem">@Model.makm</div>
+                Mã hợp dồng
+                <div class="sub header" style="font-size:2rem">@Model.mahd</div>
             </h3>
         </div>
         <div class="column">
             <h3 class="ui dividing header">
-                Tên khuyến mãi
-                <div class="sub header" style="font-size:2rem">@Model.tenkm</div>
+                Tên khách hàng
+                <div class="sub header" style="font-size:2rem">@Model.tenkh</div>
             </h3>
         </div>
     </div>
@@ -77,13 +77,13 @@
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
                 Loại gói cước
-                <div class="sub header" style="font-size:2rem">@Model.tenloaigc</div>
+                <div class="sub header" style="font-size:2rem">@Model.tengc</div>
             </h3>
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
-                Loại khuyến mãi
-                <div class="sub header" style="font-size:2rem">@Model.tenloaikm</div>
+                Loại thanh toán
+                <div class="sub header" style="font-size:2rem">@Model.tenloaitt</div>
             </h3>
         </div>
 
@@ -91,33 +91,42 @@
     <div class="row">
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
-                Ngày bắt đầu
-                <div class="sub header" style="font-size:2rem">@Model.ngbd.ToString("dd/MM/yyyy")</div>
+                Địa chỉ cài đặt
+                <div class="sub header" style="font-size:2rem">@Model.dccaidat</div>
             </h3>
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
-                Ngày kết thúc
-                <div class="sub header" style="font-size:2rem">@Model.ngkt.Value.ToString("dd/MM/yyyy")</div>
+                Tình trạng
+                <div class="sub header" style="font-size:2rem">@Model.tinhtrang</div>
             </h3>
         </div>
-
     </div>
     <div class="row">
-        <div class="column">
+        <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
-                Giá cước
-                <div class="sub header" style="font-size:2rem">@(((int)Model.trigia).ToString("N0") + "%")</div>
+                Ngày đăng ký
+                <div class="sub header" style="font-size:2rem">@Model.ngdk.ToString("dd/MM/yyyy")</div>
             </h3>
         </div>
-        <div class="column">
+        <div class="column" id="tenncc">
             <h3 class="ui dividing header">
-
-                Mô tả
-                <div class="sub header" style="font-size:2rem">@Model.mota</div>
-                @*<div class="ui transparent fluid disabled input">
-                        <input type="text" style="font-size:2rem" placeholder="Search...">
-                    </div>*@
+                Ngày áp dụng
+                <div class="sub header" style="font-size:2rem">@Model.ngad.ToString("dd/MM/yyyy")</div>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column" id="tenkhachhang">
+            <h3 class="ui dividing header">
+                Tài khoản
+                <div class="sub header" style="font-size:2rem">@Model.taikhoan</div>
+            </h3>
+        </div>
+        <div class="column" id="tenncc">
+            <h3 class="ui dividing header">
+                Mật khẩu
+                <div class="sub header" style="font-size:2rem">@Model.matkhau</div>
             </h3>
         </div>
     </div>
@@ -125,26 +134,12 @@
 
 <script>
     $(document).ready(function () {
-        document.getElementById("dshd").style.display = "none";
         document.getElementById("dsgc").style.display = "none";
+        document.getElementById("dskm").style.display = "none";
         document.getElementById("dshdon").style.display = "none";
-        document.getElementById("taohd").style.display = "none";
         document.getElementById("taogc").style.display = "none";
+        document.getElementById("taokm").style.display = "none";
         document.getElementById("taohdon").style.display = "none";
-        $("#qlhd").click(function () {
-            if (document.getElementById("dshd").style.display === "block") {
-                document.getElementById("dshd").style.display = "none";
-                document.getElementById("taohd").style.display = "none";
-            }
-            else {
-                document.getElementById("dshd").style.display = "block";
-                document.getElementById("taohd").style.display = "block";
-            }
-            document.getElementById("dsgc").style.display = "none";
-            document.getElementById("dshdon").style.display = "none";
-            document.getElementById("taogc").style.display = "none";
-            document.getElementById("taohdon").style.display = "none";
-        })
         $("#qlgc").click(function () {
             if (document.getElementById("dsgc").style.display === "block") {
                 document.getElementById("dsgc").style.display = "none";
@@ -154,10 +149,24 @@
                 document.getElementById("dsgc").style.display = "block";
                 document.getElementById("taogc").style.display = "block";
             }
-
-            document.getElementById("dshd").style.display = "none";
+            document.getElementById("dskm").style.display = "none";
             document.getElementById("dshdon").style.display = "none";
-            document.getElementById("taohd").style.display = "none";
+            document.getElementById("taokm").style.display = "none";
+            document.getElementById("taohdon").style.display = "none";
+        })
+        $("#qlkm").click(function () {
+            if (document.getElementById("dskm").style.display === "block") {
+                document.getElementById("taokm").style.display = "none";
+                document.getElementById("dskm").style.display = "none";
+            }
+            else {
+                document.getElementById("taokm").style.display = "block";
+                document.getElementById("dskm").style.display = "block";
+            }
+
+            document.getElementById("dsgc").style.display = "none";
+            document.getElementById("dshdon").style.display = "none";
+            document.getElementById("taogc").style.display = "none";
             document.getElementById("taohdon").style.display = "none";
         })
         $("#qlhdon").click(function () {
@@ -169,10 +178,14 @@
                 document.getElementById("taohdon").style.display = "block";
                 document.getElementById("dshdon").style.display = "block";
             }
-            document.getElementById("dshd").style.display = "none";
+
             document.getElementById("dsgc").style.display = "none";
-            document.getElementById("taohd").style.display = "none";
+            document.getElementById("dskm").style.display = "none";
             document.getElementById("taogc").style.display = "none";
+            document.getElementById("taokm").style.display = "none";
         })
     })
 </script>
+
+
+
