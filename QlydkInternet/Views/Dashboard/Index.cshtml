@@ -10,10 +10,10 @@
     <a class="item" id="qlhd">
         <span><i class="users icon"></i>QUẢN LÝ HỢP ĐỒNG</span>
     </a>
-    <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px" >
+    <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hợp đồng</span>
     </a>
-    <a id="taohd" class="item" style="padding-left: 25px">
+    <a id="taohd" asp-controller="HopDong" asp-action="Create" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hợp đồng</span>
     </a>
     <a class="item" id="qlgc">
@@ -22,7 +22,7 @@
     <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách gói cước</span>
     </a>
-    <a id="taogc" class="item" style="padding-left: 25px">
+    <a id="taogc" asp-controller="GoiCuoc" asp-action="Create" class="ui active item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo gói cước</span>
     </a>
     <a id="qlkm" class="item">
@@ -31,7 +31,7 @@
     <a id="dskm" asp-controller="KhuyenMai" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách khuyến mãi</span>
     </a>
-    <a id="taokm" class="item" style="padding-left: 25px">
+    <a id="taokm" asp-controller="KhuyenMai" asp-action="Create" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo khuyến mãi</span>
     </a>
     <a id="qlhdon" class="item">
@@ -40,7 +40,7 @@
     <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hóa đơn</span>
     </a>
-    <a id="taohdon" class="item" style="padding-left: 25px">
+    <a id="taohdon" asp-controller="HoaDon" asp-action="Create" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hóa đơn</span>
     </a>
     <a class="item" asp-controller="BaoCao" asp-action="Index">

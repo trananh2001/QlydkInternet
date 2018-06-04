@@ -15,7 +15,7 @@
     <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hợp đồng</span>
     </a>
-    <a id="taohd" class="item" style="padding-left: 25px">
+    <a id="taohd" asp-controller="HopDong" asp-action="Create" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hợp đồng</span>
     </a>
     <a class="item" id="qlgc">
@@ -24,7 +24,7 @@
     <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách gói cước</span>
     </a>
-    <a id="taogc" class="item" style="padding-left: 25px">
+    <a id="taogc" asp-controller="GoiCuoc" asp-action="Create" class="ui active item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo gói cước</span>
     </a>
     <a id="qlkm" class="item">
@@ -33,16 +33,16 @@
     <a id="dskm" asp-controller="KhuyenMai" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách khuyến mãi</span>
     </a>
-    <a id="taokm" class="item" style="padding-left: 25px">
+    <a id="taokm" asp-controller="KhuyenMai" asp-action="Create" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo khuyến mãi</span>
     </a>
     <a id="qlhdon" class="item">
         <span><i class="database icon"></i>QUẢN LÝ HÓA ĐƠN</span>
     </a>
-    <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="ui active item" style="padding-left: 25px">
+    <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hóa đơn</span>
     </a>
-    <a id="taohdon" class="item" style="padding-left: 25px">
+    <a id="taohdon" asp-controller="HoaDon" asp-action="Create" class="item" style="padding-left: 25px">
         <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hóa đơn</span>
     </a>
     <a class="item" asp-controller="BaoCao" asp-action="Index">
@@ -55,24 +55,6 @@
 }
 
 <h2>Danh sách hóa đơn</h2>
-<div class="row">
-    <div class="sixteen wide column">
-        <div class="ui secondary menu four item">
-            <a class="active item"
-               asp-controller="PhieuThu"
-               asp-action="Index">
-                <i class="list layout icon"></i>
-                Danh sách hóa đơn
-            </a>
-            <a class="item"
-               asp-controller="PhieuThu"
-               asp-action="Create">
-                <i class="add square icon"></i>
-                Thêm mới hóa đơn
-            </a>
-        </div>
-    </div>
-</div>
 
 <div class="row" id="context">
     <div class="sixteen wide column" style="padding:0">
@@ -170,7 +152,6 @@
                 document.getElementById("dsgc").style.display = "block";
                 document.getElementById("taogc").style.display = "block";
             }
-
             document.getElementById("dshd").style.display = "none";
             document.getElementById("dskm").style.display = "none";
             document.getElementById("taohd").style.display = "none";
@@ -185,7 +166,6 @@
                 document.getElementById("taokm").style.display = "block";
                 document.getElementById("dskm").style.display = "block";
             }
-
             document.getElementById("dshd").style.display = "none";
             document.getElementById("dsgc").style.display = "none";
             document.getElementById("taohd").style.display = "none";

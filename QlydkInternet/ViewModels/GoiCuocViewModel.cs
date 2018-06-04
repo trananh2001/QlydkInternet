@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using QlydkInternet.Models;
 namespace QlydkInternet.ViewModels
 {
@@ -18,5 +19,6 @@ namespace QlydkInternet.ViewModels
         public decimal giacuoc { get; set; }
         public string mota { get; set; }
         public string hinhanh { get; set; }
+        public SelectList listloaigc { get; set; }
     }
 }

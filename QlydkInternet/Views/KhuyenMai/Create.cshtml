@@ -1,0 +1,264 @@
+﻿@model QlydkInternet.ViewModels.KhuyenMaiViewModel
+@{
+    ViewData["Title"] = "Tạo khuyến mãi";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/font-awesome.min.css" />
+<link rel="stylesheet" href="~/lib/semantic/calendar.css" />
+<script src="~/lib/jquery/dist/jquery-2.1.4.js"></script>
+<script src="~/lib/semantic/calendar.js"></script>
+@section menu{
+    <div class="ui left fixed vertical inverted menu" id="controller-menu">
+        <a class="ui active item" asp-controller="Dashboard" asp-action="Index">
+            <span><i class="home icon"></i>DASHBOARD</span>
+        </a>
+        <a class="item" id="qlhd">
+            <span><i class="users icon"></i>QUẢN LÝ HỢP ĐỒNG</span>
+        </a>
+        <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hợp đồng</span>
+        </a>
+        <a id="taohd" asp-controller="HopDong" asp-action="Create" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hợp đồng</span>
+        </a>
+        <a class="item" id="qlgc">
+            <span><i class="add to cart icon"></i>QUẢN LÝ GÓI CƯỚC</span>
+        </a>
+        <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách gói cước</span>
+        </a>
+        <a id="taogc" asp-controller="GoiCuoc" asp-action="Create" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo gói cước</span>
+        </a>
+        <a id="qlkm" class="item">
+            <span><i class="file text icon"></i>QUẢN LÝ KHUYẾN MÃI</span>
+        </a>
+        <a id="dskm" asp-controller="KhuyenMai" asp-action="Index" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách khuyến mãi</span>
+        </a>
+        <a id="taokm" asp-controller="KhuyenMai" asp-action="Create" class="ui active item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo khuyến mãi</span>
+        </a>
+        <a id="qlhdon" class="item">
+            <span><i class="database icon"></i>QUẢN LÝ HÓA ĐƠN</span>
+        </a>
+        <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hóa đơn</span>
+        </a>
+        <a id="taohdon" asp-controller="HoaDon" asp-action="Create" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hóa đơn</span>
+        </a>
+        <a class="item" asp-controller="BaoCao" asp-action="Index">
+            <span><i class="area chart layout icon"></i>BÁO CÁO</span>
+        </a>
+        <a class="item" asp-controller="Admin" asp-action="Index">
+            <span><i class="spy icon"></i>ADMIN</span>
+        </a>
+    </div>
+}
+
+<h2>Tạo khuyến mãi</h2>
+<div class="row">
+    <div class="ui ten wide column">
+        <form class="ui form" asp-controller="KhuyenMai" asp-action="Create" id="createform">
+            <div class="field" id="providerFields">
+                <label>Tên khuyến mãi</label>
+                <div class="ui search" id="provider-search">
+                    <input class="prompt"
+                           id="tengc"
+                           asp-for="@Model.tenkm"
+                           placeholder="Tên gói cước">
+                    <div class="results"></div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Loại gói cước</label>
+                <select class="ui fluid dropdown"
+                        id="loaikm"
+                        asp-for="@Model.loaikm"
+                        asp-items="@Model.listloaikm"
+                        data-validate="valid-customer-type"></select>
+            </div>
+            <div class="field">
+                <label>Loại gói cước</label>
+                <select class="ui fluid dropdown"
+                        id="loaigc"
+                        asp-for="@Model.loaigc"
+                        asp-items="@Model.listloaigc"
+                        data-validate="valid-customer-type"></select>
+            </div>
+            <div class="field">
+                <label>Trị giá</label>
+                <input type="number"
+                       placeholder="Trị giá"
+                       asp-for="@Model.trigia"
+                       id="giacuoc"
+                       value="1000">
+            </div>
+            <div class="two fields" style="padding-left: 7px;padding-right: 7px;">
+                <div class="field">
+                    <label>Ngày bắt đầu</label>
+                    @*<input type="text"
+                           placeholder="Ngày bắt đầu"
+                           asp-for="@Model.ngbd"
+                           id="giacuoc"
+                           value="1000">*@
+                    <div class="ui calendar" id="rangestart">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input id="ngbd" type="text" placeholder="Ngày bắt đầu" asp-for="@Model.ngbd">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Ngày kết thúc</label>
+                    @*<input type="text"
+                           placeholder="Ngày kết thúc"
+                           asp-for="@Model.ngkt"
+                           id="tocdo"
+                           value="1000">*@
+                    <div class="ui calendar" id="rangeend">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input id="ngkt" type="text" placeholder="Ngày kết thúc" asp-for="@Model.ngkt">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="field">
+                <label>Mô tả</label>
+                <textarea type="text"
+                          name="mota"
+                          placeholder="Mô tả"
+                          asp-for="@Model.mota"
+                          data-validate="valid-phone"
+                          rows="2"
+                          id="mota"></textarea>
+            </div>
+            <div class="field">
+                
+            </div>
+            <button class="ui primary submit button" type="submit" id="btnThem">Thêm</button>
+            <div class="ui reset button" id="btnXoa">Hủy</div>
+        </form>
+    </div>
+</div>
+<div class="ui tiny modal" id="notify-modal">
+    <div class="header">Thành công</div>
+    <div class="content">
+        <p></p>
+        <p></p>
+        <p></p>
+    </div>
+</div>
+
+
+
+<script>
+    
+    $(document).ready(function () {
+        //$('#ngbd').val() = @DateTime.Now
+        $('#rangestart').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            },
+            onChange: function (date, text) {
+                var newValue = text;
+                //alert(newValue)
+                $('#ngbd').val(newValue);
+                alert($('#ngbd').val())
+            },
+        });
+        $('#rangeend').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                    $('#ngkt').val() = day + '/' + month + '/' + year;
+                }
+            },
+            onChange: function (date, text) {
+                var newValue = text;
+                //alert(newValue)
+                $('#ngkt').val(newValue);
+                alert($('#ngkt').val())
+            },
+        });
+        $('#btnXoa').on("click", function () {
+            $('#tengc').val() = "";
+            $('#loaigc').val() = 1;
+            $('#giacuoc').val() = 1000;
+            $('#mota').val() = "";
+            $('#tocdo').val() = 1000; _
+        })
+
+        document.getElementById("dshd").style.display = "none";
+        document.getElementById("dsgc").style.display = "block";
+        document.getElementById("dskm").style.display = "none";
+        document.getElementById("dshdon").style.display = "none";
+        document.getElementById("taohd").style.display = "none";
+        document.getElementById("taogc").style.display = "block";
+        document.getElementById("taokm").style.display = "none";
+        document.getElementById("taohdon").style.display = "none";
+        $("#qlhd").click(function () {
+            if (document.getElementById("dshd").style.display === "block") {
+                document.getElementById("dshd").style.display = "none";
+                document.getElementById("taohd").style.display = "none";
+            }
+            else {
+                document.getElementById("dshd").style.display = "block";
+                document.getElementById("taohd").style.display = "block";
+            }
+            document.getElementById("dskm").style.display = "none";
+            document.getElementById("dshdon").style.display = "none";
+            document.getElementById("taokm").style.display = "none";
+            document.getElementById("taohdon").style.display = "none";
+        })
+
+        $("#qlkm").click(function () {
+            if (document.getElementById("dskm").style.display === "block") {
+                document.getElementById("taokm").style.display = "none";
+                document.getElementById("dskm").style.display = "none";
+            }
+            else {
+                document.getElementById("taokm").style.display = "block";
+                document.getElementById("dskm").style.display = "block";
+            }
+
+            document.getElementById("dshd").style.display = "none";
+            document.getElementById("dshdon").style.display = "none";
+            document.getElementById("taohd").style.display = "none";
+            document.getElementById("taohdon").style.display = "none";
+        })
+        $("#qlhdon").click(function () {
+            if (document.getElementById("taohdon").style.display === "block") {
+                document.getElementById("taohdon").style.display = "none";
+                document.getElementById("dshdon").style.display = "none";
+            }
+            else {
+                document.getElementById("taohdon").style.display = "block";
+                document.getElementById("dshdon").style.display = "block";
+            }
+
+            document.getElementById("dshd").style.display = "none";
+            document.getElementById("dskm").style.display = "none";
+            document.getElementById("taohd").style.display = "none";
+            document.getElementById("taokm").style.display = "none";
+        })
+    })
+</script>
+

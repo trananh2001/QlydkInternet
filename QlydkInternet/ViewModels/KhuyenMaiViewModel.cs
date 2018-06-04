@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,5 +18,7 @@ namespace QlydkInternet.ViewModels
         public DateTime ngbd { get; set; }
         public DateTime? ngkt { get; set; }
         public int trigia { get; set; }
+        public SelectList listloaikm { get; set; }
+        public SelectList listloaigc { get; set; }
     }
 }

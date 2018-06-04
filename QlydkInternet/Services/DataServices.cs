@@ -102,5 +102,69 @@ namespace QlydkInternet.Services
                      };
             return re;
         }
+
+        public void TaoGoiCuoc(Goicuoc goicuoc)
+        {
+            _context.Goicuoc.Add(goicuoc);
+            _context.SaveChanges();
+        }
+        public void TaoKhuyenMai(Khuyenmai km)
+        {
+            _context.Khuyenmai.Add(km);
+            _context.SaveChanges();
+        }
+        public IEnumerable<Loaigoicuoc> GetAllLoaiGoiCuoc()
+        {
+            var query = from loaigc in _context.Loaigoicuoc
+                        select loaigc;
+            return query;
+        }
+        public IEnumerable<Loaikhuyenmai> GetAllLoaiKhuyenMai()
+        {
+            var query = from loaikm in _context.Loaikhuyenmai
+                        select loaikm;
+            return query;
+        }
+        public GoiCuocViewModel TimGoiCuocTheoMa(string ma)
+        {
+            var re = from _goicuoc in _context.Goicuoc
+                     join _loaigoicuoc in _context.Loaigoicuoc
+                     on _goicuoc.Loaigc equals _loaigoicuoc.Maloai
+                     where _goicuoc.Magc == ma
+                     select new GoiCuocViewModel
+                     {
+                         tengc = _goicuoc.Tengc,
+                         magc = _goicuoc.Magc,
+                         loaigc = _loaigoicuoc.Maloai,
+                         tenloaigc = _loaigoicuoc.Tenloai,
+                         tocdo = _goicuoc.Tocdo,
+                         giacuoc = _goicuoc.Giacuoc,
+                         mota = _goicuoc.Mota,
+                         hinhanh = _goicuoc.Hinhanh
+                     };
+            return re.First();
+        }
+        public KhuyenMaiViewModel TimKhuyenMaiTheoMa(string ma)
+        {
+            var re = from khuyenmai in _context.Khuyenmai
+                     join loaikm in _context.Loaikhuyenmai
+                     on khuyenmai.Loaikm equals loaikm.Maloai
+                     join loaigc in _context.Loaigoicuoc
+                     on khuyenmai.Loaigc equals loaigc.Maloai
+                     where khuyenmai.Makm == ma
+                     select new KhuyenMaiViewModel
+                     {
+                         makm = khuyenmai.Makm,
+                         tenkm = khuyenmai.Tenkm,
+                         loaikm = loaikm.Maloai,
+                         tenloaikm = loaikm.Tenloai,
+                         loaigc = loaigc.Maloai,
+                         tenloaigc = loaigc.Tenloai,
+                         mota = khuyenmai.Mota,
+                         ngbd = khuyenmai.Ngbd,
+                         ngkt = khuyenmai.Ngkt
+                     };
+            return re.First();
+        }
     }
 }
