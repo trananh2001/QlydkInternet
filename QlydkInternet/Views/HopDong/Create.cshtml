@@ -1,0 +1,384 @@
+﻿@model QlydkInternet.ViewModels.HopDongViewModel
+@{
+    ViewData["Title"] = "Tạo hợp đồng";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/font-awesome.min.css" />
+<link rel="stylesheet" href="~/lib/semantic/calendar.css" />
+<script src="~/lib/jquery/dist/jquery-2.1.4.js"></script>
+<script src="~/lib/semantic/calendar.js"></script>
+
+@section menu{
+    <div class="ui left fixed vertical inverted menu" id="controller-menu">
+        <a class="ui active item" asp-controller="Dashboard" asp-action="Index">
+            <span><i class="home icon"></i>DASHBOARD</span>
+        </a>
+        <a class="item" id="qlhd">
+            <span><i class="users icon"></i>QUẢN LÝ HỢP ĐỒNG</span>
+        </a>
+        <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hợp đồng</span>
+        </a>
+        <a id="taohd" asp-controller="HopDong" asp-action="Create" class="ui active item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hợp đồng</span>
+        </a>
+        <a class="item" id="qlgc">
+            <span><i class="add to cart icon"></i>QUẢN LÝ GÓI CƯỚC</span>
+        </a>
+        <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách gói cước</span>
+        </a>
+        <a id="taogc" asp-controller="GoiCuoc" asp-action="Create" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo gói cước</span>
+        </a>
+        <a id="qlkm" class="item">
+            <span><i class="file text icon"></i>QUẢN LÝ KHUYẾN MÃI</span>
+        </a>
+        <a id="dskm" asp-controller="KhuyenMai" asp-action="Index" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách khuyến mãi</span>
+        </a>
+        <a id="taokm" asp-controller="KhuyenMai" asp-action="Create" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo khuyến mãi</span>
+        </a>
+        <a id="qlhdon" class="item">
+            <span><i class="database icon"></i>QUẢN LÝ HÓA ĐƠN</span>
+        </a>
+        <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hóa đơn</span>
+        </a>
+        <a id="taohdon" asp-controller="HoaDon" asp-action="Create" class="item" style="padding-left: 25px">
+            <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hóa đơn</span>
+        </a>
+        <a class="item" asp-controller="BaoCao" asp-action="Index">
+            <span><i class="area chart layout icon"></i>BÁO CÁO</span>
+        </a>
+        <a class="item" asp-controller="Admin" asp-action="Index">
+            <span><i class="spy icon"></i>ADMIN</span>
+        </a>
+    </div>
+}
+
+<h2>Thông tin khách hàng</h2>
+<div class="row">
+    <div class="ui ten wide column">
+        <form class="ui form" asp-controller="HopDong" asp-action="Create" id="createform">
+            @*
+        nhập thông tin khách hàng
+            *@
+            <div class="field" id="providerFields">
+                <label>Họ tên</label>
+                <input class="prompt"
+                       id="tenkh"
+                       asp-for="@Model.tenkh"
+                       placeholder="Tên khách hàng">
+            </div>
+            <div class="field">
+                <label>Chứng minh nhân dân</label>
+                <input class="prompt"
+                       id="cmnd"
+                       asp-for="@Model.cmnd"
+                       placeholder="Chứng minh nhân dân">
+            </div>
+            <div class="field">
+                <label>Ngày sinh</label>
+                @*<input type="number"
+            placeholder="Ngày sinh"
+            asp-for="@Model.ngsinh"
+            id="ngsinh">*@
+                <div class="ui calendar" id="ngaysinh">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input id="ngsinh" type="text" placeholder="Ngày sinh" asp-for="@Model.ngsinh">
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Số điện thoại</label>
+                <input type="text"
+                       placeholder="Số điện thoại"
+                       asp-for="@Model.sdt"
+                       id="sdt">
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <input type="text"
+                       placeholder="Email"
+                       asp-for="@Model.email"
+                       id="email">
+            </div>
+            <div class="field">
+                <label>Địa chỉ</label>
+                <input type="text"
+                       id="diachi"
+                       placeholder="Địa chỉ"
+                       asp-for="@Model.diachi">
+            </div>
+            <div class="field">
+                <label>Nghề nghiệp</label>
+                <input type="text"
+                       id="nghenghiep"
+                       placeholder="Nghề nghiệp"
+                       asp-for="@Model.nghenghiep">
+            </div>
+            @*
+        nhập thông tin hợp đồng
+            *@
+            <h2 style="text-align:center">Thông tin hợp đồng</h2>
+            <div class="field" id="providerFields">
+                <label>Ngày áp dụng</label>
+                @*<input class="prompt"
+            id="ngad"
+            asp-for="@Model.ngad"
+            placeholder="Ngày áp dụng">*@
+                <div class="ui calendar" id="rangestart" style="display:none">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input id="today" type="text" placeholder="Ngày áp dụng">
+                    </div>
+                </div>
+                <div class="ui calendar" id="rangeend">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input id="ngad" type="text" placeholder="Ngày áp dụng" asp-for="@Model.ngad">
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Đối tượng</label>
+                <input class="prompt"
+                       id="doituong"
+                       asp-for="@Model.doituong"
+                       placeholder="Đối tượng">
+            </div>
+            <div class="field">
+                <label>Địa chỉ cài đặt</label>
+                <input type="text"
+                       placeholder="Địa chỉ cài đặt"
+                       asp-for="@Model.dccaidat"
+                       id="dccaidat">
+            </div>
+            <div class="field">
+                <label>Địa chỉ hóa đơn</label>
+                <input type="text"
+                       placeholder="Địa chỉ hóa đơn"
+                       asp-for="@Model.dchoadon"
+                       id="dchoadon">
+            </div>
+            <div class="field">
+                <label>Loại thanh toán</label>
+                <select class="ui fluid dropdown"
+                        id="loaitt"
+                        asp-for="@Model.loaitt"
+                        asp-items="@Model.listloaitt"
+                        data-validate="valid-customer-type"></select>
+            </div>
+            <div class="field">
+                <label>Gói cước</label>
+                @*<input type="text"
+            placeholder="Gói cước"
+            asp-for="@Model.magc">*@
+                <select class="ui fluid dropdown"
+                        id="magc"
+                        asp-for="@Model.magc"
+                        asp-items="@Model.listgc"
+                        data-validate="valid-customer-type"></select>
+            </div>
+            <button class="ui primary submit button" id="btnThem">Thêm</button>
+            <div class="ui reset button" id="btnXoa">Hủy</div>
+        </form>
+    </div>
+</div>
+
+
+<div class="ui tiny modal" id="notify-modal">
+    <div class="header">Thành công</div>
+    <div class="content">
+        <p></p>
+        <p></p>
+        <p></p>
+    </div>
+</div>
+
+<script src="~/js/cleave.min.js"></script>
+<script src="~/js/numeral.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        $('#today').val(today);
+        $('#ngsinh').val('1/1/2001');
+        $('#ngaysinh').calendar({
+            type: 'date',
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            },
+            onChange: function (date, text) {
+                var newValue = text;
+                //alert(newValue)
+                $('#ngsinh').val(newValue);
+            },
+        });
+        $('#rangestart').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            },
+            onChange: function (date, text) {
+                var newValue = text;
+                //alert(newValue)
+                $('#ngbd').val(newValue);
+            },
+        });
+        $('#rangeend').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            },
+            onChange: function (date, text) {
+                var newValue = text;
+                //alert(newValue)
+                $('#ngad').val(newValue);
+            },
+        });
+        $('#btnThem').on("click", function () {
+            var url = $("#createform").attr("action");
+
+            var tenkh = $("#tenkh").val();
+            var cmnd = $("#cmnd").val();
+            var ngsinh = $("#ngsinh").val();
+            var sdt = $("#sdt").val();
+            var email = $("#email").val();
+            var diachi = $("#diachi").val();
+
+            var ngad = $("#ngad").val();
+            var doituong = $("#doituong").val();
+            var dccaidat = $("#dccaidat").val();
+            var dchoadon = $("#dchoadon").val();
+            var loaitt = $("#loaitt").val();
+            var magc = $("#magc").val();
+            var nghenghiep = $("#nghenghiep").val();
+
+            var token = $('#createform input').val();
+
+            var data = {
+                ngad: ngad,
+                doituong: doituong,
+                dccaidat: dccaidat,
+                dchoadon: dchoadon,
+                loaitt: loaitt,
+                trigia: trigia,
+                magc: magc,
+                tenkh: tenkh,
+                ngsinh: ngsinh,
+                sdt: sdt,
+                email: email,
+                diachi: diachi,
+                cmnd: magc,
+                nghenghiep: nghenghiep,
+                __RequestVerificationToken: token
+            }
+            $.ajax({
+                type: "post",
+                url: url,
+                data: data,
+                success: function (result, status, xhr) {
+                    if (status === 'success') {
+                        //window.location.reload();
+                        //alert(result.str);
+                        $('#notify-modal').html(result);
+                        $('#notify-modal').modal('show');
+                        setTimeout(function () {
+                            $('#notify-modal').modal('hide');
+                        }, 1000);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    //idk what to do right here
+                    //inactive dimmer
+                }
+            });
+        })
+        $('#btnXoa').on("click", function () {
+            $('#tengc').val() = "";
+            $('#loaigc').val() = 1;
+            $('#giacuoc').val() = 1000;
+            $('#mota').val() = "";
+            $('#tocdo').val() = 1000; _
+        })
+
+        document.getElementById("dsgc").style.display = "none";
+        document.getElementById("dskm").style.display = "none";
+        document.getElementById("dshdon").style.display = "none";
+        document.getElementById("taogc").style.display = "none";
+        document.getElementById("taokm").style.display = "none";
+        document.getElementById("taohdon").style.display = "none";
+        $("#qlgc").click(function () {
+            if (document.getElementById("dsgc").style.display === "block") {
+                document.getElementById("dsgc").style.display = "none";
+                document.getElementById("taogc").style.display = "none";
+            }
+            else {
+                document.getElementById("dsgc").style.display = "block";
+                document.getElementById("taogc").style.display = "block";
+            }
+            document.getElementById("dskm").style.display = "none";
+            document.getElementById("dshdon").style.display = "none";
+            document.getElementById("taokm").style.display = "none";
+            document.getElementById("taohdon").style.display = "none";
+        })
+        $("#qlkm").click(function () {
+            if (document.getElementById("dskm").style.display === "block") {
+                document.getElementById("taokm").style.display = "none";
+                document.getElementById("dskm").style.display = "none";
+            }
+            else {
+                document.getElementById("taokm").style.display = "block";
+                document.getElementById("dskm").style.display = "block";
+            }
+
+            document.getElementById("dsgc").style.display = "none";
+            document.getElementById("dshdon").style.display = "none";
+            document.getElementById("taogc").style.display = "none";
+            document.getElementById("taohdon").style.display = "none";
+        })
+        $("#qlhdon").click(function () {
+            if (document.getElementById("taohdon").style.display === "block") {
+                document.getElementById("taohdon").style.display = "none";
+                document.getElementById("dshdon").style.display = "none";
+            }
+            else {
+                document.getElementById("taohdon").style.display = "block";
+                document.getElementById("dshdon").style.display = "block";
+            }
+
+            document.getElementById("dsgc").style.display = "none";
+            document.getElementById("dskm").style.display = "none";
+            document.getElementById("taogc").style.display = "none";
+            document.getElementById("taokm").style.display = "none";
+        })
+    })
+</script>
+

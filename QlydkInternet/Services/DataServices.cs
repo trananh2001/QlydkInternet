@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using QlydkInternet.ViewModels;
 using QlydkInternet.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace QlydkInternet.Services
 {
     public partial class DataServices : IServices
@@ -90,7 +92,7 @@ namespace QlydkInternet.Services
                      join khachhang in _context.Khachhang
                      on hoadon.Makh equals khachhang.Makh
                      join nhanvien in _context.Nhanvien
-                     on hoadon.Manv equals nhanvien.Manv 
+                     on hoadon.Manv equals nhanvien.Manv
                      select new HoaDonViewModel
                      {
                          sohd = hoadon.Sohd,
@@ -122,10 +124,23 @@ namespace QlydkInternet.Services
                         select loaigc;
             return query;
         }
+        public IEnumerable<Loaithanhtoan> GetAllLoaiThanhToan()
+        {
+            var query = from loaitt in _context.Loaithanhtoan
+                        select loaitt;
+            return query;
+        }
         public IEnumerable<Loaikhuyenmai> GetAllLoaiKhuyenMai()
         {
             var query = from loaikm in _context.Loaikhuyenmai
                         select loaikm;
+            return query;
+        }
+
+        public IEnumerable<Goicuoc> GetAllGC()
+        {
+            var query = from gc in _context.Goicuoc
+                        select gc;
             return query;
         }
         public GoiCuocViewModel TimGoiCuocTheoMa(string ma)
@@ -178,6 +193,7 @@ namespace QlydkInternet.Services
                      on hopdong.Magc equals goicuoc.Magc
                      join loaitt in _context.Loaithanhtoan
                      on hopdong.Loaitt equals loaitt.Maloai
+                     where hopdong.Maphieu == ma
                      select new HopDongViewModel
                      {
                          mahd = hopdong.Maphieu,
@@ -196,6 +212,78 @@ namespace QlydkInternet.Services
                          tengc = goicuoc.Tengc
                      };
             return re.First();
+        }
+
+        public void TaoHopDong(Phieudangky hd)
+        {
+            _context.Phieudangky.Add(hd);
+            _context.SaveChanges();
+        }
+        public void TaoKhachHang(Khachhang kh)
+        {
+            _context.Khachhang.Add(kh);
+            _context.SaveChanges();
+        }
+        public void TaoHoaDonHangThang()
+        {
+            var hopdong = GetAllHopDong();
+
+        }
+        public Hoadon TimHoaDonTheoMaKH(string ma)
+        {
+            //var re = from hoadon in _context.Hoadon
+            //         where hoadon.Makh == ma
+            //         orderby hoadon.Ngayin descending
+            //         select hoadon;
+            //return re.First();
+
+            return _context.Hoadon.First(i => i.Makh == ma);
+        }
+        public IQueryable<HopDongViewModel> GetHopDongToiHan()
+        {
+            var re = (from hopdong in _context.Phieudangky
+                      join khachhang in _context.Khachhang
+                      on hopdong.Makh equals khachhang.Makh
+                      join goicuoc in _context.Goicuoc
+                      on hopdong.Magc equals goicuoc.Magc
+                      join loaitt in _context.Loaithanhtoan
+                      on hopdong.Loaitt equals loaitt.Maloai
+                      where hopdong.Ngad < DateTime.Now
+                      select new HopDongViewModel
+                      {
+                          mahd = hopdong.Maphieu,
+                          ngdk = hopdong.Ngdk,
+                          ngad = hopdong.Ngad,
+                          doituong = hopdong.Doituong,
+                          dccaidat = hopdong.Dccaidat,
+                          taikhoan = hopdong.Taikhoan,
+                          matkhau = hopdong.Matkhau,
+                          loaitt = hopdong.Loaitt,
+                          tenloaitt = loaitt.Tenloai,
+                          tinhtrang = hopdong.Tinhtrang,
+                          makh = hopdong.Makh,
+                          tenkh = khachhang.Hoten,
+                          magc = hopdong.Magc,
+                          tengc = goicuoc.Tengc
+                      }).ToList();
+
+            foreach (var item in re)
+            {
+                if (TimHoaDonTheoMaKH(item.makh) == null && DateTime.Now.Subtract(item.ngad).TotalDays < 25)
+                {
+                    re.Remove(item);
+                }
+                else
+                {
+                    if (DateTime.Now.Subtract(TimHoaDonTheoMaKH(item.makh).Ngayin).TotalDays < 25)
+                    {
+                        re.Remove(item);
+                    }
+                }
+                
+            }
+            var res = re.AsQueryable();
+            return res;
         }
     }
 }

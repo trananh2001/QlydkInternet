@@ -19,5 +19,12 @@ namespace QlydkInternet.Services
         KhuyenMaiViewModel TimKhuyenMaiTheoMa(string ma);
         void TaoKhuyenMai(Khuyenmai km);
         HopDongViewModel TimHopDongTheoMa(string ma);
+        void TaoHopDong(Phieudangky hd);
+        void TaoKhachHang(Khachhang kh);
+        IEnumerable<Loaithanhtoan> GetAllLoaiThanhToan();
+        IEnumerable<Goicuoc> GetAllGC();
+        void TaoHoaDonHangThang();
+        IQueryable<HopDongViewModel> GetHopDongToiHan();
+        Hoadon TimHoaDonTheoMaKH(string ma);
     }
 }

@@ -25,7 +25,8 @@ namespace QlydkInternet.Controllers
                                                int? firstShowedPage, int? lastShowedPage)
         {
             var goicuoc = services.GetAllGoiCuoc();
-            int pageSize = 8;
+            goicuoc = goicuoc.OrderByDescending(c => c.magc);
+            int pageSize = 10;
             int numberOfDisplayPages = 5;
             // page = 1;
             var result = await PaginatedList<GoiCuocViewModel>.
@@ -48,7 +49,7 @@ namespace QlydkInternet.Controllers
         public async Task<IActionResult> Create(string tengc, string loaigc, string tocdo, decimal giacuoc, string mota)
         {
             Goicuoc goicuoc = new Goicuoc();
-            goicuoc.Magc = "GC"+DateTime.Now.ToString("dd") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            goicuoc.Magc = "GC"+DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
             goicuoc.Tengc = tengc;
             goicuoc.Loaigc = loaigc;
             goicuoc.Tocdo = tocdo;

@@ -21,7 +21,7 @@ namespace QlydkInternet.Controllers
                                                int? firstShowedPage, int? lastShowedPage)
         {
             var goicuoc = services.GetAllHoaDon();
-            int pageSize = 8;
+            int pageSize = 10;
             int numberOfDisplayPages = 5;
             // page = 1;
             var result = await PaginatedList<HoaDonViewModel>.
@@ -34,6 +34,19 @@ namespace QlydkInternet.Controllers
         public IActionResult ChiTiet()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Create(int? page, int? firstShowedPage, int? lastShowedPage)
+        {
+            var hopdong = services.GetHopDongToiHan();
+            int pageSize = 10;
+            int numberOfDisplayPages = 5;
+            hopdong = hopdong.OrderByDescending(c => c.ngad);
+            var result = await PaginatedList<HopDongViewModel>.
+                        CreateAsync(hopdong, page ?? 1, pageSize,
+                                    numberOfDisplayPages,
+                                    firstShowedPage, lastShowedPage);
+            return View(result);
         }
     }
 }

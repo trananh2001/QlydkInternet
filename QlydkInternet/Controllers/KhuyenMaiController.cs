@@ -24,12 +24,13 @@ namespace QlydkInternet.Controllers
         public async Task<IActionResult> Index(int? page,
                                                int? firstShowedPage, int? lastShowedPage)
         {
-            var goicuoc = services.GetAllKhuyenMai();
-            int pageSize = 8;
+            var km = services.GetAllKhuyenMai();
+            km = km.OrderByDescending(c => c.ngbd);
+            int pageSize = 10;
             int numberOfDisplayPages = 5;
             // page = 1;
             var result = await PaginatedList<KhuyenMaiViewModel>.
-                        CreateAsync(goicuoc, page ?? 1, pageSize,
+                        CreateAsync(km, page ?? 1, pageSize,
                                     numberOfDisplayPages,
                                     firstShowedPage, lastShowedPage);
             return View(result);
@@ -50,7 +51,7 @@ namespace QlydkInternet.Controllers
         public async Task<IActionResult> Create(string tenkm, string loaikm, string loaigc,string ngbd, string ngkt, int trigia, string mota)
         {
             Khuyenmai km = new Khuyenmai();
-            km.Makm = "KM"+ DateTime.Now.ToString("dd") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            km.Makm = "KM"+ DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
             km.Tenkm = tenkm;
             km.Loaikm = loaikm;
             km.Loaigc = loaigc;
