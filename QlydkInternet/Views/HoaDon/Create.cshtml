@@ -75,6 +75,10 @@
 
 <script>
     $(document).ready(function () {
+        $("#btnXoa").on("click", function () {
+            var url = '@Url.Action("Index","HoaDon")';
+            window.location = url;
+        })
         $('#btnThem').on("click", function () {
             $("#mahd").val($("#temp").val())
             var url = $("#createform").attr("action");

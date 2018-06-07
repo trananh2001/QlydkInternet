@@ -159,6 +159,10 @@
 
 <script>
     $(document).ready(function () {
+        $("#btnXoa").on("click", function () {
+            var url = '@Url.Action("Index","HopDong")';
+            window.location = url;
+        })
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1; //January is 0!

@@ -84,11 +84,15 @@
            value="@Model.makm">
     <div class="ui center aligned segment" style="border:none; box-shadow:none">
         <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:11%">Chỉnh sửa</button>
-        <div class="ui reset toggle button" id="btnXoa" style="width:11%">Hủy</div>
+        <div class="ui reset toggle button" id="btnXoa" style="width:11%">Quay lại</div>
     </div>
 </form>
 <script>
     $(document).ready(function () {
+        $("#btnXoa").on("click", function () {
+            var url = '@Url.Action("Index","KhuyenMai")';
+            window.location = url;
+        })
         $("#qlkm").addClass("ui active");
     })
 </script>

@@ -4,12 +4,12 @@
 }
 
 @section menu{
-    
+
 }
 
 <h2>Chi tiết hóa đơn</h2>
 
-<div class="ui centered grid equal width" style="width:100%;">
+<div class="ui centered grid equal width" style="width:100%;" id="print">
     <div class="sixteen wide column">
         <h3 class="ui dividing teal header"></h3>
     </div>
@@ -24,6 +24,20 @@
             <h3 class="ui dividing header">
                 Tên khách hàng
                 <div class="sub header" style="font-size:2rem">@Model.tenkh</div>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <h3 class="ui dividing header">
+                Số điện thoại
+                <div class="sub header" style="font-size:2rem">@Model.sdt</div>
+            </h3>
+        </div>
+        <div class="column">
+            <h3 class="ui dividing header">
+                Email
+                <div class="sub header" style="font-size:2rem">@Model.email</div>
             </h3>
         </div>
     </div>
@@ -50,29 +64,115 @@
                     {
                         @Model.ngthanhtoan.Value.ToString("dd/MM/yyyy");
                     }
-                    <input type="hidden" 
+                    <input type="hidden"
                            value="@if (@Model.ngthanhtoan.HasValue)
                             {
                             @Model.ngthanhtoan.Value.ToString("dd/MM/yyyy");
                             }"
-                           id="ngtt"/>
+                           id="ngtt" />
                 </div>
             </h3>
         </div>
+
         <div class="column">
             <h3 class="ui dividing header">
-                Hạn hóa đơn
+                Hạn thanh toán
                 <div class="sub header" style="font-size:2rem">@Model.hanhoadon.ToString("dd/MM/yyyy")</div>
             </h3>
         </div>
     </div>
+    <div class="row">
+        <div class="column" id="tenncc">
+            <h3 class="ui dividing header">
+                Địa chỉ
+                <div class="sub header" style="font-size:2rem">@Model.diachi</div>
+            </h3>
+        </div>
+    </div>
 </div>
+
+
+<form class="ui form" asp-controller="HoaDon" asp-action="ThanhToan" method="get" id="createform" style="width:100%">
+    <input class="prompt"
+           type="hidden"
+           asp-for="@Model.sohd"
+           placeholder="Tên gói cước"
+           value="@Model.sohd">
+
+    <div class="ui center aligned segment" style="border:none; box-shadow:none">
+        <div class="ui reset button" id="btnPrint" style="width:11%">In</div>
+        @if (!@Model.ngthanhtoan.HasValue)
+    {
+        <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:11%">Thanh Toán</button>
+}
+
+        <div class="ui reset toggle button" id="btnXoa" style="width:11%">Quay lại</div>
+    </div>
+</form>
+
 <script>
     $(document).ready(function () {
+        $("#btnPrint").on("click", function () {
+            var divContents = $("#print").html();
+            var printWindow = window.open('', '', 'height=720,width=1280');
+            printWindow.document.write('<html><head><title></title>');
+            printWindow.document.write('<link href=\"https:\//cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css"/></head><body >');
+            
+            printWindow.document.write('<div class="ui centered grid equal width" style="width:100%; margin:0">');
+            printWindow.document.write('<h2 class="ui header">Cước dịch vụ Internet tháng '+@DateTime.Now.ToString("MM")+'/'+@DateTime.Now.ToString("yyyy"));
+            printWindow.document.write('</h2>');
+            printWindow.document.write(divContents);
+
+            printWindow.document.write('</div>');
+            printWindow.document.write('<div class="ui centered grid equal width" style="width:100%;margin:0">');
+            printWindow.document.write('<div class="sixteen wide column">');
+            printWindow.document.write('<h3 class="ui dividing teal header"></h3>');
+            printWindow.document.write('</div>');
+            printWindow.document.write('<div class="row">');
+            printWindow.document.write('<div class="column">');
+            printWindow.document.write('<h3 class="ui dividing header">Người nộp ký tên');
+            printWindow.document.write('</h3>');
+            printWindow.document.write(' </div>');
+            printWindow.document.write('<div class="column">');
+            printWindow.document.write('<h3 class="ui dividing header">Ngày......tháng......năm......');
+            printWindow.document.write('</h3>');
+            printWindow.document.write(' </div>');
+            printWindow.document.write(' </div>');
+
+            printWindow.document.write('<div class="row">');
+            printWindow.document.write('<div class="column">');
+            printWindow.document.write('<h3 class="ui header">');
+            printWindow.document.write('</h3>');
+            printWindow.document.write(' </div>');
+            printWindow.document.write('<div class="column">');
+            printWindow.document.write('<h3 class="ui dividing header">Nhân viên giao dịch');
+            printWindow.document.write('</h3>');
+            printWindow.document.write(' </div>');
+            printWindow.document.write(' </div>');
+            
+            
+                
+
+            printWindow.document.write('</div>');
+            printWindow.document.write('</body></html>');
+
+            printWindow.document.close();
+            printWindow.print();
+
+
+
+
+        });
         if ($("#ngtt").val() == "") {
             document.getElementById('ngthanhtoan').innerHTML = "Chưa thanh toán"
-            $("#ngthanhtoan").css("color","red")
+            $("#ngthanhtoan").css("color", "red")
+
         }
+
+        $("#btnXoa").on("click", function () {
+            var url = '@Url.Action("Index","HoaDon")';
+            window.location = url;
+        })
         $("#qlhdon").addClass("ui active");
     })
 </script>

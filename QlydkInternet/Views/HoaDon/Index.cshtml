@@ -8,8 +8,20 @@
 
 }
 
-<h2>Danh sách hóa đơn</h2>
 
+
+<div class="row">
+    <div class="three wide column"></div>
+    <div class="ten wide column">
+        <h2 style="text-align:center">Danh sách hóa đơn</h2>
+    </div>
+    <div class="three wide column">
+        <div class="ui icon input">
+            <i class="search icon"></i>
+            <input type="text" placeholder="Số hóa đơn" id="search">
+        </div>
+    </div>
+</div>
 <div class="row" id="context">
     <div class="sixteen wide column" style="padding:0">
         <table class="ui selectable teal table">
@@ -51,20 +63,20 @@
                             @customer.ngin.ToString("dd/MM/yyyy")
                         </td>
                         <td style="padding-left: 11px">
-                                @if (customer.ngthanhtoan.HasValue)
-                                {
-                                    <div class="ui green horizontal label">
-                                        @customer.ngthanhtoan.Value.ToString("dd/MM/yyyy")
-                                    </div>
+                            @if (customer.ngthanhtoan.HasValue)
+                            {
+                                <div class="ui green horizontal label">
+                                    @customer.ngthanhtoan.Value.ToString("dd/MM/yyyy")
+                                </div>
 
-                                }
-                                @if (!customer.ngthanhtoan.HasValue)
-                                {
-                                    <div class="ui red horizontal label">
-                                        Chưa thanh toán
-                                    </div>
-                                   
-                                }
+                            }
+                            @if (!customer.ngthanhtoan.HasValue)
+                            {
+                                <div class="ui red horizontal label">
+                                    Chưa thanh toán
+                                </div>
+
+                            }
                         </td>
                         <td style="padding-left: 11px">
                             @(((int)customer.trigia).ToString("N0") + " ₫")
@@ -89,7 +101,16 @@
 <script>
     $(document).ready(function () {
         $("#qlhdon").addClass("ui active");
+        $("#search").keypress(function (event) {
+            if (event.which == 13) {
 
+                var keyword = $(this).val();
+                alert(keyword)
+            var url = '@Url.Action("TimKiem","HoaDon")';
+
+            window.location = url + "?sohd=" + keyword;
+            }
+        })
     })
 </script>
 

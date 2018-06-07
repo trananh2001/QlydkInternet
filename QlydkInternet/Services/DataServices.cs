@@ -16,6 +16,13 @@ namespace QlydkInternet.Services
         {
             _context = context;
         }
+
+        public void ThanhToanHoaDon(string mahdon)
+        {
+            var hoadon = _context.Hoadon.Where(m => m.Sohd == mahdon).FirstOrDefault();
+            hoadon.Ngaythanhtoan = DateTime.Now;
+            _context.SaveChanges();
+        }
         public decimal doanhthu(int month)
         {
             decimal re = 0;
@@ -347,7 +354,11 @@ namespace QlydkInternet.Services
                          tenkh = kh.Hoten,
                          manv = hoadon.Manv,
                          tennv = nv.Hoten,
-                         hanhoadon = hoadon.Hanhoadon
+                         hanhoadon = hoadon.Hanhoadon,
+                         diachi = kh.Diachi,
+                         cmnd = kh.Cmnd,
+                         email = kh.Email,
+                         sdt = kh.Sdt
                      };
             return re.First();
         }

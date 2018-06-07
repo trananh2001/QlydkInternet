@@ -47,6 +47,8 @@ namespace QlydkInternet.Controllers
                 //tk.time = DateTime.Now;
                 string year = DateTime.Now.ToString("yyyy");
                 tk.time = DateTime.Parse(year + "-" + m + "-01");
+                dthu.tongdangky += tk.sodangkymoi;
+                dthu.tongdoanhthu += tk.doanhthu;
                 dthu.thongke.Add(tk);
             }
             return View(dthu);

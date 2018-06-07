@@ -42,6 +42,18 @@ namespace QlydkInternet.Controllers
             var hoadon = services.TimHoaDon(id);
             return View(hoadon);
         }
+        public async Task<IActionResult> TimKiem(string sohd)
+        {
+            
+            return RedirectToAction("Details", new RouteValueDictionary(
+                new { controller = "HoaDon", action = "Main", id = sohd }));
+        }
+        public async Task<IActionResult> ThanhToan(string sohd)
+        {
+            services.ThanhToanHoaDon(sohd);
+            return RedirectToAction("Details", new RouteValueDictionary(
+                new { controller = "HoaDon", action = "Main", id = sohd }));
+        }
         public async Task<IActionResult> TaoHoaDon(string id)
         {
             string mahoadon = "HDT" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");

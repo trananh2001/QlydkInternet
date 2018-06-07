@@ -124,7 +124,10 @@
 <script>
 
     $(document).ready(function () {
-
+        $("#btnXoa").on("click", function () {
+            var url = '@Url.Action("Index","KhuyenMai")';
+            window.location = url;
+        })
         $('#rangestart').calendar({
             type: 'date',
             endCalendar: $('#rangeend'),

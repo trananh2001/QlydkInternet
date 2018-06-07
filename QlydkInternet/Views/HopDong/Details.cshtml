@@ -4,7 +4,7 @@
 }
 
 @section menu{
-   
+
 }
 
 <h2>Chi tiết hợp đồng</h2>
@@ -51,8 +51,8 @@
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
-                Tình trạng
-                <div class="sub header" style="font-size:2rem">@Model.tinhtrang</div>
+                Địa chỉ thanh toán
+                <div class="sub header" style="font-size:2rem">@Model.dchoadon</div>
             </h3>
         </div>
     </div>
@@ -70,10 +70,48 @@
             </h3>
         </div>
     </div>
+    
+</div>
+
+<h2>Thông tin khách hàng</h2>
+
+<div class="ui centered grid equal width" style="width:100%;">
+    <div class="sixteen wide column">
+        <h3 class="ui dividing teal header"></h3>
+    </div>
+    <div class="row">
+        <div class="column">
+            <h3 class="ui dividing header">
+                Chứng minh nhân dân
+                <div class="sub header" style="font-size:2rem">@Model.cmnd</div>
+            </h3>
+        </div>
+        <div class="column">
+            <h3 class="ui dividing header">
+                Số điện thoại
+                <div class="sub header" style="font-size:2rem">@Model.sdt</div>
+            </h3>
+        </div>
+    </div>
     <div class="row">
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
-                Tài khoản
+                Ngày sinh
+                <div class="sub header" style="font-size:2rem">@Model.ngsinh</div>
+            </h3>
+        </div>
+        <div class="column" id="tenncc">
+            <h3 class="ui dividing header">
+                Địa chỉ
+                <div class="sub header" style="font-size:2rem">@Model.diachi</div>
+            </h3>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="column" id="tenkhachhang">
+            <h3 class="ui dividing header">
+                Tên đăng nhập
                 <div class="sub header" style="font-size:2rem">@Model.taikhoan</div>
             </h3>
         </div>
@@ -81,6 +119,20 @@
             <h3 class="ui dividing header">
                 Mật khẩu
                 <div class="sub header" style="font-size:2rem">@Model.matkhau</div>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column" id="tenkhachhang">
+            <h3 class="ui dividing header">
+                Nghề nghiệp
+                <div class="sub header" style="font-size:2rem">@Model.nghenghiep</div>
+            </h3>
+        </div>
+        <div class="column" id="tenncc">
+            <h3 class="ui dividing header">
+                Email
+                <div class="sub header" style="font-size:2rem">@Model.email</div>
             </h3>
         </div>
     </div>
@@ -93,11 +145,15 @@
            value="@Model.mahd">
     <div class="ui center aligned segment" style="border:none; box-shadow:none">
         <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:11%">Chỉnh sửa</button>
-        <div class="ui reset toggle button" id="btnXoa" style="width:11%">Hủy</div>
+        <div class="ui reset toggle button" id="btnXoa" style="width:11%">Quay lại</div>
     </div>
 </form>
 <script>
     $(document).ready(function () {
+        $("#btnXoa").on("click", function () {
+            var url = '@Url.Action("Index","HopDong")';
+            window.location = url;
+        })
         $("#qlhd").addClass("ui active");
     })
 </script>
