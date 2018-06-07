@@ -3,42 +3,227 @@
     ViewData["Title"] = "Home Page";
 }
 <style>
+    .ui.main.grid {
+        left: 14px;
+        position: relative;
+        width: 100%;
+    }
     .section {
         padding-bottom: 31px;
         padding-top: 31px;
         width: 100%;
     }
+    .ui.container {
+        margin-left: unset;
+        margin-right: unset;
+        width: unset;
+    }
+    .tieude {
+        color: #fd6436;
+    }
+    .bluehead {
+        color: #035690;
+    }
+    .para {
+        text-align: justify;
+        font-size: 25px;
+    }
+    .leftalign {
+        text-align: left;
+    }
 </style>
+<link rel="stylesheet" href="~/lib/slide/slide.css">
+
 
 <a class="anchor" id="banner1"></a>
-<div class="section">
-    <img class="ui image" src="~/images/3.jpg">
+@*
+    slider
+*@
+<div class="section" style="padding:0">
+    @*<img class="ui image" src="~/images/3.jpg">*@
+    <div class="ui text container slides" style="padding:0;margin:0;height:100%;background:#ddd;">
+        <i class="big left angle icon"></i>
+        <i class="big right angle icon"></i>
+        <div class="slide active" style="padding:0;height:100%">
+            <img class="ui image" src="~/images/slide1.jpg">
+        </div>
+        <div class="slide">
+            <img class="ui image" src="~/images/slide2.jpg">
+        </div>
+        <div class="slide">
+            <img class="ui image" src="~/images/slide4.jpg">
+        </div>
+    </div>
 </div>
 
+
 <a class="anchor" id="khuyenmai"></a>
-<div class="section">
-    <h2>KHUYẾN MÃI</h2>
+@*
+    khuyến mãi
+*@
+<div class="section" style="padding:7%;padding-top:5%;padding-bottom:4%">
+    <h2 class="tieude">KHUYẾN MÃI</h2>
+    <div class="ui three column grid">
+        <div class="column">
+            <div class="ui segment">
+                <img class="ui image km" src="~/images/km01.jpg">
+            </div>
+            <h2>TỐC ĐỘ CỰC CAO GIÁ CỰC SỐC</h2>
+        </div>
+        <div class="column">
+            <div class="ui segment">
+                <img class="ui image km" src="~/images/km02.jpg">
+            </div>
+            <h2>COMBO GIÁ SỐC</h2>
+        </div>
+        <div class="column">
+            <div class="ui segment">
+                <img class="ui image km" src="~/images/km03.jpg">
+            </div>
+            <h2>MIỄN PHÍ LẮP ĐẶT TRONG THÁNG 8</h2>
+        </div>
+    </div>
 </div>
 
 <a class="anchor" id="goicuoc"></a>
-<div class="section">
-    <h2>GÓI CƯỚC</h2>
+
+@*
+    gói cước
+*@
+<div class="section" style="padding:7%;padding-top:5%;padding-bottom:1%">
+    <h2 class="tieude">GÓI CƯỚC</h2>
+    <div class="ui three column grid">
+        <div class="column">
+            <div class="ui circular segment" style="padding:3%">
+                <img class="ui circular image gc" src="~/images/gc1.jpg">
+            </div>
+            <h2>GÓI CƯỚC F3</h2>
+        </div>
+        <div class="column">
+            <div class="ui circular segment" style="padding:3%">
+                <img class="ui circular image gc" src="~/images/gc2.jpg">
+            </div>
+            <h2>GÓI CƯỚC F4</h2>
+        </div>
+        <div class="column">
+            <div class="ui circular segment" style="padding:3%">
+                <img class="ui circular image gc" src="~/images/gc3.jpg">
+            </div>
+            <h2>GÓI CƯỚC HOME</h2>
+        </div>
+    </div>
 </div>
 
-<a class="anchor" id="tuyendung"></a>
-<div class="section">
-    <h2>TUYỂN DỤNG</h2>
-</div>
+<a class="anchor" id="info"></a>
 
-<a class="anchor" id="hotro"></a>
-<div class="section">
-    <h2>HỖ TRỢ</h2>
+@*
+    info
+*@
+<div class="section" style="padding:7%;padding-top:5%;padding-bottom:1%">
+    <h2 class="tieude">VỀ TDDN INTERNET PROVIDER</h2>
+    <p class="para">
+        Là thành viên thuộc Tập đoàn công nghệ hàng đầu Việt Nam FPT
+        <br />
+        Công ty Cổ phần Viễn thông FPT (tên gọi tắt là FPT Telecom) hiện là một trong những nhà cung cấp dịch vụ viễn thông và Internet có uy tín và được khách hàng yêu mến tại Việt Nam và Khu vực.
+
+        Thành lập ngày 31/01/1997, khởi nguồn từ Trung tâm Dịch vụ Trực tuyến do 4 thành viên sáng lập cùng sản phẩm mạng Intranet đầu tiên của Việt Nam mang tên “Trí tuệ Việt Nam – TTVN”, sản phẩm được coi là đặt nền móng cho sự phát triển của Internet tại Việt Nam.
+    </p>
+    <div class="ui three column grid">
+        <div class="column">
+        </div>
+        <div class="column">
+            <img class="ui image" src="~/images/info.jpg">
+        </div>
+        <div class="column">
+
+        </div>
+    </div>
+    <p class="para">
+        Với sứ mệnh tiên phong đưa Internet đến với người dân Việt Nam và mong muốn mỗi gia đình Việt Nam đều sử dụng ít nhất một dịch vụ của FPT Telecom, đồng hành cùng phương châm "Khách hàng là trọng tâm", chúng tôi không ngừng nỗ lực đầu tư hạ tầng, nâng cấp chất lượng sản phẩm – dịch vụ, tăng cường ứng dụng công nghệ mới để mang đến cho khách hàng những trải nghiệm sản phẩm dịch vụ vượt trội.
+    </p>
 </div>
 
 <a class="anchor" id="dangky"></a>
-<div class="section">
-    <h2>ĐĂNG KÝ</h2>
+
+@*
+    đăng ký
+*@
+<div class="section" style="padding:7%;padding-top:5%;padding-bottom:4%">
+    <h2 class="tieude">DANH SÁCH ĐIỂM GIAO DỊCH</h2>
+    <div class="ui two column grid">
+        <div class="row" style="padding-left:20px">
+            <div class="column">
+                <h2 class="leftalign bluehead">
+                    113 Nguyễn Tất Thành, Phường Phước Nguyên, Bà Rịa Vũng Tàu
+                </h2>
+                <h3 class="leftalign">
+                    Địa chỉ: 113 Nguyễn Tất Thành, Phường Phước Nguyên, Bà Rịa Vũng Tàu
+                </h3>
+                <h3 class="leftalign">
+                    Điện thoại: 19006600
+                </h3>
+                <h3 class="leftalign">
+                    Giờ làm việc: 8h00 - 17h30
+                </h3>
+            </div>
+            <div class="column">
+                <h2 class="leftalign bluehead">
+                    219 Đường 27 Tháng 4, Thị trấn phước Bửu, Huyện Xuyên Mộc, Bà Rịa Vũng Tàu
+                </h2>
+                <h3 class="leftalign">
+                    Địa chỉ: 219 Đường 27 Tháng 4, Thị trấn phước Bửu, Huyện Xuyên Mộc, Bà Rịa Vũng Tàu
+                </h3>
+                <h3 class="leftalign">
+                    Điện thoại: 19006600
+                </h3>
+                <h3 class="leftalign">
+                    Giờ làm việc: 8h00 - 17h30
+                </h3>
+            </div>
+        </div>
+        <div class="row" style="padding-left:20px">
+            <div class="column">
+                <h2 class="leftalign bluehead">
+                    408B Lê Hồng Phong, Phường Thắng Tam, Tp. Vũng tàu
+                </h2>
+                <h3 class="leftalign">
+                    Địa chỉ: 408B Lê Hồng Phong, Phường Thắng Tam, Tp. Vũng tàu
+                </h3>
+                <h3 class="leftalign">
+                    Điện thoại: 19006600
+                </h3>
+                <h3 class="leftalign">
+                    Giờ làm việc: 8h00 - 17h30
+                </h3>
+            </div>
+
+            <div class="column">
+                <h2 class="leftalign bluehead">
+                    48 Lê Hồng Phong, Thị trấn Ngãi Giao, Huyện Châu Đức, Bà Rịa Vũng Tàu
+                </h2>
+                <h3 class="leftalign">
+                    Địa chỉ: 48 Lê Hồng Phong, Thị trấn Ngãi Giao, Huyện Châu Đức, Bà Rịa Vũng Tàu
+                </h3>
+                <h3 class="leftalign">
+                    Điện thoại: 19006600
+                </h3>
+                <h3 class="leftalign">
+                    Giờ làm việc: 8h00 - 17h30
+                </h3>
+
+            </div>
+        </div>
+    </div>
 </div>
 
-
-
+<script src="~/lib/slide/slide.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.ui.image.km').hover(function () {
+            $(this).transition('tada');
+        }, function () { });
+        $('.ui.image.gc').hover(function () {
+            $(this).transition('bounce');
+        }, function () { });
+    });
+</script>

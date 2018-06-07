@@ -9,7 +9,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Internet Service Provider</title>
-
+    <style>
+        .tde {
+            color: #fd6436;
+            text-align:left;
+        }
+        .lea{
+            text-align:left;
+        }
+    </style>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -25,7 +33,7 @@
     </environment>
     <script>
         $(document).ready(function () {
-            $('.ui.secondary.inverted.pointing.menu').on('click', '.item', function () {
+            $('.ui.pointing.menu').on('click', '.item', function () {
                 if (!$(this).hasClass('dropdown')) {
                     $(this)
                         .addClass('active')
@@ -38,26 +46,21 @@
     </script>
 </head>
 <body>
-    @*<div class="pusher">*@
-    <div class="ui top attached purple progress">
-        <div class="bar"></div>
-    </div>
+    <div class="pusher">
 
     @*<div class="ui grid container">*@
     <div class="ui main centered stackable grid" style="margin-top: 0;">
         <!-- Responsive top menu -->
-            <div class="ui fixed inverted secondary pointing menu responsive" style="height: 8%; background: black;">
+            <div class="ui fixed pointing text menu responsive" style="height: 8%;">
                 <div class="center menu" style="margin-left: 107px;">
-                    <div class="item">
-                        <h2>TDNV - ISP</h2>
-                    </div>
+                    <a class="active item" href="#banner1">
+                        <h2 style="color:#fd6436; font-size:303%">TDDN - ISP</h2>
+                    </a>
 
-                    <a class="active item" href="#banner1">Banner1</a>
-                    <a class="item" href="#khuyenmai">Khuyến mãi</a>
-                    <a class="item" href="#goicuoc">Gói cước</a>
-                    <a class="item" href="#tuyendung">Tuyển dụng</a>
-                    <a class="item" href="#hotro">Hỗ trợ</a>
-                    <a class="item" href="#dangky">Đăng ký dịch vụ</a>
+                    <a class="item" href="#khuyenmai" style="font-size:150%">Khuyến mãi</a>
+                    <a class="item" href="#goicuoc" style="font-size:150%">Gói cước</a>
+                    <a class="item" href="#info" style="font-size:150%" >Về chúng tôi</a>
+                    <a class="item" href="#dangky" style="font-size:150%">Đăng ký dịch vụ</a>
                 </div>
                 </div>
             @RenderBody()
@@ -65,21 +68,61 @@
         <!--Footer-->
         <div class="ui black inverted vertical footer segment">
             <div class="ui center aligned grid" style="margin-left: 107px;margin-right: 107px;">
-                <div class="three wide column">
-                    <h4>2017 - UIT Bank</h4>
+                <div class="four wide column">
+                    <h2 class="tde">
+                        Về TDDN
+                    </h2>
+                    <p class="lea">
+                        Giới thiệu chung
+                    </p>
+                    <p class="lea">
+                        Liên kết - Thành viên
+                    </p>
+                    <p class="lea">
+                        Khách hàng - Đối tác
+                    </p>
+                    <p class="lea">
+                        Quan hệ cổ đông
+                    </p>
                 </div>
-                <div class="three wide column">
-                    <h4>2017 - UIT Bank</h4>
+                <div class="four wide column">
+                    <h2 class="tde">
+                        Khách hàng TDDN
+                    </h2>
+                    <p class="lea">
+                        Hướng dẫn sử dụng dịch vụ
+                    </p>
+                    <p class="lea">
+                        Hỗ trợ kỹ thuật
+                    </p>
+                    <p class="lea">
+                        Thanh toán cước
+                    </p>
+                    <p class="lea">
+                        Góp ý khách hàng
+                    </p>
                 </div>
-                <div class="seven wide right floated column">
-                    <h4>2017 - UIT Bank</h4>
-                    <p>Quarter 6, Linh Trung Ward, Thu Duc Dist, Ho Chi Minh city</p>
-                    <p> Tel: (08) 372 52002 Fax: (08) 372 52148</p>
+                <div class="six wide right floated column">
+                    <h2 class="tde">
+                        Chưa là khách hàng của TDDN
+                    </h2>
+                    <p class="lea">
+                        Đăng ký Online
+                    </p>
+                    <p class="lea">
+                        Sản phẩm dịch vụ
+                    </p>
+                    <p class="lea">
+                        Khuyến mại
+                    </p>
+                    <p class="lea">
+                        Tìm điểm giao dịch
+                    </p>
                 </div>
             </div>
         </div>
         @*</div>*@
-        @*</div>*@
+        </div>
 
 </body>
 

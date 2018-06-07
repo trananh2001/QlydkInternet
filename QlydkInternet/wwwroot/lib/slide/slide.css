@@ -1,0 +1,100 @@
+body {
+  background: gainsboro;
+  margin-top:-32px;
+}
+.ui.pointing.menu .active.item:after, .ui.pointing.menu .active.item:hover:after, .ui.vertical.pointing.menu .active.item:after, .ui.vertical.pointing.menu .active.item:hover:after {
+    background-color: #171515;
+}
+.ui.pointing.menu .item:after {
+    border-bottom: #171515;
+    border-right: #171515;
+}
+    .ui.text.container {
+    max-width: unset!important;
+}
+body h1 {
+  font-size: 5vw;
+}
+body p > code {
+  background: linen;
+  border-radius: 3px;
+  color: dimgrey;
+  margin: 0 .1em;
+  padding: .1em .2em;
+  text-shadow: none;
+}
+.slide.active{
+    padding:0!important;
+}
+.slides {
+  background: white;
+  height: 20rem;
+  width: 100%;
+  overflow: hidden;
+}
+.slides .angle {
+  color: black;
+  cursor: pointer;
+  position: relative;
+  top: calc(50% - 20px);
+  transform: scale(1);
+  transition: all .2s ease-in-out;
+  z-index: 10;
+}
+.slides .angle:hover {
+  transform: scale(1.7);
+}
+.slides .angle.right {
+  float: right;
+  margin-right: 1rem;
+}
+.slides .angle.left {
+  float: left;
+  margin-left: 1rem;
+}
+.slides .slide {
+  height: 100%;
+  padding: 2rem 5rem;
+  transition: all .2s ease-in-out;
+}
+.slides .slide:not(.active) {
+  display: none;
+}
+.slides .slide.inverted {
+  color: white;
+}
+.slides .slide.shadow {
+  text-shadow: 1px 1px 2px black;
+}
+    .slides .slide.image {
+        background: url("https://c1.staticflickr.com/8/7371/12387240074_536af0b877.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+.slides .slide.salmon {
+  background: salmon;
+}
+
+.faded {
+  animation: fade .5s;
+}
+
+.blurred {
+  animation: blur .4s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opcity: 1;
+  }
+}
+@keyframes blur {
+  from {
+    filter: blur(5px);
+  }
+  to {
+    filter: blur(0);
+  }
+}
