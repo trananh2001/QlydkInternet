@@ -5,53 +5,7 @@
 }
 
 @section menu{
-<div class="ui left fixed vertical inverted menu" id="controller-menu">
-    <a class=" item" asp-controller="Dashboard" asp-action="Index">
-        <span><i class="home icon"></i>DASHBOARD</span>
-    </a>
-    <a class="item" id="qlhd">
-        <span><i class="users icon"></i>QUẢN LÝ HỢP ĐỒNG</span>
-    </a>
-    <a id="dshd" asp-controller="HopDong" asp-action="Index" class="item" style="padding-left: 25px">
-        <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hợp đồng</span>
-    </a>
-    <a id="taohd" asp-controller="HopDong" asp-action="Create" class="item" style="padding-left: 25px">
-        <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hợp đồng</span>
-    </a>
-    <a class="item" id="qlgc">
-        <span><i class="add to cart icon"></i>QUẢN LÝ GÓI CƯỚC</span>
-    </a>
-    <a id="dsgc" asp-controller="GoiCuoc" asp-action="Index" class="item" style="padding-left: 25px">
-        <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách gói cước</span>
-    </a>
-    <a id="taogc" asp-controller="GoiCuoc" asp-action="Create" class="item" style="padding-left: 25px">
-        <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo gói cước</span>
-    </a>
-    <a id="qlkm" class="item">
-        <span><i class="file text icon"></i>QUẢN LÝ KHUYẾN MÃI</span>
-    </a>
-    <a id="dskm" asp-controller="KhuyenMai" asp-action="Index" class="ui active item" style="padding-left: 25px">
-        <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách khuyến mãi</span>
-    </a>
-    <a id="taokm" asp-controller="KhuyenMai" asp-action="Create" class="item" style="padding-left: 25px">
-        <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo khuyến mãi</span>
-    </a>
-    <a id="qlhdon" class="item">
-        <span><i class="database icon"></i>QUẢN LÝ HÓA ĐƠN</span>
-    </a>
-    <a id="dshdon" asp-controller="HoaDon" asp-action="Index" class="item" style="padding-left: 25px">
-        <span><i class="circle icon" style="font-size: 0.5em"></i>Danh sách hóa đơn</span>
-    </a>
-    <a id="taohdon" asp-controller="HoaDon" asp-action="Create" class="item" style="padding-left: 25px">
-        <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hóa đơn</span>
-    </a>
-    <a class="item" asp-controller="BaoCao" asp-action="Index">
-        <span><i class="area chart layout icon"></i>BÁO CÁO</span>
-    </a>
-    <a class="item" asp-controller="Admin" asp-action="Index">
-        <span><i class="spy icon"></i>ADMIN</span>
-    </a>
-</div>
+
 }
 
 <h2>Danh sách khuyến mãi</h2>
@@ -121,55 +75,7 @@
 
 <script>
     $(document).ready(function(){
-        document.getElementById("dshd").style.display = "none";
-        document.getElementById("dsgc").style.display = "none";
-        document.getElementById("dshdon").style.display = "none";
-        document.getElementById("taohd").style.display = "none";
-        document.getElementById("taogc").style.display = "none";
-        document.getElementById("taohdon").style.display = "none";
-        $("#qlhd").click(function () {
-            if (document.getElementById("dshd").style.display === "block") {
-                document.getElementById("dshd").style.display = "none";
-                document.getElementById("taohd").style.display = "none";
-            }
-            else {
-                document.getElementById("dshd").style.display = "block";
-                document.getElementById("taohd").style.display = "block";
-            }
-            document.getElementById("dsgc").style.display = "none";
-            document.getElementById("dshdon").style.display = "none";
-            document.getElementById("taogc").style.display = "none";
-            document.getElementById("taohdon").style.display = "none";
-        })
-        $("#qlgc").click(function () {
-            if (document.getElementById("dsgc").style.display === "block") {
-                document.getElementById("dsgc").style.display = "none";
-                document.getElementById("taogc").style.display = "none";
-            }
-            else {
-                document.getElementById("dsgc").style.display = "block";
-                document.getElementById("taogc").style.display = "block";
-            }
-
-            document.getElementById("dshd").style.display = "none";
-            document.getElementById("dshdon").style.display = "none";
-            document.getElementById("taohd").style.display = "none";
-            document.getElementById("taohdon").style.display = "none";
-        })
-        $("#qlhdon").click(function () {
-            if (document.getElementById("taohdon").style.display === "block") {
-                document.getElementById("taohdon").style.display = "none";
-                document.getElementById("dshdon").style.display = "none";
-            }
-            else {
-                document.getElementById("taohdon").style.display = "block";
-                document.getElementById("dshdon").style.display = "block";
-            }
-            document.getElementById("dshd").style.display = "none";
-            document.getElementById("dsgc").style.display = "none";
-            document.getElementById("taohd").style.display = "none";
-            document.getElementById("taogc").style.display = "none";
-        })
+        $("#qlkm").addClass("ui active");
     })
 </script>
 

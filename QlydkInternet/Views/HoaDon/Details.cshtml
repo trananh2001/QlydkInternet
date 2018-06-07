@@ -1,0 +1,79 @@
+﻿@model QlydkInternet.ViewModels.HoaDonViewModel
+@{
+    ViewData["Title"] = "Chi tiết hóa đơn";
+}
+
+@section menu{
+    
+}
+
+<h2>Chi tiết hóa đơn</h2>
+
+<div class="ui centered grid equal width" style="width:100%;">
+    <div class="sixteen wide column">
+        <h3 class="ui dividing teal header"></h3>
+    </div>
+    <div class="row">
+        <div class="column">
+            <h3 class="ui dividing header">
+                Số hóa đơn
+                <div class="sub header" style="font-size:2rem">@Model.sohd</div>
+            </h3>
+        </div>
+        <div class="column">
+            <h3 class="ui dividing header">
+                Tên khách hàng
+                <div class="sub header" style="font-size:2rem">@Model.tenkh</div>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column" id="tenncc">
+            <h3 class="ui dividing header">
+                Trị giá
+                <div class="sub header" style="font-size:2rem">@(((int)Model.trigia).ToString("N0") + " ₫")</div>
+            </h3>
+        </div>
+        <div class="column" id="tenkhachhang">
+            <h3 class="ui dividing header">
+                Ngày in
+                <div class="sub header" style="font-size:2rem">@Model.ngin.ToString("dd/MM/yyyy")</div>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <h3 class="ui dividing header">
+                Ngày thanh toán
+                <div class="sub header" style="font-size:2rem" id="ngthanhtoan">
+                    @if (@Model.ngthanhtoan.HasValue)
+                    {
+                        @Model.ngthanhtoan.Value.ToString("dd/MM/yyyy");
+                    }
+                    <input type="hidden" 
+                           value="@if (@Model.ngthanhtoan.HasValue)
+                            {
+                            @Model.ngthanhtoan.Value.ToString("dd/MM/yyyy");
+                            }"
+                           id="ngtt"/>
+                </div>
+            </h3>
+        </div>
+        <div class="column">
+            <h3 class="ui dividing header">
+                Hạn hóa đơn
+                <div class="sub header" style="font-size:2rem">@Model.hanhoadon.ToString("dd/MM/yyyy")</div>
+            </h3>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        if ($("#ngtt").val() == "") {
+            document.getElementById('ngthanhtoan').innerHTML = "Chưa thanh toán"
+            $("#ngthanhtoan").css("color","red")
+        }
+        $("#qlhdon").addClass("ui active");
+    })
+</script>
+

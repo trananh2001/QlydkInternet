@@ -1,13 +1,13 @@
 ﻿@model QlydkInternet.ViewModels.GoiCuocViewModel
 @{
-    ViewData["Title"] = "Tạo gói cước";
+    ViewData["Title"] = "Cập nhật gói cước";
 }
 
 @section menu{
-  
+    
 }
 
-<h2>Tạo gói cước</h2>
+<h2>Cập nhật gói cước</h2>
 <div class="row">
     <div class="column">
         <h3 class="ui dividing teal header"></h3>
@@ -15,14 +15,21 @@
 </div>
 <div class="row">
     <div class="ui ten wide column">
-        <form class="ui form" asp-controller="GoiCuoc" asp-action="Create" id="createform">
+        <form class="ui form" asp-controller="GoiCuoc" asp-action="Update" id="createform">
             <div class="field" id="providerFields">
                 <label>Tên gói cước</label>
                 <div class="ui search" id="provider-search">
                     <input class="prompt"
                            id="tengc"
                            asp-for="@Model.tengc"
-                           placeholder="Tên gói cước">
+                           placeholder="Tên gói cước"
+                           value="@Model.tengc">
+                    <input class="prompt"
+                           type="hidden"
+                           asp-for="@Model.magc"
+                           placeholder="Tên gói cước"
+                           value="@Model.magc">
+
                     <div class="results"></div>
                 </div>
             </div>
@@ -40,7 +47,7 @@
                        placeholder="Tốc độ"
                        asp-for="@Model.tocdo"
                        id="tocdo"
-                       value="1000">
+                       value="@Model.tocdo">
             </div>
             <div class="field">
                 <label>Giá cước</label>
@@ -48,7 +55,7 @@
                        placeholder="Giá cước"
                        asp-for="@Model.giacuoc"
                        id="giacuoc"
-                       value="1000">
+                       value="@Model.giacuoc">
             </div>
             <div class="field">
                 <label>Mô tả</label>
@@ -58,8 +65,9 @@
                           asp-for="@Model.mota"
                           data-validate="valid-phone"
                           rows="2"
-                          id="mota"></textarea>
+                          id="mota">@Model.mota</textarea>
             </div>
+
             <div class="ui center aligned segment" style="border:none; box-shadow:none">
                 <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:19%">Lưu</button>
                 <div class="ui reset toggle button" id="btnXoa" style="width:19%">Hủy</div>
@@ -76,12 +84,14 @@
     </div>
 </div>
 
-    <script src="~/js/cleave.min.js"></script>
-    <script src="~/js/numeral.min.js"></script>
+<script src="~/js/cleave.min.js"></script>
+<script src="~/js/numeral.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $("#qlgc").addClass("ui active");
-        })
-    </script>
+<script>
+    $(document).ready(function () {
+        $("#qlgc").addClass("ui active");
+    })
+</script>
+
+
 

@@ -70,5 +70,27 @@ namespace QlydkInternet.Controllers
             var goicuoc = services.TimGoiCuocTheoMa(id);
             return View(goicuoc);
         }
+
+        public IActionResult Update(string magc)
+        {
+            var loaigc = services.GetAllLoaiGoiCuoc();
+            var model = services.TimGoiCuocTheoMa(magc);
+            model.listloaigc = new SelectList(loaigc, "Maloai", "Tenloai", 1);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(string magc, string tengc, string loaigc, string tocdo, decimal giacuoc, string mota)
+        {
+
+            if (mota == null)
+            {
+                mota = "Không có mô tả";
+            }
+
+            services.CapNhatGoiCuoc(magc, tengc, loaigc, tocdo, giacuoc, mota);
+            return RedirectToAction("Details", new RouteValueDictionary(
+                new { controller = "GoiCuoc", action = "Main", id = magc }));
+        }
     }
 }

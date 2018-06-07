@@ -1,0 +1,36 @@
+﻿@model QlydkInternet.ViewModels.ThongKeViewModel
+@{
+    ViewData["Title"] = "Chi tiết gói cước";
+}
+
+@section menu{
+    
+}
+
+<h2>Doanh thu tháng @Model.time.ToString("MM")</h2>
+
+<div class="ui centered grid equal width" style="width:100%;">
+    <div class="sixteen wide column">
+        <h3 class="ui dividing teal header"></h3>
+    </div>
+    <div class="row">
+        <div class="column">
+            <h3 class="ui dividing header">
+                Thu nhập
+                <div class="sub header" style="font-size:2rem">@Model.doanhthu</div>
+            </h3>
+        </div>
+        <div class="column">
+            <h3 class="ui dividing header">
+                Số đăng ký mới
+                <div class="sub header" style="font-size:2rem">@Model.sodangkymoi</div>
+            </h3>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#thongke").addClass("ui active");
+    })
+</script>
+

@@ -95,5 +95,29 @@ namespace QlydkInternet.Controllers
             var khuyenmai = services.TimKhuyenMaiTheoMa(id);
             return View(khuyenmai);
         }
+
+        public IActionResult Update(string makm)
+        {
+            var loaikm = services.GetAllLoaiKhuyenMai();
+            var loaigc = services.GetAllLoaiGoiCuoc();
+            var model = services.TimKhuyenMaiTheoMa(makm);
+            model.listloaigc = new SelectList(loaigc, "Maloai", "Tenloai", 1);
+            model.listloaikm = new SelectList(loaikm, "Maloai", "Tenloai", 1);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(string makm, string tenkm, string loaikm, string loaigc, DateTime ngbd, DateTime? ngkt, int trigia, string mota)
+        {
+            if (mota == null)
+            {
+                mota = "Không có mô tả";
+            }
+            else
+                services.CapNhatKhuyenMai(makm, tenkm, loaikm, loaigc, mota, ngbd, ngkt, trigia);
+
+            return RedirectToAction("Details", new RouteValueDictionary(
+                    new { controller = "KhuyenMai", action = "Details", id = makm }));
+        }
     }
 }

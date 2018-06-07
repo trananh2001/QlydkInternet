@@ -1,6 +1,6 @@
 ﻿@model QlydkInternet.ViewModels.KhuyenMaiViewModel
 @{
-    ViewData["Title"] = "Tạo khuyến mãi";
+    ViewData["Title"] = "Cập nhật khuyến mãi";
 }
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/font-awesome.min.css" />
@@ -11,7 +11,7 @@
    
 }
 
-<h2 style="margin-top:0">Tạo khuyến mãi</h2>
+<h2 style="margin-top:0">Cập nhật khuyến mãi</h2>
 <div class="row">
     <div class="column">
         <h3 class="ui dividing teal header"></h3>
@@ -26,17 +26,20 @@
                     <input class="prompt"
                            id="tenkm"
                            asp-for="@Model.tenkm"
+                           value="@Model.tenkm"
                            placeholder="Tên gói cước">
                     <div class="results"></div>
                 </div>
             </div>
             <div class="field">
-                <label>Loại gói cước</label>
+                <label>Loại khuyến mãi</label>
                 <select class="ui fluid dropdown"
                         id="loaikm"
                         asp-for="@Model.loaikm"
                         asp-items="@Model.listloaikm"
-                        data-validate="valid-customer-type"></select>
+                        data-validate="valid-customer-type">
+                    @Model.loaikm
+                </select>
             </div>
             <div class="field">
                 <label>Loại gói cước</label>
@@ -44,7 +47,9 @@
                         id="loaigc"
                         asp-for="@Model.loaigc"
                         asp-items="@Model.listloaigc"
-                        data-validate="valid-customer-type"></select>
+                        data-validate="valid-customer-type">
+                    @Model.loaigc
+                </select>
             </div>
             <div class="field">
                 <label>Trị giá</label>
@@ -52,38 +57,41 @@
                        placeholder="Trị giá"
                        asp-for="@Model.trigia"
                        id="trigia"
-                       value="1000">
+                       value="@Model.trigia">
             </div>
-            <div class="two fields" style="padding-left: 7px;padding-right: 7px; margin-bottom:0">
+            <div class="two fields" style="padding-left: 7px;padding-right: 7px; margin-bottom:0" >
                 <div class="field">
                     <label>Ngày bắt đầu</label>
                     @*<input type="text"
-                placeholder="Ngày bắt đầu"
-                asp-for="@Model.ngbd"
-                id="giacuoc"
-                value="1000">*@
+                        placeholder="Ngày bắt đầu"
+                        asp-for="@Model.ngbd"
+                        id="giacuoc"
+                        value="1000">*@
                     <div class="ui calendar" id="rangestart">
                         <div class="ui input left icon">
                             <i class="calendar icon"></i>
-                            <input id="ngbd" type="text" placeholder="Ngày bắt đầu" asp-for="@Model.ngbd">
+                            <input id="ngbd" type="text" placeholder="Ngày bắt đầu" asp-for="@Model.ngbd"
+                                   value="@Model.ngbd">
                         </div>
                     </div>
                 </div>
                 <div class="field">
                     <label>Ngày kết thúc</label>
                     @*<input type="text"
-                placeholder="Ngày kết thúc"
-                asp-for="@Model.ngkt"
-                id="tocdo"
-                value="1000">*@
+                        placeholder="Ngày kết thúc"
+                        asp-for="@Model.ngkt"
+                        id="tocdo"
+                        value="1000">*@
                     <div class="ui calendar" id="rangeend">
                         <div class="ui input left icon">
                             <i class="calendar icon"></i>
-                            <input id="ngkt" type="text" placeholder="Ngày kết thúc" asp-for="@Model.ngkt">
+                            <input id="ngkt" type="text" placeholder="Ngày kết thúc" asp-for="@Model.ngkt"
+                                   value="@Model.ngkt">
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="field">
                 <label>Mô tả</label>
                 <textarea type="text"
@@ -94,6 +102,7 @@
                           rows="2"
                           id="mota"></textarea>
             </div>
+ 
             <div class="ui center aligned segment" style="border:none; box-shadow:none">
                 <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:19%">Lưu</button>
                 <div class="ui reset toggle button" id="btnXoa" style="width:19%">Hủy</div>
@@ -113,9 +122,9 @@
 
 
 <script>
-    
+
     $(document).ready(function () {
-        
+
         $('#rangestart').calendar({
             type: 'date',
             endCalendar: $('#rangeend'),
@@ -194,7 +203,7 @@
                     //inactive dimmer
                 }
             });
-         })
+        })
         $('#btnXoa').on("click", function () {
             $('#tengc').val() = "";
             $('#loaigc').val() = 1;
@@ -206,4 +215,3 @@
         $("#qlkm").addClass("ui active");
     })
 </script>
-
