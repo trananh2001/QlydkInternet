@@ -10,6 +10,7 @@ using QlydkInternet.ViewModels;
 using QlydkInternet.Helper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Http;
 
 namespace QlydkInternet.Controllers
 {
@@ -24,6 +25,7 @@ namespace QlydkInternet.Controllers
         public async Task<IActionResult> Index(int? page,
                                                int? firstShowedPage, int? lastShowedPage)
         {
+            
             var goicuoc = services.GetAllGoiCuoc();
             goicuoc = goicuoc.OrderByDescending(c => c.magc);
             int pageSize = 10;

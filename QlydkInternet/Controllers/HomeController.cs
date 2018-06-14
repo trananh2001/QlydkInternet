@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using QlydkInternet.Models;
 
 namespace QlydkInternet.Controllers
@@ -12,6 +13,7 @@ namespace QlydkInternet.Controllers
     {
         public IActionResult Index()
         {
+            
             return View();
         }
 

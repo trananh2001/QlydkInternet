@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using QlydkInternet.Models;
 using QlydkInternet.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Session;
 
 namespace QlydkInternet
 {
@@ -28,6 +29,8 @@ namespace QlydkInternet
             services.AddScoped<IServices, DataServices>();
             services.AddScoped<IViewRenderService, ViewRenderService>();
             services.AddMvc();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +47,7 @@ namespace QlydkInternet
             }
 
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

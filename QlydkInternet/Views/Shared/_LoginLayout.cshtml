@@ -1,0 +1,33 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập - QLĐKInternet</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/site.min.css" />
+        <link rel="stylesheet" href="~/lib/semantic/dist/semantic.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="~/lib/semantic/dist/semantic.js"></script>
+        <script src="~/js/site.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <!--stating environment-->
+    </environment>
+    @RenderSection("Additional", false)
+</head>
+<body>
+    <!--Responsive sidebar menu-->
+    <div class="pusher">
+        <div class="ui grid container">
+            <div class="ui main centered stackable grid" style="left:0; padding-top:36px">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

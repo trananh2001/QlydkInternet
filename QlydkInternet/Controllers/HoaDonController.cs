@@ -56,7 +56,7 @@ namespace QlydkInternet.Controllers
         }
         public async Task<IActionResult> TaoHoaDon(string id)
         {
-            string mahoadon = "HDT" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            string mahoadon = "TT" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
             var hopdong = services.TimHopDongTheoMa(id);
             var goicuoc = services.TimGoiCuocTheoMa(hopdong.magc);
             Hoadon hoadon = new Hoadon();

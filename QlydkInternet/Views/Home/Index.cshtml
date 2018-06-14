@@ -39,7 +39,7 @@
 @*
     slider
 *@
-<div class="section" style="padding:0">
+<div class="home" style="padding:0">
     @*<img class="ui image" src="~/images/3.jpg">*@
     <div class="ui text container slides" style="padding:0;margin:0;height:100%;background:#ddd;">
         <i class="big left angle icon"></i>
@@ -61,7 +61,7 @@
 @*
     khuyến mãi
 *@
-<div class="section" style="padding:7%;padding-top:5%;padding-bottom:4%">
+<div class="khuyenmai" style="padding:7%;padding-top:5%;padding-bottom:4%">
     <h2 class="tieude">KHUYẾN MÃI</h2>
     <div class="ui three column grid">
         <div class="column">
@@ -90,7 +90,7 @@
 @*
     gói cước
 *@
-<div class="section" style="padding:7%;padding-top:5%;padding-bottom:1%">
+<div class="goicuoc" style="padding:7%;padding-top:5%;padding-bottom:1%">
     <h2 class="tieude">GÓI CƯỚC</h2>
     <div class="ui three column grid">
         <div class="column">
@@ -119,7 +119,7 @@
 @*
     info
 *@
-<div class="section" style="padding:7%;padding-top:5%;padding-bottom:1%">
+<div class="info" style="padding:7%;padding-top:5%;padding-bottom:1%">
     <h2 class="tieude">VỀ TDDN INTERNET PROVIDER</h2>
     <p class="para">
         Là thành viên thuộc Tập đoàn công nghệ hàng đầu Việt Nam FPT
@@ -128,7 +128,7 @@
 
         Thành lập ngày 31/01/1997, khởi nguồn từ Trung tâm Dịch vụ Trực tuyến do 4 thành viên sáng lập cùng sản phẩm mạng Intranet đầu tiên của Việt Nam mang tên “Trí tuệ Việt Nam – TTVN”, sản phẩm được coi là đặt nền móng cho sự phát triển của Internet tại Việt Nam.
     </p>
-    <div class="ui three column grid">
+    @*<div class="ui three column grid">
         <div class="column">
         </div>
         <div class="column">
@@ -137,7 +137,7 @@
         <div class="column">
 
         </div>
-    </div>
+    </div>*@
     <p class="para">
         Với sứ mệnh tiên phong đưa Internet đến với người dân Việt Nam và mong muốn mỗi gia đình Việt Nam đều sử dụng ít nhất một dịch vụ của FPT Telecom, đồng hành cùng phương châm "Khách hàng là trọng tâm", chúng tôi không ngừng nỗ lực đầu tư hạ tầng, nâng cấp chất lượng sản phẩm – dịch vụ, tăng cường ứng dụng công nghệ mới để mang đến cho khách hàng những trải nghiệm sản phẩm dịch vụ vượt trội.
     </p>
@@ -148,7 +148,7 @@
 @*
     đăng ký
 *@
-<div class="section" style="padding:7%;padding-top:5%;padding-bottom:4%">
+<div class="dangky" style="padding:7%;padding-top:5%;padding-bottom:4%">
     <h2 class="tieude">DANH SÁCH ĐIỂM GIAO DỊCH</h2>
     <div class="ui two column grid">
         <div class="row" style="padding-left:20px">
@@ -225,5 +225,30 @@
         $('.ui.image.gc').hover(function () {
             $(this).transition('bounce');
         }, function () { });
+        $('#km').click(function () {
+            $('html, body').animate({
+                scrollTop: $("div.khuyenmai").offset().top
+            }, 1000)
+        })
+        $('#dangky').click(function () {
+            $('html, body').animate({
+                scrollTop: $("div.dangky").offset().top
+            }, 1000)
+        })
+        $('#goicuoc').click(function () {
+            $('html, body').animate({
+                scrollTop: $("div.goicuoc").offset().top
+            }, 1000)
+        })
+        $('#info').click(function () {
+            $('html, body').animate({
+                scrollTop: $("div.info").offset().top
+            }, 1000)
+        })
+        $('#home').click(function () {
+            $('html, body').animate({
+                scrollTop: $("div.home").offset().top
+            }, 1000)
+        })
     });
 </script>

@@ -6,13 +6,9 @@
     <title>@ViewData["Title"] - QLĐKInternet</title>
 
     <environment names="Development">
-        
-        
         <link rel="stylesheet" href="~/css/site.min.css" />
-
         <link rel="stylesheet" href="~/lib/semantic/dist/semantic.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        
         <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="~/lib/semantic/dist/semantic.js"></script>
         <script src="~/js/site.js"></script>
@@ -24,14 +20,15 @@
 </head>
 <body>
     <!--Responsive sidebar menu-->
-    
-
     <div class="pusher">
         <div class="ui top attached purple progress">
             <div class="bar"></div>
         </div>
         <div class="ui grid container">
             <div class="ui left fixed vertical inverted menu" id="controller-menu">
+                <div>
+                    @RenderSection("nhanvien", false)
+                </div>
                 <a class="item" asp-controller="Dashboard" asp-action="Index" id="dash">
                     <span><i class="home icon"></i>DASHBOARD</span>
                 </a>
@@ -86,7 +83,7 @@
             </div>
             @RenderSection("menu", false)
             <div class="ui main centered stackable grid">
-
+                
                 @RenderBody()
             </div>
         </div>

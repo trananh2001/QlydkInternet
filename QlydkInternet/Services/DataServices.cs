@@ -16,7 +16,10 @@ namespace QlydkInternet.Services
         {
             _context = context;
         }
-
+        public Nhanvien TimNhanVien(string taikhoan, string mk)
+        {
+            return _context.Nhanvien.Where(m => m.Taikhoan == taikhoan && m.Matkhau == mk).FirstOrDefault();
+        }
         public void ThanhToanHoaDon(string mahdon)
         {
             var hoadon = _context.Hoadon.Where(m => m.Sohd == mahdon).FirstOrDefault();

@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "Error";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="row" style="padding-top:103px">
+    <h2>Sai tên đăng nhập hoặc mật khẩu</h2>
+</div>
+<div class="row">
+    <div class="ui center aligned segment" style="border:none;padding:0">
+        <div class="ui fluid large teal submit button" id="dangnhap">Đăng nhập lại</div>
+    </div>
+</div>
+<script>
+    $("#dangnhap").on("click", function () {
+            var url = '@Url.Action("Index","Admin")';
+            window.location = url;
+        })
+</script>

@@ -1,0 +1,35 @@
+﻿@model QlydkInternet.Models.Nhanvien;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="row" style="padding-top:103px">
+    <div class="ui ten wide column">
+        <form class="ui large form" asp-controller="Admin" asp-action="Login">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" id="email" placeholder="Tên đăng nhập" asp-for="@Model.Taikhoan">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" id="password" placeholder="Mật khẩu" asp-for="@Model.Matkhau">
+                    </div>
+                </div>
+                <button class="ui fluid large teal submit button" type="submit" id="btnThem" >Đăng nhập</button>
+            </div>
+            <div class="ui error message"></div>
+        </form>
+        </div>
+    </div>
+<script>
+    $("#test").click(function () {
+        alert($("#password").val())
+        
+    })
+</script>

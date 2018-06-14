@@ -8,6 +8,7 @@ namespace QlydkInternet.Services
 {
     public interface IServices
     {
+        Nhanvien TimNhanVien(string taikhoan, string mk);
         IQueryable<HoaDonViewModel> thanhtoantre(DateTime date);
         void ThanhToanHoaDon(string mahdon);
         int sodkmoi(int m);
