@@ -7,8 +7,13 @@
 <link rel="stylesheet" href="~/lib/semantic/calendar.css" />
 <script src="~/lib/jquery/dist/jquery-2.1.4.js"></script>
 <script src="~/lib/semantic/calendar.js"></script>
-@section menu{
-   
+@section Nhanvien{
+
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <h2 style="margin-top:0">Cập nhật khuyến mãi</h2>
@@ -19,109 +24,103 @@
 </div>
 <div class="row">
     <div class="ui ten wide column">
-        <form class="ui form" asp-controller="KhuyenMai" asp-action="Create" id="createform">
+        <form class="ui form" asp-controller="KhuyenMai" asp-action="Update" id="createform">
             <div class="field" id="providerFields">
                 <label>Tên khuyến mãi</label>
                 <div class="ui search" id="provider-search">
                     <input class="prompt"
                            id="tenkm"
-                           asp-for="@Model.tenkm"
-                           value="@Model.tenkm"
+                           asp-for="@Model.tenkhuyenmai"
+                           value="@Model.tenkhuyenmai"
                            placeholder="Tên gói cước">
                     <div class="results"></div>
+                    <input class="prompt"
+                           type="hidden"
+                           asp-for="@Model.makhuyenmai"
+                           placeholder="Tên gói cước"
+                           value="@Model.makhuyenmai"
+                           id="makm">
                 </div>
             </div>
             <div class="field">
                 <label>Loại khuyến mãi</label>
                 <select class="ui fluid dropdown"
                         id="loaikm"
-                        asp-for="@Model.loaikm"
+                        asp-for="@Model.maloaikhuyenmai"
                         asp-items="@Model.listloaikm"
                         data-validate="valid-customer-type">
-                    @Model.loaikm
-                </select>
-            </div>
-            <div class="field">
-                <label>Loại gói cước</label>
-                <select class="ui fluid dropdown"
-                        id="loaigc"
-                        asp-for="@Model.loaigc"
-                        asp-items="@Model.listloaigc"
-                        data-validate="valid-customer-type">
-                    @Model.loaigc
-                </select>
-            </div>
-            <div class="field">
-                <label>Trị giá</label>
-                <input type="number"
-                       placeholder="Trị giá"
-                       asp-for="@Model.trigia"
-                       id="trigia"
-                       value="@Model.trigia">
-            </div>
-            <div class="two fields" style="padding-left: 7px;padding-right: 7px; margin-bottom:0" >
+                    @Model.tenloaikhuyenmai
+                    </select>
+                </div>
                 <div class="field">
-                    <label>Ngày bắt đầu</label>
-                    @*<input type="text"
-                        placeholder="Ngày bắt đầu"
-                        asp-for="@Model.ngbd"
-                        id="giacuoc"
-                        value="1000">*@
-                    <div class="ui calendar" id="rangestart">
-                        <div class="ui input left icon">
-                            <i class="calendar icon"></i>
-                            <input id="ngbd" type="text" placeholder="Ngày bắt đầu" asp-for="@Model.ngbd"
-                                   value="@Model.ngbd">
+                    <label>Trị giá</label>
+                    <input type="number"
+                           placeholder="Trị giá"
+                           asp-for="@Model.trigia"
+                           id="trigia"
+                           value="@Model.trigia">
+                </div>
+                <div class="two fields" style="padding-left: 7px;padding-right: 7px; margin-bottom:0">
+                    <div class="field">
+                        <label>Ngày bắt đầu</label>
+                        @*<input type="text"
+                            placeholder="Ngày bắt đầu"
+                            asp-for="@Model.ngbd"
+                            id="giacuoc"
+                            value="1000">*@
+                        <div class="ui calendar" id="rangestart">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input id="ngbd" type="text" placeholder="Ngày bắt đầu" asp-for="@Model.ngaybatdau"
+                                       value="@Model.ngaybatdau">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Ngày kết thúc</label>
+                        @*<input type="text"
+                            placeholder="Ngày kết thúc"
+                            asp-for="@Model.ngkt"
+                            id="tocdo"
+                            value="1000">*@
+                        <div class="ui calendar" id="rangeend">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input id="ngkt" type="text" placeholder="Ngày kết thúc" asp-for="@Model.ngayketthuc"
+                                       value="@Model.ngayketthuc">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="field">
-                    <label>Ngày kết thúc</label>
-                    @*<input type="text"
-                        placeholder="Ngày kết thúc"
-                        asp-for="@Model.ngkt"
-                        id="tocdo"
-                        value="1000">*@
-                    <div class="ui calendar" id="rangeend">
-                        <div class="ui input left icon">
-                            <i class="calendar icon"></i>
-                            <input id="ngkt" type="text" placeholder="Ngày kết thúc" asp-for="@Model.ngkt"
-                                   value="@Model.ngkt">
-                        </div>
+                    <label>Tình trạng</label>
+                    <select class="ui fluid dropdown"
+                            id="tinhtrang"
+                            asp-for="@Model.matinhtrang"
+                            asp-items="@Model.listtinhtrang"
+                            data-validate="valid-customer-type">
+                        @Model.tentinhtrang
+                        </select>
                     </div>
-                </div>
+                    <div class="ui center aligned segment" style="border:none; box-shadow:none">
+                        <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:19%">Lưu</button>
+                        <div class="ui reset toggle button" id="btnXoa" style="width:19%">Hủy</div>
+                    </div>
+                </form>
             </div>
-
-            <div class="field">
-                <label>Mô tả</label>
-                <textarea type="text"
-                          name="mota"
-                          placeholder="Mô tả"
-                          asp-for="@Model.mota"
-                          data-validate="valid-phone"
-                          rows="2"
-                          id="mota"></textarea>
+        </div>
+        <div class="ui tiny modal" id="notify-modal">
+            <div class="header">Thành công</div>
+            <div class="content">
+                <p></p>
+                <p></p>
+                <p></p>
             </div>
- 
-            <div class="ui center aligned segment" style="border:none; box-shadow:none">
-                <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:19%">Lưu</button>
-                <div class="ui reset toggle button" id="btnXoa" style="width:19%">Hủy</div>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="ui tiny modal" id="notify-modal">
-    <div class="header">Thành công</div>
-    <div class="content">
-        <p></p>
-        <p></p>
-        <p></p>
-    </div>
-</div>
+        </div>
 
 
 
-<script>
+        <script>
 
     $(document).ready(function () {
         $("#btnXoa").on("click", function () {
@@ -168,22 +167,22 @@
         $('#btnThem').on("click", function () {
             var url = $("#createform").attr("action");
             var tenkm = $("#tenkm").val();
-            var loaikm = $("#tenkm").val();
-            var loaigc = $("#loaigc").val();
+            var loaikm = $("#loaikm").val();
             var ngbd = $("#ngbd").val();
             var ngkt = $("#ngkt").val();
             var trigia = $("#trigia").val();
-            var mota = $("#mota").val();
+            var tinhtrang = $("#tinhtrang").val();
+            var makm = $("#makm").val();
             var token = $('#createform input').val();
             console.log(ngbd)
             var data = {
-                tenkm: tenkm,
-                loaikm: loaikm,
-                loaigc: loaigc,
+                makhuyenmai : makm,
+                tenkhuyenmai: tenkm,
+                maloaikhuyenmai: loaikm,
                 ngbd: ngbd,
                 ngkt: ngkt,
                 trigia: trigia,
-                mota: mota,
+                matinhtrang: tinhtrang,
                 __RequestVerificationToken: token
             }
             $.ajax({
@@ -217,4 +216,4 @@
 
         $("#qlkm").addClass("ui active");
     })
-</script>
+        </script>

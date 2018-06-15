@@ -3,8 +3,13 @@
     ViewData["Title"] = "Chi tiết gói cước";
 }
 
-@section menu{
-  
+@section Nhanvien{
+
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <h2>Chi tiết gói cước</h2>
@@ -17,27 +22,27 @@
         <div class="column">
             <h3 class="ui dividing header">
                 Mã gói cước
-                <div class="sub header" style="font-size:2rem">@Model.magc</div>
+                <div class="sub header" style="font-size:2rem">@Model.magoicuoc</div>
             </h3>
         </div>
         <div class="column">
             <h3 class="ui dividing header">
                 Tên gói cước
-                <div class="sub header" style="font-size:2rem">@Model.tengc</div>
+                <div class="sub header" style="font-size:2rem">@Model.tengoicuoc</div>
             </h3>
         </div>
     </div>
     <div class="row">
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
-                Loại gói cước
-                <div class="sub header" style="font-size:2rem">@Model.tenloaigc</div>
+                Cước thuê bao
+                <div class="sub header" style="font-size:2rem">@(((int)Model.cuocthuebao).ToString("N0") + " ₫")</div>
             </h3>
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
-                Tốc độ
-                <div class="sub header" style="font-size:2rem">@Model.tocdo</div>
+                Giá cước đêm
+                <div class="sub header" style="font-size:2rem">@(((int)Model.giacuocdem).ToString("N0") + " ₫")</div>
             </h3>
         </div>
 
@@ -45,15 +50,14 @@
     <div class="row">
         <div class="column">
             <h3 class="ui dividing header">
-                Giá cước
-                <div class="sub header" style="font-size:2rem">@(((int)Model.giacuoc).ToString("N0") + " ₫")</div>
+                Giá cước ngày
+                <div class="sub header" style="font-size:2rem">@(((int)Model.giacuocngay).ToString("N0") + " ₫")</div>
             </h3>
         </div>
         <div class="column">
             <h3 class="ui dividing header">
-
-                Mô tả
-                <div class="sub header" style="font-size:2rem">@Model.mota</div>
+                Tình trạng
+                <div class="sub header" style="font-size:2rem">@Model.tentinhtrang</div>
                 @*<div class="ui transparent fluid disabled input">
                         <input type="text" style="font-size:2rem" placeholder="Search...">
                     </div>*@
@@ -64,9 +68,9 @@
 <form class="ui form" asp-controller="GoiCuoc" asp-action="Update" method="get" id="createform" style="width:100%">
     <input class="prompt"
            type="hidden"
-           asp-for="@Model.magc"
+           asp-for="@Model.magoicuoc"
            placeholder="Tên gói cước"
-           value="@Model.magc">
+           value="@Model.magoicuoc">
     <div class="ui center aligned segment" style="border:none; box-shadow:none">
         <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:11%">Chỉnh sửa</button>
         <div class="ui reset toggle button" id="btnXoa" style="width:11%">Quay lại</div>

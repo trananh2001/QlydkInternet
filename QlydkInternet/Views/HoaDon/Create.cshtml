@@ -1,13 +1,16 @@
 ﻿@model PaginatedList<QlydkInternet.ViewModels.HopDongViewModel>
 
 @{
-    ViewData["Title"] = "Tạo hợp đồng";
+    ViewData["Title"] = "Tạo Hóa Đơn Tính Cước";
 }
+@section Nhanvien{
 
-@section menu{
-   
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
-
 <h2>Danh sách hợp đồng tới hạn thanh toán</h2>
 
 <div class="row" id="context">
@@ -19,7 +22,7 @@
                         Mã hợp đồng
                     </th>
                     <th style="width: 15%">
-                        Ngày đăng ký
+                        Ngày áp dụng
                     </th>
                     <th style="width: 15%">
                         Tên khách hàng
@@ -28,7 +31,7 @@
                         Tên gói cước
                     </th>
                     <th style="width: 15%">
-                        Loại thanh toán
+                        Tình trạng
                     </th>
                     <th>
 
@@ -37,31 +40,31 @@
             </thead>
             <tbody>
                 @foreach (var customer in Model)
-            {
-                <tr class="selectable">
-                    <td style="padding-left: 11px">
-                        @customer.mahd
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.ngdk.ToString("dd/MM/yyyy")
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.tenkh
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.tengc
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.tenloaitt
-                    </td>
-                    <td style="text-align:center">
-                        @*<button class="ui primary submit button" id="btnThem" asp-action="TaoHoaDon" asp-route-mahd="@customer.mahd">Tạo hóa đơn</button>*@
-                        <a asp-action="TaoHoaDon" asp-route-id="@customer.mahd">
-                            Tạo hóa đơn
-                        </a>
-                    </td>
-                </tr>
-        }
+                {
+                    <tr class="selectable">
+                        <td style="padding-left: 11px">
+                            @customer.mahopdong
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.ngayapdung.Value.ToString("dd/MM/yyyy")
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tenkhachhang
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tengoicuoc
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tentinhtrang
+                        </td>
+                        <td style="text-align:center">
+                            @*<button class="ui primary submit button" id="btnThem" asp-action="TaoHoaDon" asp-route-mahd="@customer.mahd">Tạo hóa đơn</button>*@
+                            <a asp-action="TaoHoaDon" asp-route-id="@customer.mahopdong">
+                                Tạo hóa đơn
+                            </a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
         <form class="ui form" asp-controller="HoaDon" asp-action="Create" method="post" id="createform" style="display:none">

@@ -3,8 +3,13 @@
     ViewData["Title"] = "Thống kê doanh thu";
 }
 
-@section menu{
+@section Nhanvien{
 
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 <div class="row">
     <div class="three wide column"></div>
@@ -76,7 +81,7 @@
             var printWindow = window.open('', '', 'height=720,width=1280');
             printWindow.document.write('<html><head><title></title>');
             printWindow.document.write('<link href=\"https:\//cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css"/></head><body >');
-            
+
             printWindow.document.write('<div class="ui centered grid equal width" style="width: 95%;margin-top:  0px;margin-left: 10px;">');
             printWindow.document.write('<h3 class="ui header">Báo cáo doanh thu năm '+@DateTime.Now.ToString("yyyy")+' tính đến ngày '+@DateTime.Now.ToString("dd")+'/'+@DateTime.Now.ToString("MM"));
             printWindow.document.write('</h3>');
@@ -98,7 +103,7 @@
             printWindow.document.write(' </div>');
             printWindow.document.write(' </div>');
 
-            
+
 
             printWindow.document.write('</div>');
             printWindow.document.write('</body></html>');

@@ -25,9 +25,12 @@ namespace QlydkInternet.Controllers
         public async Task<IActionResult> Index(int? page,
                                                int? firstShowedPage, int? lastShowedPage)
         {
-            
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
             var goicuoc = services.GetAllGoiCuoc();
-            goicuoc = goicuoc.OrderByDescending(c => c.magc);
+            goicuoc = goicuoc.OrderByDescending(c => c.magoicuoc);
             int pageSize = 10;
             int numberOfDisplayPages = 5;
             // page = 1;
@@ -40,59 +43,59 @@ namespace QlydkInternet.Controllers
 
         public IActionResult Create()
         {
-            var loaigc = services.GetAllLoaiGoiCuoc();
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            var tinhtrang = services.GetAllTinhTrang();
             var model = new GoiCuocViewModel();
-            model.listloaigc = new SelectList(loaigc, "Maloai", "Tenloai", 1);
+            model.listtinhtrang = new SelectList(tinhtrang, "Matinhtrang", "Tentinhtrang", 1);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string tengc, string loaigc, string tocdo, decimal giacuoc, string mota)
+        public async Task<IActionResult> Create(string tengoicuoc, decimal cuocthuebao, decimal giacuocdem, decimal giacuocngay)
         {
             Goicuoc goicuoc = new Goicuoc();
-            goicuoc.Magc = "GC"+DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
-            goicuoc.Tengc = tengc;
-            goicuoc.Loaigc = loaigc;
-            goicuoc.Tocdo = tocdo;
-            goicuoc.Giacuoc = giacuoc;
-            if (mota != null)
-            {
-                goicuoc.Mota = mota;
-            }
-            else
-                goicuoc.Mota = "Không có mô tả";
+            goicuoc.Magoicuoc = "GC" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            goicuoc.Tengoicuoc = tengoicuoc;
+            goicuoc.Cuocthuebao = cuocthuebao;
+            goicuoc.Giacuocdem = giacuocdem;
+            goicuoc.Giacuocngay = giacuocngay;
+            goicuoc.Matinhtrang = "TTKM01";
             services.TaoGoiCuoc(goicuoc);
             return RedirectToAction("Details", new RouteValueDictionary(
-    new { controller = "GoiCuoc", action = "Main", id = goicuoc.Magc }));
+    new { controller = "GoiCuoc", action = "Main", id = goicuoc.Magoicuoc }));
         }
 
         public IActionResult Details(string id)
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
             var goicuoc = services.TimGoiCuocTheoMa(id);
             return View(goicuoc);
         }
 
-        public IActionResult Update(string magc)
+        public IActionResult Update(string magoicuoc)
         {
-            var loaigc = services.GetAllLoaiGoiCuoc();
-            var model = services.TimGoiCuocTheoMa(magc);
-            model.listloaigc = new SelectList(loaigc, "Maloai", "Tenloai", 1);
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
+            var tinhtrang = services.GetAllTinhTrang();
+            var model = services.TimGoiCuocTheoMa(magoicuoc);
+            model.listtinhtrang = new SelectList(tinhtrang, "Matinhtrang", "Tentinhtrang", 1);
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(string magc, string tengc, string loaigc, string tocdo, decimal giacuoc, string mota)
+        public async Task<IActionResult> Update(string magoicuoc, string tengoicuoc, decimal cuocthuebao, decimal giacuocdem, decimal giacuocngay, string matinhtrang)
         {
 
-            if (mota == null)
-            {
-                mota = "Không có mô tả";
-            }
-
-            services.CapNhatGoiCuoc(magc, tengc, loaigc, tocdo, giacuoc, mota);
+            services.CapNhatGoiCuoc(magoicuoc,tengoicuoc,cuocthuebao,giacuocngay,giacuocdem,matinhtrang);
             return RedirectToAction("Details", new RouteValueDictionary(
-                new { controller = "GoiCuoc", action = "Main", id = magc }));
+                new { controller = "GoiCuoc", action = "Main", id = magoicuoc }));
         }
     }
 }

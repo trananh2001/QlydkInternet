@@ -1,7 +1,7 @@
 ﻿@model PaginatedList<QlydkInternet.ViewModels.HoaDonViewModel>
 
 @{
-    ViewData["Title"] = "Hóa Đơn Tính Cước";
+    ViewData["Title"] = "Hóa Đơn Đăng Ký";
 }
 
 @section Nhanvien{
@@ -50,9 +50,6 @@
                     <th style="width: 15%">
                         Tên nhân viên
                     </th>
-                    <th style="width: 15%">
-                        Hạn hóa đơn
-                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -60,7 +57,7 @@
                 {
                     <tr class="selectable">
                         <td style="padding-left: 11px">
-                            <a asp-action="Details" asp-route-id="@customer.mahoadon">
+                            <a asp-action="HDDKDetails" asp-route-id="@customer.mahoadon">
                                 @customer.mahoadon
                             </a>
                         </td>
@@ -92,14 +89,6 @@
                         <td style="padding-left: 11px">
                             @customer.tennhanvien
                         </td>
-                        <td style="padding-left: 11px">
-                            @if (customer.hanthanhtoan.HasValue)
-                            {
-                                @customer.hanthanhtoan.Value.ToString("dd/MM/yyyy")
-
-                            }
-                        </td>
-
                     </tr>
                 }
             </tbody>
@@ -115,9 +104,9 @@
 
                 var keyword = $(this).val();
                 alert(keyword)
-            var url = '@Url.Action("TimKiem","HoaDon")';
+            var url = '@Url.Action("HDDKDetails", "HoaDon")';
 
-            window.location = url + "?mahoadon=" + keyword;
+            window.location = url + "?id=" + keyword;
             }
         })
     })

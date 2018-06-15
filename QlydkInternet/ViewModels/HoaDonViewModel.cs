@@ -7,25 +7,22 @@ namespace QlydkInternet.ViewModels
 {
     public class HoaDonViewModel
     {
-        public string sohd { get; set; }
-        public DateTime ngin { get; set; }
-        public DateTime? ngthanhtoan { get; set; }
-        public decimal trigia { get; set; }
-        public string manv { get; set; }
-        public string tennv { get; set; }
-        public DateTime hanhoadon { get; set; }
-        /// <summary>
-        /// thông tin kh
-        /// </summary>
-        ///  public DateTime ngsinh { get; set; }
+        public string mahoadon { get; set; }
+        public DateTime? ngaylap { get; set; }
+        public DateTime? ngaythanhtoan { get; set; }
+        public decimal? trigia { get; set; }
+        public DateTime? hanthanhtoan { get; set; }
+        public string manhanvien { get; set; }
+        public string tennhanvien { get; set; }
+        public string mahopdong { get; set; }
+        public string maloaihoadon { get; set; }
+        public string tenloaihoadon { get; set; }
+        public string makhachhang { get; set; }
+        public string tenkhachhang { get; set; }
+        public string matinhtrang { get; set; }
+        public string tentinhtrang { get; set; }
         public string sdt { get; set; }
         public string email { get; set; }
-        public string diachi { get; set; }
-        public string cmnd { get; set; }
-        public string makh { get; set; }
-        public string tenkh { get; set; }
-        
-
-        
+        public string diachithanhtoan { get; set; }
     }
 }

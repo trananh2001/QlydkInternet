@@ -8,17 +8,17 @@ namespace QlydkInternet.ViewModels
 {
     public class KhuyenMaiViewModel
     {
-        public string makm { get; set; }
-        public string tenkm { get; set; }
-        public string loaikm { get; set; }
-        public string tenloaikm { get; set; }
-        public string loaigc { get; set; }
-        public string tenloaigc { get; set; }
-        public string mota { get; set; }
-        public DateTime ngbd { get; set; }
-        public DateTime? ngkt { get; set; }
-        public int trigia { get; set; }
+        public string makhuyenmai { get; set; }
+        public string tenkhuyenmai { get; set; }
+        public DateTime? ngaybatdau { get; set; }
+        public DateTime? ngayketthuc { get; set; }
+        public string maloaikhuyenmai { get; set; }
+        public string tenloaikhuyenmai { get; set; }
+        public string mahopdong { get; set; }
+        public int? trigia { get; set; }
+        public string matinhtrang { get; set; }
+        public string tentinhtrang { get; set; }
+        public SelectList listtinhtrang { get; set; }
         public SelectList listloaikm { get; set; }
-        public SelectList listloaigc { get; set; }
     }
 }

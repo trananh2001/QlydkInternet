@@ -13,9 +13,16 @@
     </h2>
 }
 
-<h2>Danh sách hợp đồng</h2>
-
-<div class="row" id="context">
+<div class="row" >
+    <div class="three wide column"></div>
+    <div class="ten wide column">
+        <h2 style="text-align:center">Danh sách bị đình chỉ</h2>
+    </div>
+    <div class="three wide column">
+        <div class="ui primary button" id="btnPrint" style="width:100%">In danh sách</div>
+    </div>
+</div>
+<div class="row" id="print">
     <div class="sixteen wide column" style="padding:0">
         <table class="ui selectable teal table">
             <thead>
@@ -50,7 +57,7 @@
                     <tr class="selectable">
 
                         <td style="padding-left: 11px">
-                            <a asp-action="Details" asp-route-id="@customer.mahopdong">
+                            <a asp-controller="HopDong" asp-action="Details" asp-route-id="@customer.mahopdong">
                                 @customer.mahopdong
                             </a>
                         </td>
@@ -115,14 +122,50 @@
                 }
             </tbody>
         </table>
-        @Html.Partial("_Paginated", Model)
+        @Html.Partial("_DinhChiPaginated", Model)
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-        $("#qlhd").addClass("ui active");
+        $("#thongke").addClass("ui active");
+        $("#btnPrint").on("click", function () {
+            var divContents = $("#print").html();
+            var printWindow = window.open('', '', 'height=720,width=1280');
+            printWindow.document.write('<html><head><title></title>');
+            printWindow.document.write('<link href=\"https:\//cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css"/></head><body >');
+
+            printWindow.document.write('<div class="ui centered grid equal width" style="width: 95%;margin-top:  0px;margin-left: 10px;">');
+            printWindow.document.write('<h3 class="ui header">Danh sách bị đình chỉ');
+            printWindow.document.write('</h3>');
+            printWindow.document.write(divContents);
+
+            printWindow.document.write('</div>');
+            printWindow.document.write('<div class="ui centered grid equal width" style="width:95%;margin-left:10px">');
+            printWindow.document.write('<div class="sixteen wide column">');
+            printWindow.document.write('<h3 class="ui dividing teal header"></h3>');
+            printWindow.document.write('</div>');
+            printWindow.document.write('<div class="row">');
+            printWindow.document.write('<div class="column">');
+            printWindow.document.write('<h3 class="ui dividing header">Ngày......tháng......năm......');
+            printWindow.document.write('</h3>');
+            printWindow.document.write(' </div>');
+            printWindow.document.write('<div class="column">');
+            printWindow.document.write('<h3 class="ui dividing header">Người lập báo cáo');
+            printWindow.document.write('</h3>');
+            printWindow.document.write(' </div>');
+            printWindow.document.write(' </div>');
+
+
+
+            printWindow.document.write('</div>');
+            printWindow.document.write('</body></html>');
+
+            printWindow.document.close();
+            printWindow.print();
+        });
     })
 </script>
+
 
 

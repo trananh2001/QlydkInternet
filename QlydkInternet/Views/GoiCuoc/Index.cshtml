@@ -4,8 +4,13 @@
     ViewData["Title"] = "Gói cước";
 }
 
-@section menu{
+@section Nhanvien{
 
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <h2>Danh sách gói cước</h2>
@@ -21,17 +26,17 @@
                     <th style="width: 10%">
                         Tên gói cước
                     </th>
-                    <th style="width: 15%">
-                        Loai gói cước
+                    <th style="width: 10%">
+                        Cước thuê bao
                     </th>
                     <th style="width: 10%">
-                        Tốc độ
+                        Giá cước đêm
                     </th>
                     <th style="width: 10%">
-                        Giá cước
+                        Giá cước ngày
                     </th>
                     <th>
-                        Mô tả
+                        Tình trạng
                     </th>
                 </tr>
             </thead>
@@ -40,24 +45,24 @@
                 {
                     <tr class="selectable">
                         <td style="padding-left: 11px">
-                            <a asp-action="Details" asp-route-id="@customer.magc">
-                                @customer.magc
+                            <a asp-action="Details" asp-route-id="@customer.magoicuoc">
+                                @customer.magoicuoc
                             </a>
                         </td>
-                        <td  style="padding-left: 11px">
-                            @customer.tengc
-                        </td>
-                        <td  style="padding-left: 11px">
-                            @customer.tenloaigc
-                        </td>
-                        <td  style="padding-left: 11px">
-                            @customer.tocdo
+                        <td style="padding-left: 11px">
+                            @customer.tengoicuoc
                         </td>
                         <td style="padding-left: 11px">
-                            @(((int)customer.giacuoc).ToString("N0") + " ₫")
+                            @(((int)customer.cuocthuebao).ToString("N0") + " ₫")
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.mota
+                            @(((int)customer.giacuocdem).ToString("N0") + " ₫")
+                        </td>
+                        <td style="padding-left: 11px">
+                            @(((int)customer.giacuocngay).ToString("N0") + " ₫")
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tentinhtrang
                         </td>
                     </tr>
                 }

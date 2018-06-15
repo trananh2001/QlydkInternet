@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using QlydkInternet.Models;
 using QlydkInternet.ViewModels;
 using QlydkInternet.Services;
-using QlydkInternet.ViewModels;
+using QlydkInternet.Models;
 using QlydkInternet.Helper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Http;
 
 namespace QlydkInternet.Controllers
 {
@@ -28,6 +29,10 @@ namespace QlydkInternet.Controllers
             //tk.sodangkymoi = services.sodkmoi(DateTime.Now);
             //tk.thanhtoantre = services.thanhtoantre(DateTime.Now).ToList();
             //tk.time = DateTime.Now;
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
             DoanhThuThangViewModel dthu = new DoanhThuThangViewModel();
             dthu.thongke = new List<ThongKeViewModel>();
             int month = Convert.ToInt32(DateTime.Now.ToString("MM"));
@@ -48,14 +53,18 @@ namespace QlydkInternet.Controllers
                 string year = DateTime.Now.ToString("yyyy");
                 tk.time = DateTime.Parse(year + "-" + m + "-01");
                 dthu.tongdangky += tk.sodangkymoi;
-                dthu.tongdoanhthu += tk.doanhthu;
+                dthu.tongdoanhthu += tk.doanhthu.Value;
                 dthu.thongke.Add(tk);
             }
             return View(dthu);
         }
 
-        public async Task<IActionResult> HoaDonQuaHan(int? page,int? firstShowedPage, int? lastShowedPage)
+        public async Task<IActionResult> HoaDonQuaHan(int? page, int? firstShowedPage, int? lastShowedPage)
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
             ThongKeViewModel tk = new ThongKeViewModel();
             tk.thanhtoantre = services.thanhtoantre(DateTime.Now).ToList();
             tk.time = DateTime.Now;
@@ -63,6 +72,24 @@ namespace QlydkInternet.Controllers
             int numberOfDisplayPages = 5;
             var result = await PaginatedList<HoaDonViewModel>.
                         CreateAsync(tk.thanhtoantre.AsQueryable(), page ?? 1, pageSize,
+                                    numberOfDisplayPages,
+                                    firstShowedPage, lastShowedPage);
+            return View(result);
+        }
+
+        public async Task<IActionResult> DanhSachDinhChi(int? page, int? firstShowedPage, int? lastShowedPage)
+        {
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
+            var hopdong = services.GetHopDongDinhChi();
+            hopdong = hopdong.OrderByDescending(c => c.ngayapdung);
+            int pageSize = 10;
+            int numberOfDisplayPages = 5;
+            // page = 1;
+            var result = await PaginatedList<HopDongViewModel>.
+                        CreateAsync(hopdong, page ?? 1, pageSize,
                                     numberOfDisplayPages,
                                     firstShowedPage, lastShowedPage);
             return View(result);

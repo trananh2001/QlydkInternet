@@ -4,8 +4,13 @@
     ViewData["Title"] = "khuyến mãi";
 }
 
-@section menu{
+@section Nhanvien{
 
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <h2>Danh sách khuyến mãi</h2>
@@ -18,54 +23,54 @@
                     <th style="width: 10%">
                         Mã khuyến mãi
                     </th>
-                    <th style="width: 10%">
+                    <th style="width: 15%">
                         Tên khuyến mãi
                     </th>
                     <th style="width: 15%">
-                        Loại gói cước
+                        Loại khuyến mãi
                     </th>
                     <th style="width: 10%">
                         Trị giá
                     </th>
-                    <th style="width: 10%">
+                    <th style="width: 15%">
                         Ngày bắt đầu
                     </th>
-                    <th>
+                    <th style="width: 15%">
                         Ngày kết thúc
                     </th>
                     <th>
-                        Mô tả
+                        Tình trạng
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var customer in Model)
                 {
-                <tr class="selectable">
-                    <td style="padding-left: 11px">
-                        <a asp-action="Details" asp-route-id="@customer.makm">
-                            @customer.makm
-                        </a>
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.tenkm
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.tenloaigc
-                    </td>
-                    <td style="padding-left: 11px">
-                        @(((int)customer.trigia).ToString("N0") + " ₫")
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.ngbd.ToString("dd/MM/yyyy")
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.ngkt.Value.ToString("dd/MM/yyyy")
-                    </td>
-                    <td style="padding-left: 11px">
-                        @customer.mota
-                    </td>
-                </tr>
+                    <tr class="selectable">
+                        <td style="padding-left: 11px">
+                            <a asp-action="Details" asp-route-id="@customer.makhuyenmai">
+                                @customer.makhuyenmai
+                            </a>
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tenkhuyenmai
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tenloaikhuyenmai
+                        </td>
+                        <td style="padding-left: 11px">
+                            @(((int)customer.trigia).ToString("N0") + " %")
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.ngaybatdau.Value.ToString("dd/MM/yyyy")
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.ngayketthuc.Value.ToString("dd/MM/yyyy")
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tentinhtrang
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -74,7 +79,7 @@
 </div>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("#qlkm").addClass("ui active");
     })
 </script>

@@ -4,8 +4,12 @@
     ViewData["Title"] = "Hóa đơn quá hạn";
 }
 
-@section menu{
+@section Nhanvien{
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
 
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <div class="row">
@@ -50,25 +54,25 @@
                 {
                     <tr class="selectable">
                         <td style="padding-left: 11px">
-                            <a asp-controller="HoaDon" asp-action="Details" asp-route-id="@customer.sohd">
-                                @customer.sohd
+                            <a asp-controller="HoaDon" asp-action="Details" asp-route-id="@customer.mahoadon">
+                                @customer.mahoadon
                             </a>
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.ngin.ToString("dd/MM/yyyy")
+                            @customer.ngaylap.Value.ToString("dd/MM/yyyy")
                         </td>
                         <td style="padding-left: 11px">
-                            @if (customer.ngthanhtoan.HasValue)
+                            @if (customer.ngaythanhtoan.HasValue)
                             {
                                 <div class="ui green horizontal label">
-                                    @customer.ngthanhtoan.Value.ToString("dd/MM/yyyy")
+                                    @customer.ngaythanhtoan.Value.ToString("dd/MM/yyyy")
                                 </div>
 
                             }
-                            @if (!customer.ngthanhtoan.HasValue)
+                            @if (!customer.ngaythanhtoan.HasValue)
                             {
                                 <div class="ui red horizontal label">
-                                    Chưa thanh toán
+                                    @customer.tentinhtrang
                                 </div>
 
                             }
@@ -77,13 +81,16 @@
                             @(((int)customer.trigia).ToString("N0") + " ₫")
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.tenkh
+                            <a asp-controller="HopDong" asp-action="Details" asp-route-id="@customer.mahopdong">
+                                @customer.tenkhachhang
+                            </a>
+
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.tennv
+                            @customer.tennhanvien
                         </td>
                         <td style="padding-left: 11px">
-                            @customer.hanhoadon.ToShortDateString()
+                            @customer.hanthanhtoan.Value.ToShortDateString()
                         </td>
 
                     </tr>

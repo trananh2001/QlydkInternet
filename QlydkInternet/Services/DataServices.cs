@@ -10,25 +10,74 @@ namespace QlydkInternet.Services
 {
     public partial class DataServices : IServices
     {
-        private QUANLYDANGKYINTERNETContext _context;
+        private QUANLYINTERNETContext _context;
 
-        public DataServices(QUANLYDANGKYINTERNETContext context)
+        public DataServices(QUANLYINTERNETContext context)
         {
             _context = context;
         }
+
+        public string TimHoaDonDangKy(string mahopdong)
+        {
+            var re = _context.Hoadon.Where(m => m.Mahopdong == mahopdong && m.Maloaihoadon == "ML001         ").FirstOrDefault();
+            if (re == null)
+                return "";
+            else return re.Mahoadon;
+        }
+        public string TaoHoaDonDK(string mahopdong, string manv)
+        {
+            Hoadon hoadon = new Hoadon();
+            Hopdong hopdong = _context.Hopdong.Where(m => m.Mahopdong == mahopdong).FirstOrDefault();
+            Khachhang kh = _context.Khachhang.Where(m => m.Makhachhang == hopdong.Makhachhang).FirstOrDefault();
+            Nhanvien nv = _context.Nhanvien.Where(m => m.Manv == hopdong.Manv).FirstOrDefault();
+
+            hoadon.Mahoadon = "TT" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            hoadon.Maloaihoadon = "ML001         ";
+            hoadon.Ngaylap = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-" + DateTime.Now.ToString("MM") + "-" + DateTime.Now.ToString("dd"));
+            hoadon.Trigia = 100000;
+            hoadon.Manhanvien = manv;
+            hoadon.Mahopdong = mahopdong;
+            hoadon.Makhachhang = hopdong.Makhachhang;
+            hoadon.Matinhtrang = "TTHDON01      ";
+            _context.Hoadon.Add(hoadon);
+            _context.SaveChanges();
+            return hoadon.Mahoadon;
+        }
+
+        public IEnumerable<Tinhtrang> GetAllTinhTrang()
+        {
+            var query = from tinhtrang in _context.Tinhtrang
+                        select tinhtrang;
+            return query;
+        }
         public Nhanvien TimNhanVien(string taikhoan, string mk)
         {
-            return _context.Nhanvien.Where(m => m.Taikhoan == taikhoan && m.Matkhau == mk).FirstOrDefault();
+            return _context.Nhanvien.Where(m => m.Tendangnhap == taikhoan && m.Matkhau == mk).FirstOrDefault();
         }
         public void ThanhToanHoaDon(string mahdon)
         {
-            var hoadon = _context.Hoadon.Where(m => m.Sohd == mahdon).FirstOrDefault();
-            hoadon.Ngaythanhtoan = DateTime.Now;
+            var hoadon = _context.Hoadon.Where(m => m.Mahoadon == mahdon).FirstOrDefault();
+            hoadon.Ngaythanhtoan = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-" + DateTime.Now.ToString("MM") + "-" + DateTime.Now.ToString("dd"));
+            hoadon.Matinhtrang = "TTHDON02      ";
             _context.SaveChanges();
         }
-        public decimal doanhthu(int month)
+
+        public void DinhChi(string mahopdong)
         {
-            decimal re = 0;
+            var hd = _context.Hopdong.Where(m=>m.Mahopdong == mahopdong).FirstOrDefault();
+            if (hd.Matinhtrang == "TTHOPDONG04   ")
+            {
+                hd.Matinhtrang = "TTHOPDONG03   ";
+            }
+            else
+            {
+                hd.Matinhtrang = "TTHOPDONG04   ";
+            }
+            _context.SaveChanges();
+        }
+        public decimal? doanhthu(int month)
+        {
+            decimal? re = 0;
             string m;
             //string month = date.ToString("MM");
             if (month < 10)
@@ -38,31 +87,23 @@ namespace QlydkInternet.Services
             else
                 m = month.ToString();
             string year = DateTime.Now.ToString("yyyy");
-            DateTime start = DateTime.Parse(year+"-"+m+"-01");
+            DateTime start = DateTime.Parse(year + "-" + m + "-01");
             DateTime end;
             if (month == 2)
             {
                 end = DateTime.Parse(year + "-" + m + "-28");
             }
             else
-                end = DateTime.Parse(year+"-"+m+"-30");
+                end = DateTime.Parse(year + "-" + m + "-30");
             var hd = from hoadon in _context.Hoadon
                      join khachhang in _context.Khachhang
-                     on hoadon.Makh equals khachhang.Makh
+                     on hoadon.Makhachhang equals khachhang.Makhachhang
                      join nhanvien in _context.Nhanvien
-                     on hoadon.Manv equals nhanvien.Manv
+                     on hoadon.Manhanvien equals nhanvien.Manv
                      where hoadon.Ngaythanhtoan != null && hoadon.Ngaythanhtoan > start && hoadon.Ngaythanhtoan < end
                      select new HoaDonViewModel
                      {
-                         sohd = hoadon.Sohd,
-                         ngin = hoadon.Ngayin,
-                         ngthanhtoan = hoadon.Ngaythanhtoan,
                          trigia = hoadon.Trigia,
-                         makh = hoadon.Makh,
-                         tenkh = khachhang.Hoten,
-                         manv = hoadon.Manv,
-                         tennv = nhanvien.Hoten,
-                         hanhoadon = hoadon.Hanhoadon,
                      };
             foreach (var item in hd)
             {
@@ -72,7 +113,6 @@ namespace QlydkInternet.Services
         }
         public int sodkmoi(int month)
         {
-            int re = 0;
             string m;
             //string month = date.ToString("MM");
             if (month < 10)
@@ -82,49 +122,59 @@ namespace QlydkInternet.Services
             else
                 m = month.ToString();
             string year = DateTime.Now.ToString("yyyy");
-            DateTime start = DateTime.Parse(year +"-"+ m + "-01");
+            DateTime start = DateTime.Parse(year + "-" + m + "-01");
             DateTime end = DateTime.Parse(year + "-" + m + "-28");
-            int count = _context.Phieudangky.Where(a => a.Ngdk > start && a.Ngdk < end).Count();
+            int count = _context.Hopdong.Where(a => a.Ngayapdung > start && a.Ngayapdung < end).Count();
             return count;
         }
 
         public IQueryable<HoaDonViewModel> thanhtoantre(DateTime date)
         {
             var re = from hoadon in _context.Hoadon
+                     join hopdong in _context.Hopdong
+                     on hoadon.Mahopdong equals hopdong.Mahopdong
                      join khachhang in _context.Khachhang
-                     on hoadon.Makh equals khachhang.Makh
+                     on hoadon.Makhachhang equals khachhang.Makhachhang
                      join nhanvien in _context.Nhanvien
-                     on hoadon.Manv equals nhanvien.Manv
-                     where (hoadon.Ngaythanhtoan == null && DateTime.Now > hoadon.Hanhoadon)
+                     on hoadon.Manhanvien equals nhanvien.Manv
+                     join loaihd in _context.Loaihoadon
+                     on hoadon.Maloaihoadon equals loaihd.Maloaihoadon
+                     join tinhtrang in _context.Tinhtrang
+                     on hoadon.Matinhtrang equals tinhtrang.Matinhtrang
+                     where (hoadon.Ngaythanhtoan == null && DateTime.Now > hoadon.Hanthanhtoan)
                      select new HoaDonViewModel
                      {
-                         sohd = hoadon.Sohd,
-                         ngin = hoadon.Ngayin,
-                         ngthanhtoan = hoadon.Ngaythanhtoan,
+                         mahoadon = hoadon.Mahoadon,
+                         ngaylap = hoadon.Ngaylap,
+                         ngaythanhtoan = hoadon.Ngaythanhtoan,
                          trigia = hoadon.Trigia,
-                         makh = hoadon.Makh,
-                         tenkh = khachhang.Hoten,
-                         manv = hoadon.Manv,
-                         tennv = nhanvien.Hoten,
-                         hanhoadon = hoadon.Hanhoadon,
+                         hanthanhtoan = hoadon.Hanthanhtoan,
+                         manhanvien = hoadon.Manhanvien,
+                         tennhanvien = nhanvien.Tennv,
+                         mahopdong = hoadon.Mahopdong,
+                         maloaihoadon = hoadon.Maloaihoadon,
+                         tenloaihoadon = loaihd.Tenloaihoadon,
+                         makhachhang = hoadon.Makhachhang,
+                         tenkhachhang = khachhang.Tenkhachhang,
+                         matinhtrang = hoadon.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang
                      };
             return re;
         }
         public IQueryable<GoiCuocViewModel> GetAllGoiCuoc()
         {
-            var re = from _goicuoc in _context.Goicuoc
-                     join _loaigoicuoc in _context.Loaigoicuoc
-                     on _goicuoc.Loaigc equals _loaigoicuoc.Maloai
+            var re = from goicuoc in _context.Goicuoc
+                     join tinhtrang in _context.Tinhtrang
+                     on goicuoc.Matinhtrang equals tinhtrang.Matinhtrang
                      select new GoiCuocViewModel
                      {
-                         tengc = _goicuoc.Tengc,
-                         magc = _goicuoc.Magc,
-                         loaigc = _loaigoicuoc.Maloai,
-                         tenloaigc = _loaigoicuoc.Tenloai,
-                         tocdo = _goicuoc.Tocdo,
-                         giacuoc = _goicuoc.Giacuoc,
-                         mota = _goicuoc.Mota,
-                         hinhanh = _goicuoc.Hinhanh
+                        magoicuoc = goicuoc.Magoicuoc,
+                        tengoicuoc = goicuoc.Tengoicuoc,
+                        cuocthuebao = goicuoc.Cuocthuebao,
+                        giacuocdem = goicuoc.Giacuocdem,
+                        giacuocngay = goicuoc.Giacuocngay,
+                        matinhtrang = goicuoc.Matinhtrang,
+                        tentinhtrang = tinhtrang.Tentinhtrang
                      };
             return re;
         }
@@ -133,71 +183,156 @@ namespace QlydkInternet.Services
         {
             var re = from khuyenmai in _context.Khuyenmai
                      join loaikm in _context.Loaikhuyenmai
-                     on khuyenmai.Loaikm equals loaikm.Maloai
-                     join loaigc in _context.Loaigoicuoc
-                     on khuyenmai.Loaigc equals loaigc.Maloai
+                     on khuyenmai.Maloaikhuyenmai equals loaikm.Maloaikhuyenmai
+                     join tinhtrang in _context.Tinhtrang
+                     on khuyenmai.Matinhtrang equals tinhtrang.Matinhtrang
                      select new KhuyenMaiViewModel
                      {
-                         makm = khuyenmai.Makm,
-                         tenkm = khuyenmai.Tenkm,
-                         loaikm = loaikm.Maloai,
-                         tenloaikm = loaikm.Tenloai,
-                         loaigc = loaigc.Maloai,
-                         tenloaigc = loaigc.Tenloai,
-                         mota = khuyenmai.Mota,
-                         ngbd = khuyenmai.Ngbd,
-                         ngkt = khuyenmai.Ngkt
+                         makhuyenmai = khuyenmai.Makhuyenmai,
+                         tenkhuyenmai = khuyenmai.Tenkhuyenmai,
+                         ngaybatdau = khuyenmai.Ngaybatdau,
+                         ngayketthuc = khuyenmai.Ngayketthuc,
+                         maloaikhuyenmai = khuyenmai.Maloaikhuyenmai,
+                         tenloaikhuyenmai = loaikm.Tenloaikhuyenmai,
+                         trigia = khuyenmai.Trigia,
+                         matinhtrang = khuyenmai.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang
                      };
             return re;
         }
 
         public IQueryable<HopDongViewModel> GetAllHopDong()
         {
-            var re = from hopdong in _context.Phieudangky
+            var re = from hopdong in _context.Hopdong
                      join khachhang in _context.Khachhang
-                     on hopdong.Makh equals khachhang.Makh
+                     on hopdong.Makhachhang equals khachhang.Makhachhang
+                     join nhanvien in _context.Nhanvien
+                     on hopdong.Manv equals nhanvien.Manv
+                     join tinhtrang in _context.Tinhtrang
+                     on hopdong.Matinhtrang equals tinhtrang.Matinhtrang
                      join goicuoc in _context.Goicuoc
-                     on hopdong.Magc equals goicuoc.Magc
-                     join loaitt in _context.Loaithanhtoan
-                     on hopdong.Loaitt equals loaitt.Maloai
+                     on hopdong.Magiocuoc equals goicuoc.Magoicuoc
                      select new HopDongViewModel
                      {
-                         mahd = hopdong.Maphieu,
-                         ngdk = hopdong.Ngdk,
-                         ngad = hopdong.Ngad,
-                         doituong = hopdong.Doituong,
-                         dccaidat = hopdong.Dccaidat,
-                         taikhoan = hopdong.Taikhoan,
-                         matkhau = hopdong.Matkhau,
-                         loaitt = hopdong.Loaitt,
-                         tenloaitt = loaitt.Tenloai,
-                         tinhtrang = hopdong.Tinhtrang,
-                         makh = hopdong.Makh,
-                         tenkh = khachhang.Hoten,
-                         magc = hopdong.Magc,
-                         tengc = goicuoc.Tengc
+                         mahopdong = hopdong.Mahopdong,
+                         ngaydangky = hopdong.Ngaydangky,
+                         ngayapdung = hopdong.Ngayapdung,
+                         diachicaidat = hopdong.Diachicaidat,
+                         diachithanhtoan = hopdong.Diachithanhtoan,
+                         makhachhang = hopdong.Makhachhang,
+                         tenkhachhang = khachhang.Tenkhachhang,
+                         magoicuoc = hopdong.Magiocuoc,
+                         tengoicuoc = goicuoc.Tengoicuoc,
+                         manhanvien = hopdong.Manv,
+                         tennhanvien = nhanvien.Tennv,
+                         matinhtrang = hopdong.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang,
+                         cmnd = khachhang.Cmnd,
+                         nghenghiep = khachhang.Nghenghiep,
+                         email = khachhang.Email,
+                         diachi = khachhang.Diachi,
+                         soluongtaikhoan = khachhang.Soluongtaikhoan
                      };
             return re;
         }
-
+        public IQueryable<HopDongViewModel> GetHopDongDinhChi()
+        {
+            var re = from hopdong in _context.Hopdong
+                     join khachhang in _context.Khachhang
+                     on hopdong.Makhachhang equals khachhang.Makhachhang
+                     join nhanvien in _context.Nhanvien
+                     on hopdong.Manv equals nhanvien.Manv
+                     join tinhtrang in _context.Tinhtrang
+                     on hopdong.Matinhtrang equals tinhtrang.Matinhtrang
+                     join goicuoc in _context.Goicuoc
+                     on hopdong.Magiocuoc equals goicuoc.Magoicuoc
+                     where hopdong.Matinhtrang == "TTHOPDONG04   "
+                     select new HopDongViewModel
+                     {
+                         mahopdong = hopdong.Mahopdong,
+                         ngaydangky = hopdong.Ngaydangky,
+                         ngayapdung = hopdong.Ngayapdung,
+                         diachicaidat = hopdong.Diachicaidat,
+                         diachithanhtoan = hopdong.Diachithanhtoan,
+                         makhachhang = hopdong.Makhachhang,
+                         tenkhachhang = khachhang.Tenkhachhang,
+                         magoicuoc = hopdong.Magiocuoc,
+                         tengoicuoc = goicuoc.Tengoicuoc,
+                         manhanvien = hopdong.Manv,
+                         tennhanvien = nhanvien.Tennv,
+                         matinhtrang = hopdong.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang,
+                         cmnd = khachhang.Cmnd,
+                         nghenghiep = khachhang.Nghenghiep,
+                         email = khachhang.Email,
+                         diachi = khachhang.Diachi,
+                         soluongtaikhoan = khachhang.Soluongtaikhoan
+                     };
+            return re;
+        }
+        public IQueryable<HoaDonViewModel> GetAllHoaDonDK()
+        {
+            var re = from hoadon in _context.Hoadon
+                     join hopdong in _context.Hopdong
+                     on hoadon.Mahopdong equals hopdong.Mahopdong
+                     join khachhang in _context.Khachhang
+                     on hopdong.Makhachhang equals khachhang.Makhachhang
+                     join nhanvien in _context.Nhanvien
+                     on hoadon.Manhanvien equals nhanvien.Manv
+                     join loaihd in _context.Loaihoadon
+                     on hoadon.Maloaihoadon equals loaihd.Maloaihoadon
+                     join tinhtrang in _context.Tinhtrang
+                     on hoadon.Matinhtrang equals tinhtrang.Matinhtrang
+                     where hoadon.Maloaihoadon == "ML001         "
+                     select new HoaDonViewModel
+                     {
+                         mahoadon = hoadon.Mahoadon,
+                         ngaylap = hoadon.Ngaylap,
+                         ngaythanhtoan = hoadon.Ngaythanhtoan,
+                         trigia = hoadon.Trigia,
+                         hanthanhtoan = hoadon.Hanthanhtoan,
+                         manhanvien = hoadon.Manhanvien,
+                         tennhanvien = nhanvien.Tennv,
+                         mahopdong = hoadon.Mahopdong,
+                         maloaihoadon = hoadon.Maloaihoadon,
+                         tenloaihoadon = loaihd.Tenloaihoadon,
+                         makhachhang = hoadon.Makhachhang,
+                         tenkhachhang = khachhang.Tenkhachhang,
+                         matinhtrang = hoadon.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang
+                     };
+            return re;
+        }
         public IQueryable<HoaDonViewModel> GetAllHoaDon()
         {
             var re = from hoadon in _context.Hoadon
+                     join hopdong in _context.Hopdong
+                     on hoadon.Mahopdong equals hopdong.Mahopdong
                      join khachhang in _context.Khachhang
-                     on hoadon.Makh equals khachhang.Makh
+                     on hopdong.Makhachhang equals khachhang.Makhachhang
                      join nhanvien in _context.Nhanvien
-                     on hoadon.Manv equals nhanvien.Manv
+                     on hoadon.Manhanvien equals nhanvien.Manv
+                     join loaihd in _context.Loaihoadon
+                     on hoadon.Maloaihoadon equals loaihd.Maloaihoadon
+                     join tinhtrang in _context.Tinhtrang
+                     on hoadon.Matinhtrang equals tinhtrang.Matinhtrang
+                     where hoadon.Maloaihoadon != "ML001         "
                      select new HoaDonViewModel
                      {
-                         sohd = hoadon.Sohd,
-                         ngin = hoadon.Ngayin,
-                         ngthanhtoan = hoadon.Ngaythanhtoan,
+                         mahoadon = hoadon.Mahoadon,
+                         ngaylap = hoadon.Ngaylap,
+                         ngaythanhtoan = hoadon.Ngaythanhtoan,
                          trigia = hoadon.Trigia,
-                         makh = hoadon.Makh,
-                         tenkh = khachhang.Hoten,
-                         manv = hoadon.Manv,
-                         tennv = nhanvien.Hoten,
-                         hanhoadon = hoadon.Hanhoadon
+                         hanthanhtoan = hoadon.Hanthanhtoan,
+                         manhanvien = hoadon.Manhanvien,
+                         tennhanvien = nhanvien.Tennv,
+                         mahopdong = hoadon.Mahopdong,
+                         maloaihoadon = hoadon.Maloaihoadon,
+                         tenloaihoadon = loaihd.Tenloaihoadon,
+                         makhachhang = hoadon.Makhachhang,
+                         tenkhachhang = khachhang.Tenkhachhang,
+                         matinhtrang = hoadon.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang
                      };
             return re;
         }
@@ -211,18 +346,6 @@ namespace QlydkInternet.Services
         {
             _context.Khuyenmai.Add(km);
             _context.SaveChanges();
-        }
-        public IEnumerable<Loaigoicuoc> GetAllLoaiGoiCuoc()
-        {
-            var query = from loaigc in _context.Loaigoicuoc
-                        select loaigc;
-            return query;
-        }
-        public IEnumerable<Loaithanhtoan> GetAllLoaiThanhToan()
-        {
-            var query = from loaitt in _context.Loaithanhtoan
-                        select loaitt;
-            return query;
         }
         public IEnumerable<Loaikhuyenmai> GetAllLoaiKhuyenMai()
         {
@@ -239,84 +362,86 @@ namespace QlydkInternet.Services
         }
         public GoiCuocViewModel TimGoiCuocTheoMa(string ma)
         {
-            var re = from _goicuoc in _context.Goicuoc
-                     join _loaigoicuoc in _context.Loaigoicuoc
-                     on _goicuoc.Loaigc equals _loaigoicuoc.Maloai
-                     where _goicuoc.Magc == ma
+
+            var re = from goicuoc in _context.Goicuoc
+                     join tinhtrang in _context.Tinhtrang
+                     on goicuoc.Matinhtrang equals tinhtrang.Matinhtrang
+                     where goicuoc.Magoicuoc == ma
                      select new GoiCuocViewModel
                      {
-                         tengc = _goicuoc.Tengc,
-                         magc = _goicuoc.Magc,
-                         loaigc = _loaigoicuoc.Maloai,
-                         tenloaigc = _loaigoicuoc.Tenloai,
-                         tocdo = _goicuoc.Tocdo,
-                         giacuoc = _goicuoc.Giacuoc,
-                         mota = _goicuoc.Mota,
-                         hinhanh = _goicuoc.Hinhanh
+                         magoicuoc = goicuoc.Magoicuoc,
+                         tengoicuoc = goicuoc.Tengoicuoc,
+                         cuocthuebao = goicuoc.Cuocthuebao,
+                         giacuocdem = goicuoc.Giacuocdem,
+                         giacuocngay = goicuoc.Giacuocngay,
+                         matinhtrang = goicuoc.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang
                      };
             return re.First();
         }
         public KhuyenMaiViewModel TimKhuyenMaiTheoMa(string ma)
         {
+
             var re = from khuyenmai in _context.Khuyenmai
                      join loaikm in _context.Loaikhuyenmai
-                     on khuyenmai.Loaikm equals loaikm.Maloai
-                     join loaigc in _context.Loaigoicuoc
-                     on khuyenmai.Loaigc equals loaigc.Maloai
-                     where khuyenmai.Makm == ma
+                     on khuyenmai.Maloaikhuyenmai equals loaikm.Maloaikhuyenmai
+                     join tinhtrang in _context.Tinhtrang
+                     on khuyenmai.Matinhtrang equals tinhtrang.Matinhtrang
+                     where khuyenmai.Makhuyenmai == ma
                      select new KhuyenMaiViewModel
                      {
-                         makm = khuyenmai.Makm,
-                         tenkm = khuyenmai.Tenkm,
-                         loaikm = loaikm.Maloai,
-                         tenloaikm = loaikm.Tenloai,
-                         loaigc = loaigc.Maloai,
-                         tenloaigc = loaigc.Tenloai,
-                         mota = khuyenmai.Mota,
-                         ngbd = khuyenmai.Ngbd,
-                         ngkt = khuyenmai.Ngkt
+                         makhuyenmai = khuyenmai.Makhuyenmai,
+                         tenkhuyenmai = khuyenmai.Tenkhuyenmai,
+                         ngaybatdau = khuyenmai.Ngaybatdau,
+                         ngayketthuc = khuyenmai.Ngayketthuc,
+                         maloaikhuyenmai = khuyenmai.Maloaikhuyenmai,
+                         tenloaikhuyenmai = loaikm.Tenloaikhuyenmai,
+                         trigia = khuyenmai.Trigia,
+                         matinhtrang = khuyenmai.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang
                      };
             return re.First();
         }
         public HopDongViewModel TimHopDongTheoMa(string ma)
         {
-            var re = from hopdong in _context.Phieudangky
+            var re = from hopdong in _context.Hopdong
                      join khachhang in _context.Khachhang
-                     on hopdong.Makh equals khachhang.Makh
+                     on hopdong.Makhachhang equals khachhang.Makhachhang
+                     join nhanvien in _context.Nhanvien
+                     on hopdong.Manv equals nhanvien.Manv
+                     join tinhtrang in _context.Tinhtrang
+                     on hopdong.Matinhtrang equals tinhtrang.Matinhtrang
                      join goicuoc in _context.Goicuoc
-                     on hopdong.Magc equals goicuoc.Magc
-                     join loaitt in _context.Loaithanhtoan
-                     on hopdong.Loaitt equals loaitt.Maloai
-                     where hopdong.Maphieu == ma
+                     on hopdong.Magiocuoc equals goicuoc.Magoicuoc
+                     where hopdong.Mahopdong == ma
                      select new HopDongViewModel
                      {
-                         mahd = hopdong.Maphieu,
+                         mahopdong = hopdong.Mahopdong,
+                         ngaydangky = hopdong.Ngaydangky,
+                         ngayapdung = hopdong.Ngayapdung,
+                         diachicaidat = hopdong.Diachicaidat,
+                         diachithanhtoan = hopdong.Diachithanhtoan,
+                         makhachhang = hopdong.Makhachhang,
+                         tenkhachhang = khachhang.Tenkhachhang,
+                         magoicuoc = hopdong.Magiocuoc,
+                         tengoicuoc = goicuoc.Tengoicuoc,
+                         manhanvien = hopdong.Manv,
+                         tennhanvien = nhanvien.Tennv,
+                         matinhtrang = hopdong.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang,
                          cmnd = khachhang.Cmnd,
-                         sdt = khachhang.Sdt,
+                         nghenghiep = khachhang.Nghenghiep,
                          email = khachhang.Email,
                          diachi = khachhang.Diachi,
-                         nghenghiep = khachhang.Nghenghiep,
-                         ngdk = hopdong.Ngdk,
-                         ngad = hopdong.Ngad,
-                         doituong = hopdong.Doituong,
-                         dccaidat = hopdong.Dccaidat,
-                         dchoadon = hopdong.Dchoadon,
-                         taikhoan = hopdong.Taikhoan,
-                         matkhau = hopdong.Matkhau,
-                         loaitt = hopdong.Loaitt,
-                         tenloaitt = loaitt.Tenloai,
-                         tinhtrang = hopdong.Tinhtrang,
-                         makh = hopdong.Makh,
-                         tenkh = khachhang.Hoten,
-                         magc = hopdong.Magc,
-                         tengc = goicuoc.Tengc
+                         soluongtaikhoan = khachhang.Soluongtaikhoan,
+                         sdt = khachhang.Sdt
                      };
             return re.First();
         }
 
-        public void TaoHopDong(Phieudangky hd)
+        public void TaoHopDong(Hopdong hd)
         {
-            _context.Phieudangky.Add(hd);
+            _context.Hopdong.Add(hd);
             _context.SaveChanges();
         }
         public void TaoKhachHang(Khachhang kh)
@@ -332,154 +457,196 @@ namespace QlydkInternet.Services
         public Hoadon TimHoaDonTheoMaKH(string ma)
         {
             var re = from hoadon in _context.Hoadon
-                     where hoadon.Makh == ma
-                     orderby hoadon.Ngayin descending
+                     where hoadon.Makhachhang == ma
+                     orderby hoadon.Ngaylap descending
                      select hoadon;
             return re.FirstOrDefault();
 
-           // return _context.Hoadon.FirstOrDefault(i => i.Makh == ma);
+            // return _context.Hoadon.FirstOrDefault(i => i.Makh == ma);
         }
         public HoaDonViewModel TimHoaDon(string ma)
         {
             var re = from hoadon in _context.Hoadon
-                     join kh in _context.Khachhang
-                     on hoadon.Makh equals kh.Makh
-                     join nv in _context.Nhanvien
-                     on hoadon.Manv equals nv.Manv
-                     where hoadon.Sohd == ma
+                     join khachhang in _context.Khachhang
+                     on hoadon.Makhachhang equals khachhang.Makhachhang
+                     join hopdong in _context.Hopdong
+                     on khachhang.Makhachhang equals hopdong.Makhachhang
+                     join nhanvien in _context.Nhanvien
+                     on hoadon.Manhanvien equals nhanvien.Manv
+                     join loaihd in _context.Loaihoadon
+                     on hoadon.Maloaihoadon equals loaihd.Maloaihoadon
+                     join tinhtrang in _context.Tinhtrang
+                     on hoadon.Matinhtrang equals tinhtrang.Matinhtrang
+                     where hoadon.Mahoadon == ma
                      select new HoaDonViewModel
                      {
-                         sohd = hoadon.Sohd,
-                         ngin = hoadon.Ngayin,
-                         ngthanhtoan = hoadon.Ngaythanhtoan,
+                         mahoadon = hoadon.Mahoadon,
+                         ngaylap = hoadon.Ngaylap,
+                         ngaythanhtoan = hoadon.Ngaythanhtoan,
                          trigia = hoadon.Trigia,
-                         makh = hoadon.Makh,
-                         tenkh = kh.Hoten,
-                         manv = hoadon.Manv,
-                         tennv = nv.Hoten,
-                         hanhoadon = hoadon.Hanhoadon,
-                         diachi = kh.Diachi,
-                         cmnd = kh.Cmnd,
-                         email = kh.Email,
-                         sdt = kh.Sdt
+                         hanthanhtoan = hoadon.Hanthanhtoan,
+                         manhanvien = hoadon.Manhanvien,
+                         tennhanvien = nhanvien.Tennv,
+                         mahopdong = hoadon.Mahopdong,
+                         maloaihoadon = hoadon.Maloaihoadon,
+                         tenloaihoadon = loaihd.Tenloaihoadon,
+                         makhachhang = hoadon.Makhachhang,
+                         tenkhachhang = khachhang.Tenkhachhang,
+                         matinhtrang = hoadon.Matinhtrang,
+                         tentinhtrang = tinhtrang.Tentinhtrang,
+                         sdt = khachhang.Sdt,
+                         email = khachhang.Email,
+                         diachithanhtoan = hopdong.Diachithanhtoan
                      };
             return re.First();
         }
-        public Apdung TimApDungKM(string makh)
+        public Apdung TimApDungKM(string mahd)
         {
             var re = from ad in _context.Apdung
-                     where ad.Makh == makh
-                     orderby ad.Ngad descending
+                     where ad.Mahopdong == mahd
+                     orderby ad.Makhuyenmai descending
                      select ad;
 
             return re.FirstOrDefault();
         }
         public IQueryable<HopDongViewModel> GetHopDongToiHan()
         {
-            var re = (from hopdong in _context.Phieudangky
+
+            var re = (from hopdong in _context.Hopdong
                       join khachhang in _context.Khachhang
-                      on hopdong.Makh equals khachhang.Makh
+                      on hopdong.Makhachhang equals khachhang.Makhachhang
+                      join nhanvien in _context.Nhanvien
+                      on hopdong.Manv equals nhanvien.Manv
+                      join tinhtrang in _context.Tinhtrang
+                      on hopdong.Matinhtrang equals tinhtrang.Matinhtrang
                       join goicuoc in _context.Goicuoc
-                      on hopdong.Magc equals goicuoc.Magc
-                      join loaitt in _context.Loaithanhtoan
-                      on hopdong.Loaitt equals loaitt.Maloai
-                      where hopdong.Ngad < DateTime.Now
+                      on hopdong.Magiocuoc equals goicuoc.Magoicuoc
+                      where hopdong.Matinhtrang != "TTHOPDONG04   "
                       select new HopDongViewModel
                       {
-                          mahd = hopdong.Maphieu,
-                          ngdk = hopdong.Ngdk,
-                          ngad = hopdong.Ngad,
-                          doituong = hopdong.Doituong,
-                          dccaidat = hopdong.Dccaidat,
-                          taikhoan = hopdong.Taikhoan,
-                          matkhau = hopdong.Matkhau,
-                          loaitt = hopdong.Loaitt,
-                          tenloaitt = loaitt.Tenloai,
-                          tinhtrang = hopdong.Tinhtrang,
-                          makh = hopdong.Makh,
-                          tenkh = khachhang.Hoten,
-                          magc = hopdong.Magc,
-                          tengc = goicuoc.Tengc
+                          mahopdong = hopdong.Mahopdong,
+                          ngaydangky = hopdong.Ngaydangky,
+                          ngayapdung = hopdong.Ngayapdung,
+                          diachicaidat = hopdong.Diachicaidat,
+                          diachithanhtoan = hopdong.Diachithanhtoan,
+                          makhachhang = hopdong.Makhachhang,
+                          tenkhachhang = khachhang.Tenkhachhang,
+                          magoicuoc = hopdong.Magiocuoc,
+                          tengoicuoc = goicuoc.Tengoicuoc,
+                          manhanvien = hopdong.Manv,
+                          tennhanvien = nhanvien.Tennv,
+                          matinhtrang = hopdong.Matinhtrang,
+                          tentinhtrang = tinhtrang.Tentinhtrang,
+                          cmnd = khachhang.Cmnd,
+                          nghenghiep = khachhang.Nghenghiep,
+                          email = khachhang.Email,
+                          diachi = khachhang.Diachi,
+                          soluongtaikhoan = khachhang.Soluongtaikhoan
                       }).ToList();
 
-            foreach (var item in re.ToList())
+            foreach (HopDongViewModel item in re.ToList())
             {
-                var hdon = TimHoaDonTheoMaKH(item.makh);
+                var hdon = TimHoaDonTheoMaKH(item.makhachhang);
                 if (hdon == null)
                 {
-                    if (DateTime.Now.Subtract(item.ngad).TotalDays < 20)
+                    if (DateTime.Now.Subtract(item.ngayapdung.Value).TotalDays < 28)
                     {
                         re.Remove(item);
                     }
                 }
                 else
                 {
-                    if (DateTime.Now.Subtract(hdon.Ngayin).TotalDays < 20)
-                    {
-                        re.Remove(item);
-                    }
-                }
-                
-            }
-            foreach (var item in re.ToList())
-            {
-                var ad = TimApDungKM(item.makh);
-                if (ad != null)
-                {
-                    var km = TimKhuyenMaiTheoMa(ad.Makm);
-                    if (DateTime.Now.Subtract(ad.Ngad).TotalDays < 30 * km.trigia)
+                    if (DateTime.Now.Subtract(hdon.Ngaylap.Value).TotalDays < 28)
                     {
                         re.Remove(item);
                     }
                 }
             }
+            //foreach (var HopDongViewModel in re.ToList())
+            //{
+            //    var ad = TimApDungKM(item.makh);
+            //    if (ad != null)
+            //    {
+            //        var km = TimKhuyenMaiTheoMa(ad.Makm);
+            //        if (DateTime.Now.Subtract(ad.Ngad).TotalDays < 30 * km.trigia)
+            //        {
+            //            re.Remove(item);
+            //        }
+            //    }
+            //}
             var res = re.AsQueryable();
             return res;
         }
 
-        public void CapNhatGoiCuoc(string Magc, string Tengc, string Loaigc, string Tocdo, decimal Giacuoc, string Mota)
+        public void CapNhatGoiCuoc(string Magc, string Tengc, decimal cuocthuebao, decimal giacuocngay, decimal giacuocdem, string matinhtrang)
         {
-            var goicuoc = _context.Goicuoc.Where(m => m.Magc == Magc).FirstOrDefault();
-            goicuoc.Tengc = Tengc;
-            goicuoc.Loaigc = Loaigc;
-            goicuoc.Tocdo = Tocdo;
-            goicuoc.Giacuoc = Giacuoc;
-            goicuoc.Mota = Mota;
+            var goicuoc = _context.Goicuoc.Where(m => m.Magoicuoc == Magc).FirstOrDefault();
+            goicuoc.Tengoicuoc = Tengc;
+            goicuoc.Cuocthuebao = cuocthuebao;
+            goicuoc.Giacuocdem = giacuocdem;
+            goicuoc.Giacuocngay = giacuocngay;
+            goicuoc.Matinhtrang = matinhtrang;
             _context.SaveChanges();
         }
 
-        public void CapNhatKhuyenMai(string Makm, string Tenkm, string Loaikm, string Loaigc, string Mota, DateTime Ngbd, DateTime? Ngkt, int? Trigia)
+        public void CapNhatKhuyenMai(string makhuyenmai,string tenkhuyenmai, string maloaikhuyenmai, string ngaybatdau, string ngayketthuc, int trigia, string matinhtrang)
         {
-            var khuyenmai = _context.Khuyenmai.Where(m => m.Makm == Makm).FirstOrDefault();
-            khuyenmai.Tenkm = Tenkm;
-            khuyenmai.Loaikm = Loaikm;
-            khuyenmai.Loaigc = Loaigc;
-            khuyenmai.Mota = Mota;
-            khuyenmai.Ngbd = Ngbd;
-            khuyenmai.Ngkt = Ngkt;
-            khuyenmai.Trigia = Trigia;
+            var khuyenmai = _context.Khuyenmai.Where(m => m.Makhuyenmai == makhuyenmai).FirstOrDefault();
+            khuyenmai.Tenkhuyenmai = tenkhuyenmai;
+
+            string[] date = ngaybatdau.Split("/");
+            string time = "";
+            if (date[1].Length == 1)
+            {
+                time = date[2] + "-0" + date[1] + "-" + date[0];
+            }
+            else
+            {
+                time = date[2] + "-" + date[1] + "-" + date[0];
+            }
+            khuyenmai.Ngaybatdau = DateTime.Parse(time);
+            date = ngayketthuc.Split("/");
+            time = "";
+            if (date[1].Length == 1)
+            {
+                time = date[2] + "-0" + date[1] + "-" + date[0];
+            }
+            else
+            {
+                time = date[2] + "-" + date[1] + "-" + date[0];
+            }
+            khuyenmai.Ngayketthuc = DateTime.Parse(time);
+
+            khuyenmai.Trigia = trigia;
+            khuyenmai.Matinhtrang = matinhtrang;
             _context.SaveChanges();
         }
 
-        public void CapNhatHopDong(string Maphieu, DateTime Ngad, string Doituong, string Dccaidat, string Dchoadon, string Matkhau, string Loaitt, string Tinhtrang, string Makh, string Magc, string Hoten, DateTime Ngsinh, string Sdt, string Nghenghiep, string Email, string Diachi, string Cmnd)
+        public void CapNhatHopDong(string mahopdong, string diachicaidat, string diachithanhtoan, string tenkhachhang, string magoicuoc, string matinhtrang, string cmnd, string nghenghiep, string email, string diachi, string soluongtaikhoan, string sdt, string ngayapdung)
         {
-            var hopdong = _context.Phieudangky.Where(m => m.Maphieu == Maphieu).FirstOrDefault();
-            var khachhang = _context.Khachhang.Where(m => m.Makh == Makh).FirstOrDefault();
-            hopdong.Ngad = Ngad;
-            hopdong.Doituong = Doituong;
-            hopdong.Dccaidat = Dccaidat;
-            hopdong.Dchoadon = Dchoadon;
-            hopdong.Tinhtrang = Tinhtrang;
-            hopdong.Matkhau = Matkhau;
-            hopdong.Loaitt = Loaitt;
-            hopdong.Magc = Magc;
-            khachhang.Hoten = Hoten;
-            khachhang.Ngsinh = Ngsinh;
-            khachhang.Sdt = Sdt;
-            khachhang.Nghenghiep = Nghenghiep;
-            khachhang.Email = Email;
-            khachhang.Diachi = Diachi;
-            khachhang.Cmnd = Cmnd;
+            var hopdong = _context.Hopdong.Where(m => m.Mahopdong == mahopdong).FirstOrDefault();
+            hopdong.Diachicaidat = diachicaidat;
+            hopdong.Diachithanhtoan = diachithanhtoan;
+            hopdong.Magiocuoc = magoicuoc;
+            hopdong.Matinhtrang = matinhtrang;
+            string[] date = ngayapdung.Split("/");
+            string time = "";
+            if (date[1].Length == 1)
+            {
+                time = date[2] + "-0" + date[1] + "-" + date[0];
+            }
+            else
+            {
+                time = date[2] + "-" + date[1] + "-" + date[0];
+            }
+            hopdong.Ngayapdung = DateTime.Parse(time);
+            var khachhang = _context.Khachhang.Where(m => m.Makhachhang == hopdong.Makhachhang).FirstOrDefault();
+            khachhang.Tenkhachhang = tenkhachhang;
+            khachhang.Cmnd = cmnd;
+            khachhang.Nghenghiep = nghenghiep;
+            khachhang.Email = email;
+            khachhang.Diachi = diachi;
+            khachhang.Sdt = sdt;
             _context.SaveChanges();
         }
     }

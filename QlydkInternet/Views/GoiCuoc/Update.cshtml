@@ -3,8 +3,13 @@
     ViewData["Title"] = "Cập nhật gói cước";
 }
 
-@section menu{
-    
+@section Nhanvien{
+
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <h2>Cập nhật gói cước</h2>
@@ -21,73 +26,72 @@
                 <div class="ui search" id="provider-search">
                     <input class="prompt"
                            id="tengc"
-                           asp-for="@Model.tengc"
+                           asp-for="@Model.tengoicuoc"
                            placeholder="Tên gói cước"
-                           value="@Model.tengc">
+                           value="@Model.tengoicuoc">
                     <input class="prompt"
                            type="hidden"
-                           asp-for="@Model.magc"
+                           asp-for="@Model.magoicuoc"
                            placeholder="Tên gói cước"
-                           value="@Model.magc">
+                           value="@Model.magoicuoc">
 
                     <div class="results"></div>
                 </div>
             </div>
             <div class="field">
-                <label>Loại gói cước</label>
+                <label>Cước thuê bao</label>
+                <input type="number"
+                       placeholder="Cước thuê bao"
+                       asp-for="@Model.cuocthuebao"
+                       id="giacuoc"
+                       value="@Model.cuocthuebao">
+            </div>
+            <div class="field">
+                <label>Giá cước đêm</label>
+                <input type="text"
+                       placeholder="Giá cước đêm"
+                       asp-for="@Model.giacuocdem"
+                       id="tocdo"
+                       value="@Model.giacuocdem">
+            </div>
+            <div class="field">
+                <label>Giá cước ngày</label>
+                <input type="number"
+                       placeholder="Giá cước ngày"
+                       asp-for="@Model.giacuocngay"
+                       id="giacuoc"
+                       value="@Model.giacuocngay">
+            </div>
+            <div class="field">
+                <label>Tình trạng</label>
                 <select class="ui fluid dropdown"
                         id="loaigc"
-                        asp-for="@Model.loaigc"
-                        asp-items="@Model.listloaigc"
-                        data-validate="valid-customer-type"></select>
-            </div>
-            <div class="field">
-                <label>Tốc độ</label>
-                <input type="text"
-                       placeholder="Tốc độ"
-                       asp-for="@Model.tocdo"
-                       id="tocdo"
-                       value="@Model.tocdo">
-            </div>
-            <div class="field">
-                <label>Giá cước</label>
-                <input type="number"
-                       placeholder="Giá cước"
-                       asp-for="@Model.giacuoc"
-                       id="giacuoc"
-                       value="@Model.giacuoc">
-            </div>
-            <div class="field">
-                <label>Mô tả</label>
-                <textarea type="text"
-                          name="mota"
-                          placeholder="Mô tả"
-                          asp-for="@Model.mota"
-                          data-validate="valid-phone"
-                          rows="2"
-                          id="mota">@Model.mota</textarea>
-            </div>
-
-            <div class="ui center aligned segment" style="border:none; box-shadow:none">
-                <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:19%">Lưu</button>
-                <div class="ui reset toggle button" id="btnXoa" style="width:19%">Hủy</div>
-            </div>
-        </form>
+                        asp-for="@Model.matinhtrang"
+                        asp-items="@Model.listtinhtrang"
+                        data-validate="valid-customer-type">
+                    @Model.tentinhtrang
+                    </select>
+                </div>
+                <div class="ui center aligned segment" style="border:none; box-shadow:none">
+                    <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:19%">Lưu</button>
+                    <div class="ui reset toggle button" id="btnXoa" style="width:19%">Hủy</div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<div class="ui tiny modal" id="notify-modal">
-    <div class="header">Thành công</div>
-    <div class="content">
-        <p></p>
-        <p></p>
-        <p></p>
+    <div class="ui tiny modal" id="notify-modal">
+        <div class="header">Thành công</div>
+        <div class="content">
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
     </div>
-</div>
 
-<script src="~/js/cleave.min.js"></script>
-<script src="~/js/numeral.min.js"></script>
+    <script src="~/js/cleave.min.js"></script>
+    <script src="~/js/numeral.min.js"></script>
 
-<script>
+    <script>
     $(document).ready(function () {
         $("#btnXoa").on("click", function () {
             var url = '@Url.Action("Index","GoiCuoc")';
@@ -95,7 +99,7 @@
         })
         $("#qlgc").addClass("ui active");
     })
-</script>
+    </script>
 
 
 

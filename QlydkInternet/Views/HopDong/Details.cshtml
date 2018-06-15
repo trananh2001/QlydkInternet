@@ -3,8 +3,13 @@
     ViewData["Title"] = "Chi tiết hợp đồng";
 }
 
-@section menu{
+@section Nhanvien{
 
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <h2>Chi tiết hợp đồng</h2>
@@ -17,13 +22,13 @@
         <div class="column">
             <h3 class="ui dividing header">
                 Mã hợp dồng
-                <div class="sub header" style="font-size:2rem">@Model.mahd</div>
+                <div class="sub header" style="font-size:2rem">@Model.mahopdong</div>
             </h3>
         </div>
         <div class="column">
             <h3 class="ui dividing header">
                 Tên khách hàng
-                <div class="sub header" style="font-size:2rem">@Model.tenkh</div>
+                <div class="sub header" style="font-size:2rem">@Model.tenkhachhang</div>
             </h3>
         </div>
     </div>
@@ -31,13 +36,13 @@
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
                 Loại gói cước
-                <div class="sub header" style="font-size:2rem">@Model.tengc</div>
+                <div class="sub header" style="font-size:2rem">@Model.tengoicuoc</div>
             </h3>
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
-                Loại thanh toán
-                <div class="sub header" style="font-size:2rem">@Model.tenloaitt</div>
+                Tình trạng
+                <div class="sub header" style="font-size:2rem">@Model.tentinhtrang</div>
             </h3>
         </div>
 
@@ -46,31 +51,52 @@
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
                 Địa chỉ cài đặt
-                <div class="sub header" style="font-size:2rem">@Model.dccaidat</div>
+                <div class="sub header" style="font-size:2rem">@Model.diachicaidat</div>
             </h3>
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
                 Địa chỉ thanh toán
-                <div class="sub header" style="font-size:2rem">@Model.dchoadon</div>
+                <div class="sub header" style="font-size:2rem">@Model.diachithanhtoan</div>
             </h3>
         </div>
     </div>
     <div class="row">
-        <div class="column" id="tenkhachhang">
-            <h3 class="ui dividing header">
-                Ngày đăng ký
-                <div class="sub header" style="font-size:2rem">@Model.ngdk.ToString("dd/MM/yyyy")</div>
-            </h3>
-        </div>
-        <div class="column" id="tenncc">
-            <h3 class="ui dividing header">
-                Ngày áp dụng
-                <div class="sub header" style="font-size:2rem">@Model.ngad.ToString("dd/MM/yyyy")</div>
-            </h3>
-        </div>
+        @if (Model.ngaydangky.HasValue)
+        {
+            <div class="column" id="tenkhachhang">
+                <h3 class="ui dividing header">
+                    Ngày đăng ký
+                    <div class="sub header" style="font-size:2rem">@Model.ngaydangky.Value.ToString("dd/MM/yyyy")</div>
+                </h3>
+            </div>
+            <div class="column" id="tenncc">
+                <h3 class="ui dividing header">
+                    Ngày áp dụng
+                    <div class="sub header" style="font-size:2rem">@Model.ngayapdung.Value.ToString("dd/MM/yyyy")</div>
+                </h3>
+            </div>
+
+        }
+        @if (!Model.ngaydangky.HasValue)
+        {
+            <div class="column" id="tenkhachhang">
+                <h3 class="ui dividing header">
+                    Ngày đăng ký
+                    <div class="sub header" style="font-size:2rem"></div>
+                </h3>
+            </div>
+            <div class="column" id="tenncc">
+                <h3 class="ui dividing header">
+                    Ngày áp dụng
+                    <div class="sub header" style="font-size:2rem"></div>
+                </h3>
+            </div>
+
+        }
+
     </div>
-    
+
 </div>
 
 <h2>Thông tin khách hàng</h2>
@@ -96,14 +122,14 @@
     <div class="row">
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
-                Ngày sinh
-                <div class="sub header" style="font-size:2rem">@Model.ngsinh</div>
+                Email
+                <div class="sub header" style="font-size:2rem">@Model.email</div>
             </h3>
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
-                Địa chỉ
-                <div class="sub header" style="font-size:2rem">@Model.diachi</div>
+                Nghề nghiệp
+                <div class="sub header" style="font-size:2rem">@Model.nghenghiep</div>
             </h3>
         </div>
 
@@ -111,41 +137,40 @@
     <div class="row">
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
-                Tên đăng nhập
-                <div class="sub header" style="font-size:2rem">@Model.taikhoan</div>
+                Địa chỉ
+                <div class="sub header" style="font-size:2rem">@Model.diachi</div>
             </h3>
         </div>
-        <div class="column" id="tenncc">
-            <h3 class="ui dividing header">
-                Mật khẩu
-                <div class="sub header" style="font-size:2rem">@Model.matkhau</div>
-            </h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="column" id="tenkhachhang">
-            <h3 class="ui dividing header">
-                Nghề nghiệp
-                <div class="sub header" style="font-size:2rem">@Model.nghenghiep</div>
-            </h3>
-        </div>
-        <div class="column" id="tenncc">
-            <h3 class="ui dividing header">
-                Email
-                <div class="sub header" style="font-size:2rem">@Model.email</div>
-            </h3>
-        </div>
+        @*<div class="column" id="tenncc">
+                <h3 class="ui dividing header">
+                    Email
+                    <div class="sub header" style="font-size:2rem">@Model.email</div>
+                </h3>
+            </div>*@
     </div>
 </div>
 <form class="ui form" asp-controller="HopDong" asp-action="Update" method="get" id="createform" style="width:100%">
     <input class="prompt"
            type="hidden"
-           asp-for="@Model.mahd"
+           asp-for="@Model.mahopdong"
            placeholder="Tên gói cước"
-           value="@Model.mahd">
+           value="@Model.mahopdong"
+           id="mahd">
     <div class="ui center aligned segment" style="border:none; box-shadow:none">
         <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:11%">Chỉnh sửa</button>
         <div class="ui reset toggle button" id="btnXoa" style="width:11%">Quay lại</div>
+        @if (Model.mahddk == "" && Model.matinhtrang == "TTHOPDONG03   ")
+        {
+            <div class="ui primary toggle button" id="lhd">Lập hóa đơn đăng ký</div>
+        }
+        @if (Model.matinhtrang == "TTHOPDONG03   ")
+        {
+            <div class="ui primary toggle button" id="dinhchi">Đình chỉ</div>
+        }
+        @if (Model.matinhtrang == "TTHOPDONG04   ")
+        {
+            <div class="ui primary toggle button" id="dinhchi">Hủy đình chỉ</div>
+        }
     </div>
 </form>
 <script>
@@ -153,6 +178,16 @@
         $("#btnXoa").on("click", function () {
             var url = '@Url.Action("Index","HopDong")';
             window.location = url;
+        })
+        $("#lhd").on("click", function () {
+            var url = '@Url.Action("TaoHDDK","HoaDon")';
+            var keyword = $("#mahd").val();
+            window.location = url + "?mahopdong=" + keyword;
+        })
+        $("#dinhchi").on("click", function () {
+            var url = '@Url.Action("DinhChi","HopDong")';
+            var keyword = $("#mahd").val();
+            window.location = url + "?mahopdong=" + keyword;
         })
         $("#qlhd").addClass("ui active");
     })

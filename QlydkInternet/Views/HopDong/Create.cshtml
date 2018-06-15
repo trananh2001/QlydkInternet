@@ -7,8 +7,13 @@
 <script src="~/lib/jquery/dist/jquery-2.1.4.js"></script>
 <script src="~/lib/semantic/calendar.js"></script>
 
-@section menu{
-   
+@section Nhanvien{
+
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <h2 style="margin-top:0">Thông tin khách hàng</h2>
@@ -16,13 +21,13 @@
     <div class="ui ten wide column">
         <form class="ui form" asp-controller="HopDong" asp-action="Create" id="createform">
             @*
-        nhập thông tin khách hàng
+                nhập thông tin khách hàng
             *@
             <div class="field" id="providerFields">
                 <label>Họ tên</label>
                 <input class="prompt"
-                       id="tenkh"
-                       asp-for="@Model.tenkh"
+                       id="hoten"
+                       asp-for="@Model.tenkhachhang"
                        placeholder="Tên khách hàng">
             </div>
             <div class="field">
@@ -31,19 +36,6 @@
                        id="cmnd"
                        asp-for="@Model.cmnd"
                        placeholder="Chứng minh nhân dân">
-            </div>
-            <div class="field">
-                <label>Ngày sinh</label>
-                @*<input type="number"
-            placeholder="Ngày sinh"
-            asp-for="@Model.ngsinh"
-            id="ngsinh">*@
-                <div class="ui calendar" id="ngaysinh">
-                    <div class="ui input left icon">
-                        <i class="calendar icon"></i>
-                        <input id="ngsinh" type="text" placeholder="Ngày sinh" asp-for="@Model.ngsinh">
-                    </div>
-                </div>
             </div>
             <div class="field">
                 <label>Số điện thoại</label>
@@ -74,15 +66,15 @@
                        asp-for="@Model.nghenghiep">
             </div>
             @*
-        nhập thông tin hợp đồng
+                nhập thông tin hợp đồng
             *@
             <h2 style="text-align:center; margin-top:0">Thông tin hợp đồng</h2>
             <div class="field" id="providerFields">
                 <label>Ngày áp dụng</label>
                 @*<input class="prompt"
-            id="ngad"
-            asp-for="@Model.ngad"
-            placeholder="Ngày áp dụng">*@
+                    id="ngad"
+                    asp-for="@Model.ngad"
+                    placeholder="Ngày áp dụng">*@
                 <div class="ui calendar" id="rangestart" style="display:none">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
@@ -92,48 +84,41 @@
                 <div class="ui calendar" id="rangeend">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
-                        <input id="ngad" type="text" placeholder="Ngày áp dụng" asp-for="@Model.ngad">
+                        <input id="ngad" type="text" placeholder="Ngày áp dụng" asp-for="@Model.ngayapdung">
                     </div>
                 </div>
-            </div>
-            <div class="field">
-                <label>Đối tượng</label>
-                <input class="prompt"
-                       id="doituong"
-                       asp-for="@Model.doituong"
-                       placeholder="Đối tượng">
             </div>
             <div class="field">
                 <label>Địa chỉ cài đặt</label>
                 <input type="text"
                        placeholder="Địa chỉ cài đặt"
-                       asp-for="@Model.dccaidat"
+                       asp-for="@Model.diachicaidat"
                        id="dccaidat">
             </div>
             <div class="field">
                 <label>Địa chỉ hóa đơn</label>
                 <input type="text"
                        placeholder="Địa chỉ hóa đơn"
-                       asp-for="@Model.dchoadon"
+                       asp-for="@Model.diachithanhtoan"
                        id="dchoadon">
             </div>
             <div class="field">
-                <label>Loại thanh toán</label>
+                <label>Gói cước</label>
                 <select class="ui fluid dropdown"
-                        id="loaitt"
-                        asp-for="@Model.loaitt"
-                        asp-items="@Model.listloaitt"
+                        id="magoicuoc"
+                        asp-for="@Model.magoicuoc"
+                        asp-items="@Model.listgc"
                         data-validate="valid-customer-type"></select>
             </div>
             <div class="field">
-                <label>Gói cước</label>
+                <label>Tình trạng</label>
                 @*<input type="text"
-            placeholder="Gói cước"
-            asp-for="@Model.magc">*@
+                    placeholder="Gói cước"
+                    asp-for="@Model.magc">*@
                 <select class="ui fluid dropdown"
-                        id="magc"
-                        asp-for="@Model.magc"
-                        asp-items="@Model.listgc"
+                        id="matinhtrang"
+                        asp-for="@Model.matinhtrang"
+                        asp-items="@Model.listtinhtrang"
                         data-validate="valid-customer-type"></select>
             </div>
             <div class="ui center aligned segment" style="border:none; box-shadow:none">
@@ -226,38 +211,33 @@
         $('#btnThem').on("click", function () {
             var url = $("#createform").attr("action");
 
-            var tenkh = $("#tenkh").val();
+            var tenkh = $("#hoten").val();
             var cmnd = $("#cmnd").val();
-            var ngsinh = $("#ngsinh").val();
             var sdt = $("#sdt").val();
             var email = $("#email").val();
             var diachi = $("#diachi").val();
+            var nghenghiep = $("#nghenghiep").val();
 
             var ngad = $("#ngad").val();
-            var doituong = $("#doituong").val();
             var dccaidat = $("#dccaidat").val();
             var dchoadon = $("#dchoadon").val();
-            var loaitt = $("#loaitt").val();
-            var magc = $("#magc").val();
-            var nghenghiep = $("#nghenghiep").val();
+            var magc = $("#magoicuoc").val();
+            var matinhtrang = $("#matinhtrang").val();
 
             var token = $('#createform input').val();
 
             var data = {
-                ngad: ngad,
-                doituong: doituong,
-                dccaidat: dccaidat,
-                dchoadon: dchoadon,
-                loaitt: loaitt,
-                trigia: trigia,
-                magc: magc,
-                tenkh: tenkh,
-                ngsinh: ngsinh,
+                tenkhachhang: tenkh,
+                cmnd: cmnd,
                 sdt: sdt,
                 email: email,
                 diachi: diachi,
-                cmnd: magc,
                 nghenghiep: nghenghiep,
+                ngayapdung: ngad,
+                diachicaidat: dccaidat,
+                diachithanhtoan: dchoadon,
+                magoicuoc: magc,
+                matinhtrang: matinhtrang,
                 __RequestVerificationToken: token
             }
             $.ajax({

@@ -3,8 +3,13 @@
     ViewData["Title"] = "Chi tiết khuyến mãi";
 }
 
-@section menu{
-    
+@section Nhanvien{
+
+    <img src="/images/patrick.png" class="ui circular image" style="margin-left: 73px; max-width:28%;margin-top:7px">
+
+    <h2 class="ui header" style="text-align:  center;color: wheat;margin-top: 0;">
+        @ViewBag.sessionnv
+    </h2>
 }
 
 <h2>Chi tiết khuyến mãi</h2>
@@ -17,27 +22,27 @@
         <div class="column">
             <h3 class="ui dividing header">
                 Mã khuyến mãi
-                <div class="sub header" style="font-size:2rem">@Model.makm</div>
+                <div class="sub header" style="font-size:2rem">@Model.makhuyenmai</div>
             </h3>
         </div>
         <div class="column">
             <h3 class="ui dividing header">
                 Tên khuyến mãi
-                <div class="sub header" style="font-size:2rem">@Model.tenkm</div>
+                <div class="sub header" style="font-size:2rem">@Model.tenkhuyenmai</div>
             </h3>
         </div>
     </div>
     <div class="row">
-        <div class="column" id="tenkhachhang">
+        <div class="column">
             <h3 class="ui dividing header">
-                Loại gói cước
-                <div class="sub header" style="font-size:2rem">@Model.tenloaigc</div>
+                Trị giá
+                <div class="sub header" style="font-size:2rem">@(((int)Model.trigia).ToString("N0") + "%")</div>
             </h3>
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
                 Loại khuyến mãi
-                <div class="sub header" style="font-size:2rem">@Model.tenloaikm</div>
+                <div class="sub header" style="font-size:2rem">@Model.tenloaikhuyenmai</div>
             </h3>
         </div>
 
@@ -46,13 +51,13 @@
         <div class="column" id="tenkhachhang">
             <h3 class="ui dividing header">
                 Ngày bắt đầu
-                <div class="sub header" style="font-size:2rem">@Model.ngbd.ToString("dd/MM/yyyy")</div>
+                <div class="sub header" style="font-size:2rem">@Model.ngaybatdau.Value.ToString("dd/MM/yyyy")</div>
             </h3>
         </div>
         <div class="column" id="tenncc">
             <h3 class="ui dividing header">
                 Ngày kết thúc
-                <div class="sub header" style="font-size:2rem">@Model.ngkt.Value.ToString("dd/MM/yyyy")</div>
+                <div class="sub header" style="font-size:2rem">@Model.ngayketthuc.Value.ToString("dd/MM/yyyy")</div>
             </h3>
         </div>
 
@@ -60,15 +65,8 @@
     <div class="row">
         <div class="column">
             <h3 class="ui dividing header">
-                Giá cước
-                <div class="sub header" style="font-size:2rem">@(((int)Model.trigia).ToString("N0") + "%")</div>
-            </h3>
-        </div>
-        <div class="column">
-            <h3 class="ui dividing header">
-
-                Mô tả
-                <div class="sub header" style="font-size:2rem">@Model.mota</div>
+                Tình trạng
+                <div class="sub header" style="font-size:2rem">@Model.tentinhtrang</div>
                 @*<div class="ui transparent fluid disabled input">
                         <input type="text" style="font-size:2rem" placeholder="Search...">
                     </div>*@
@@ -79,9 +77,9 @@
 <form class="ui form" asp-controller="KhuyenMai" asp-action="Update" method="get" id="createform" style="width:100%">
     <input class="prompt"
            type="hidden"
-           asp-for="@Model.makm"
+           asp-for="@Model.makhuyenmai"
            placeholder="Tên gói cước"
-           value="@Model.makm">
+           value="@Model.makhuyenmai">
     <div class="ui center aligned segment" style="border:none; box-shadow:none">
         <button class="ui primary submit toggle button" type="submit" id="btnThem" style="width:11%">Chỉnh sửa</button>
         <div class="ui reset toggle button" id="btnXoa" style="width:11%">Quay lại</div>

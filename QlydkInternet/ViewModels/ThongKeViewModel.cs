@@ -7,7 +7,7 @@ namespace QlydkInternet.ViewModels
 {
     public class ThongKeViewModel
     {
-        public decimal doanhthu { get; set; }
+        public decimal? doanhthu { get; set; }
         public int sodangkymoi { get; set; }
         public DateTime time { get; set; }
         public List<HoaDonViewModel> thanhtoantre { get; set; }

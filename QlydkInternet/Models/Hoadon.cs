@@ -5,15 +5,15 @@ namespace QlydkInternet.Models
 {
     public partial class Hoadon
     {
-        public string Sohd { get; set; }
-        public DateTime Ngayin { get; set; }
+        public string Mahoadon { get; set; }
+        public DateTime? Ngaylap { get; set; }
         public DateTime? Ngaythanhtoan { get; set; }
-        public decimal Trigia { get; set; }
-        public string Makh { get; set; }
-        public string Manv { get; set; }
-        public DateTime Hanhoadon { get; set; }
-
-        public Khachhang MakhNavigation { get; set; }
-        public Nhanvien ManvNavigation { get; set; }
+        public decimal? Trigia { get; set; }
+        public DateTime? Hanthanhtoan { get; set; }
+        public string Manhanvien { get; set; }
+        public string Mahopdong { get; set; }
+        public string Maloaihoadon { get; set; }
+        public string Makhachhang { get; set; }
+        public string Matinhtrang { get; set; }
     }
 }

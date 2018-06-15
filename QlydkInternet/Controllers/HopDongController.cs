@@ -8,6 +8,7 @@ using QlydkInternet.ViewModels;
 using QlydkInternet.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Http;
 
 namespace QlydkInternet.Controllers
 {
@@ -22,10 +23,12 @@ namespace QlydkInternet.Controllers
         public async Task<IActionResult> Index(int? page,
                                                int? firstShowedPage, int? lastShowedPage)
         {
-            
-
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
             var hopdong = services.GetAllHopDong();
-            hopdong = hopdong.OrderByDescending(c => c.ngdk);
+            hopdong = hopdong.OrderByDescending(c => c.ngayapdung);
             int pageSize = 10;
             int numberOfDisplayPages = 5;
             // page = 1;
@@ -38,124 +41,98 @@ namespace QlydkInternet.Controllers
 
         public IActionResult Details(string id)
         {
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
             var hopdong = services.TimHopDongTheoMa(id);
+            hopdong.mahddk = services.TimHoaDonDangKy(id);
             return View(hopdong);
+        }
+        public async Task<IActionResult> DinhChi(string mahopdong)
+        {
+            services.DinhChi(mahopdong);
+            return RedirectToAction("Details", new RouteValueDictionary(
+                new { controller = "HopDong", action = "Main", id = mahopdong }));
         }
         public IActionResult Create(string id)
         {
-            var loaitt = services.GetAllLoaiThanhToan();
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
             var goicuoc = services.GetAllGC();
+            var tinhtrang = services.GetAllTinhTrang();
             var model = new HopDongViewModel();
-            model.listloaitt = new SelectList(loaitt, "Maloai", "Tenloai", 1);
-            model.listgc = new SelectList(goicuoc, "Magc", "Tengc", 1);
+            model.listgc = new SelectList(goicuoc, "Magoicuoc", "Tengoicuoc", 1);
+            model.listtinhtrang = new SelectList(tinhtrang, "Matinhtrang", "Tentinhtrang", 1);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string tenkh, string cmnd, string sdt, string email, string diachi, string ngad, string doituong, string ngsinh, string dccaidat, string dchoadon, string loaitt, string magc, string nghenghiep)
+        public async Task<IActionResult> Create(string ngayapdung, string diachicaidat, string diachithanhtoan, string tenkhachhang, string magoicuoc, string matinhtrang, string cmnd, string nghenghiep, string email, string diachi, string soluongtaikhoan, string sdt)
         {
             Khachhang kh = new Khachhang();
-            Phieudangky hd = new Phieudangky();
-            kh.Makh = "KH" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
-            hd.Maphieu = "HD" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            Hopdong hd = new Hopdong();
+            kh.Makhachhang = "KH" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            hd.Mahopdong = "HD" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
-            kh.Hoten = tenkh;
+            kh.Tenkhachhang = tenkhachhang;
             kh.Cmnd = cmnd;
             kh.Sdt = sdt;
             kh.Email = email;
             kh.Diachi = diachi;
-            string[] date = ngsinh.Split("/");
-            string time = "";
-            if (date[1].Length == 1)
-            {
-                string temp = date[1];
-                date[1] = "0" + temp;
-            }
-            if (date[0].Length == 1)
-            {
-                string temp = date[0];
-                date[0] = "0" + temp;
-            }
-
-            time = date[2] + "-" + date[1] + "-" + date[0];
-            kh.Ngsinh = DateTime.Parse(time);
             kh.Nghenghiep = nghenghiep;
 
             services.TaoKhachHang(kh);
-
-            date = ngad.Split("/");
-            time = "";
-            if (date[1].Length == 1)
+            if (matinhtrang != "TTHOPDONG01   " && matinhtrang != "TTHOPDONG02   ")
             {
-                time = date[2] + "-0" + date[1] + "-" + date[0];
+                string[] date = ngayapdung.Split("/");
+                string time = "";
+                if (date[1].Length == 1)
+                {
+                    time = date[2] + "-0" + date[1] + "-" + date[0];
+                }
+                else
+                {
+                    time = date[2] + "-" + date[1] + "-" + date[0];
+                }
+                hd.Ngayapdung = DateTime.Parse(time);
+                
             }
-            else
-            {
-                time = date[2] + "-" + date[1] + "-" + date[0];
-            }
-            hd.Ngad = DateTime.Parse(time);
-            hd.Ngdk = DateTime.Parse(DateTime.Now.ToString("yyyy") +"-"+ DateTime.Now.ToString("MM") + "-" + DateTime.Now.ToString("dd"));
-            hd.Dccaidat = dccaidat;
-            hd.Dchoadon = dchoadon;
-            hd.Doituong = doituong;
-            hd.Loaitt = loaitt;
-            hd.Magc = magc;
-            hd.Makh = kh.Makh;
-            hd.Tinhtrang = "lưu thông";
-            hd.Taikhoan = hd.Maphieu;
-            hd.Matkhau = hd.Maphieu;
-
+            hd.Ngaydangky = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-" + DateTime.Now.ToString("MM") + "-" + DateTime.Now.ToString("dd"));
+            hd.Diachicaidat = diachicaidat;
+            hd.Diachithanhtoan = diachithanhtoan;
+            hd.Magiocuoc = magoicuoc;
+            hd.Makhachhang = kh.Makhachhang;
+            hd.Matinhtrang = matinhtrang;
+            hd.Manv = HttpContext.Session.GetString("id");
             services.TaoHopDong(hd);
             return RedirectToAction("Details", new RouteValueDictionary(
-                    new { controller = "HopDong", action = "Details", id = hd.Maphieu }));
+                    new { controller = "HopDong", action = "Details", id = hd.Mahopdong }));
         }
 
-        public IActionResult Update(string mahd)
+        public IActionResult Update(string mahopdong)
         {
-            var loaitt = services.GetAllLoaiThanhToan();
+            var user = HttpContext.Session.GetString("user");
+            if (user == "null" || user == null)
+                return RedirectToAction("Index", "Admin");
+            ViewBag.sessionnv = user;
+            var model = services.TimHopDongTheoMa(mahopdong);
             var goicuoc = services.GetAllGC();
-            var model = services.TimHopDongTheoMa(mahd);
-            model.listloaitt = new SelectList(loaitt, "Maloai", "Tenloai", 1);
-            model.listgc = new SelectList(goicuoc, "Magc", "Tengc", 1);
+            var tinhtrang = services.GetAllTinhTrang();
+            model.listgc = new SelectList(goicuoc, "Magoicuoc", "Tengoicuoc", 1);
+            model.listtinhtrang = new SelectList(tinhtrang, "Matinhtrang", "Tentinhtrang", 1);
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(string mahd, string ngad, string doituong, string dccaidat, string dchoadon, string taikhoan, string matkhau, string loaitt, string tinhtrang, string makh, string magc, string tenkh, string ngsinh, string sdt, string nghenghiep, string email, string diachi, string cmnd)
+        public async Task<IActionResult> Update(string mahopdong, string diachicaidat, string diachithanhtoan, string tenkhachhang, string magoicuoc, string matinhtrang, string cmnd, string nghenghiep, string email, string diachi, string soluongtaikhoan, string sdt, string ngayapdung)
         {
-            string[] date = ngad.Split("/");
-            string time = "";
-            if (date[1].Length == 1)
-            {
-                string temp = date[1];
-                date[1] = "0" + temp;
-            }
-            if (date[0].Length == 1)
-            {
-                string temp = date[0];
-                date[0] = "0" + temp;
-            }
-            time = date[2] + "-" + date[1] + "-" + date[0];
-            DateTime ngayad = DateTime.Parse(time);
-
-            date = ngsinh.Split("/");
-            time = "";
-            if (date[1].Length == 1)
-            {
-                string temp = date[1];
-                date[1] = "0" + temp;
-            }
-            if (date[0].Length == 1)
-            {
-                string temp = date[0];
-                date[0] = "0" + temp;
-            }
-            time = date[2] + "-" + date[1] + "-" + date[0];
-            DateTime ngaysinh = DateTime.Parse(time);
-            services.CapNhatHopDong(mahd, ngayad, doituong, dccaidat, dchoadon, matkhau, loaitt, tinhtrang, makh, magc, tenkh, ngaysinh, sdt, nghenghiep, email, diachi, cmnd);
+            services.CapNhatHopDong(mahopdong, diachicaidat, diachithanhtoan, tenkhachhang, magoicuoc, matinhtrang, cmnd, nghenghiep, email, diachi, soluongtaikhoan, sdt, ngayapdung);
             return RedirectToAction("Details", new RouteValueDictionary(
-                    new { controller = "HopDong", action = "Details", id = mahd }));
+                    new { controller = "HopDong", action = "Details", id = mahopdong }));
         }
     }
 }
