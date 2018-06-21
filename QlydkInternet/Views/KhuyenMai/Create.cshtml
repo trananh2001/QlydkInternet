@@ -43,7 +43,7 @@
                         asp-items="@Model.listloaikm"
                         data-validate="valid-customer-type"></select>
             </div>
-            <div class="field">
+            <div class="field" id="gia">
                 <label>Trị giá</label>
                 <input type="number"
                        placeholder="Trị giá"
@@ -110,6 +110,13 @@
 <script>
 
     $(document).ready(function () {
+        $("#loaikm").on("change", function () {
+            if ($("#loaikm").val() == "ML001         ") {
+                $("#gia").hide();
+
+            }
+
+        })
         $("#btnXoa").on("click", function () {
             var url = '@Url.Action("Index","KhuyenMai")';
             window.location = url;

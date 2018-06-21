@@ -547,7 +547,7 @@ namespace QlydkInternet.Services
             foreach (HopDongViewModel item in re.ToList())
             {
                 var hdon = TimHoaDonTheoMaKH(item.makhachhang);
-                if (hdon == null)
+                if (hdon == null && item.ngayapdung.HasValue)
                 {
                     if (DateTime.Now.Subtract(item.ngayapdung.Value).TotalDays < 28)
                     {
