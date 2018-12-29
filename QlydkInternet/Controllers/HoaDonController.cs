@@ -18,8 +18,7 @@ namespace QlydkInternet.Controllers
         {
             services = iservice;
         }
-        public async Task<IActionResult> Index(int? page,
-                                               int? firstShowedPage, int? lastShowedPage)
+        public async Task<IActionResult> Index(int? page, int? firstShowedPage, int? lastShowedPage)
         {
             var hoadon = services.GetAllHoaDon();
             hoadon = hoadon.OrderBy(m => m.ngthanhtoan);

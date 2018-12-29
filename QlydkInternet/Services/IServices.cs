@@ -9,8 +9,8 @@ namespace QlydkInternet.Services
     public interface IServices
     {
         IQueryable<HoaDonViewModel> thanhtoantre(DateTime date);
-        int sodkmoi(DateTime date);
-        decimal doanhthu(DateTime date);
+        int sodkmoi(int m);
+        decimal doanhthu(int m);
         IQueryable<GoiCuocViewModel> GetAllGoiCuoc();
         IQueryable<KhuyenMaiViewModel> GetAllKhuyenMai();
         IQueryable<HopDongViewModel> GetAllHopDong();

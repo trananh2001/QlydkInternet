@@ -16,13 +16,26 @@ namespace QlydkInternet.Services
         {
             _context = context;
         }
-        public decimal doanhthu(DateTime date)
+        public decimal doanhthu(int month)
         {
             decimal re = 0;
-            string month = date.ToString("MM");
+            string m;
+            //string month = date.ToString("MM");
+            if (month < 10)
+            {
+                m = "0" + month.ToString();
+            }
+            else
+                m = month.ToString();
             string year = DateTime.Now.ToString("yyyy");
-            DateTime start = DateTime.Parse(year+"-"+month+"-01");
-            DateTime end = DateTime.Parse(year+"-"+month+"-28");
+            DateTime start = DateTime.Parse(year+"-"+m+"-01");
+            DateTime end;
+            if (month == 2)
+            {
+                end = DateTime.Parse(year + "-" + m + "-28");
+            }
+            else
+                end = DateTime.Parse(year+"-"+m+"-30");
             var hd = from hoadon in _context.Hoadon
                      join khachhang in _context.Khachhang
                      on hoadon.Makh equals khachhang.Makh
@@ -47,14 +60,21 @@ namespace QlydkInternet.Services
             }
             return re;
         }
-        public int sodkmoi(DateTime date)
+        public int sodkmoi(int month)
         {
             int re = 0;
-            string month = date.ToString("MM");
+            string m;
+            //string month = date.ToString("MM");
+            if (month < 10)
+            {
+                m = "0" + month.ToString();
+            }
+            else
+                m = month.ToString();
             string year = DateTime.Now.ToString("yyyy");
-            DateTime start = DateTime.Parse(year +"-"+ month + "-01");
-            DateTime end = DateTime.Parse(year + "-" + month + "-28");
-            int count = _context.Phieudangky.Where(m => m.Ngdk > start && m.Ngdk < end).Count();
+            DateTime start = DateTime.Parse(year +"-"+ m + "-01");
+            DateTime end = DateTime.Parse(year + "-" + m + "-28");
+            int count = _context.Phieudangky.Where(a => a.Ngdk > start && a.Ngdk < end).Count();
             return count;
         }
 
@@ -65,7 +85,7 @@ namespace QlydkInternet.Services
                      on hoadon.Makh equals khachhang.Makh
                      join nhanvien in _context.Nhanvien
                      on hoadon.Manv equals nhanvien.Manv
-                     where hoadon.Ngaythanhtoan > hoadon.Hanhoadon
+                     where (hoadon.Ngaythanhtoan == null && DateTime.Now > hoadon.Hanhoadon)
                      select new HoaDonViewModel
                      {
                          sohd = hoadon.Sohd,

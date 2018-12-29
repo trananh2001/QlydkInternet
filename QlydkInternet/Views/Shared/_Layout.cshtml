@@ -71,8 +71,14 @@
                 <a id="taohdon" asp-controller="HoaDon" asp-action="Create" class="item" style="padding-left: 25px">
                     <span><i class="circle icon" style="font-size: 0.5em"></i>Tạo hóa đơn</span>
                 </a>
-                <a id="thongke" class="item" asp-controller="ThongKe" asp-action="Index">
+                <a id="thongke" class="item" >
                     <span><i class="area chart layout icon"></i>THỐNG KÊ</span>
+                </a>
+                <a id="dthu" asp-controller="ThongKe" asp-action="Index" class="item" style="padding-left: 25px">
+                    <span><i class="circle icon" style="font-size: 0.5em"></i>Doanh thu</span>
+                </a>
+                <a id="hdqh" asp-controller="ThongKe" asp-action="HoaDonQuaHan" class="item" style="padding-left: 25px">
+                    <span><i class="circle icon" style="font-size: 0.5em"></i>Hóa đơn quá hạn</span>
                 </a>
                 <a id="admin" class="item" asp-controller="Admin" asp-action="Index">
                     <span><i class="spy icon"></i>ADMIN</span>
@@ -95,6 +101,8 @@
             document.getElementById("taogc").style.display = "none";
             document.getElementById("taokm").style.display = "none";
             document.getElementById("taohdon").style.display = "none";
+            document.getElementById("dthu").style.display = "none";
+            document.getElementById("hdqh").style.display = "none";
             $("#qlhd").click(function () {
                 if (document.getElementById("dshd").style.display === "block") {
                     document.getElementById("dshd").style.display = "none";
@@ -110,6 +118,28 @@
                 document.getElementById("taogc").style.display = "none";
                 document.getElementById("taokm").style.display = "none";
                 document.getElementById("taohdon").style.display = "none";
+                document.getElementById("dthu").style.display = "none";
+                document.getElementById("hdqh").style.display = "none";
+            })
+            $("#thongke").click(function () {
+                if (document.getElementById("dthu").style.display === "block") {
+                    document.getElementById("dthu").style.display = "none";
+                    document.getElementById("hdqh").style.display = "none";
+                }
+                else {
+                    document.getElementById("dthu").style.display = "block";
+                    document.getElementById("hdqh").style.display = "block";
+                }
+
+                document.getElementById("dshd").style.display = "none";
+                document.getElementById("dskm").style.display = "none";
+                document.getElementById("dshdon").style.display = "none";
+                document.getElementById("taohd").style.display = "none";
+                document.getElementById("taokm").style.display = "none";
+                document.getElementById("taohdon").style.display = "none";
+                document.getElementById("dsgc").style.display = "none";
+                document.getElementById("taogc").style.display = "none";
+                
             })
             $("#qlgc").click(function () {
                 if (document.getElementById("dsgc").style.display === "block") {
@@ -127,6 +157,8 @@
                 document.getElementById("taohd").style.display = "none";
                 document.getElementById("taokm").style.display = "none";
                 document.getElementById("taohdon").style.display = "none";
+                document.getElementById("dthu").style.display = "none";
+                document.getElementById("hdqh").style.display = "none";
             })
             $("#qlkm").click(function () {
                 if (document.getElementById("dskm").style.display === "block") {
@@ -144,6 +176,8 @@
                 document.getElementById("taohd").style.display = "none";
                 document.getElementById("taogc").style.display = "none";
                 document.getElementById("taohdon").style.display = "none";
+                document.getElementById("dthu").style.display = "none";
+                document.getElementById("hdqh").style.display = "none";
             })
             $("#qlhdon").click(function () {
                 if (document.getElementById("taohdon").style.display === "block") {
@@ -161,6 +195,8 @@
                 document.getElementById("taohd").style.display = "none";
                 document.getElementById("taogc").style.display = "none";
                 document.getElementById("taokm").style.display = "none";
+                document.getElementById("dthu").style.display = "none";
+                document.getElementById("hdqh").style.display = "none";
             })
         })
     </script>

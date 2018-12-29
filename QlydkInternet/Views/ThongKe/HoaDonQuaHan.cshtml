@@ -1,0 +1,99 @@
+﻿@model PaginatedList<QlydkInternet.ViewModels.HoaDonViewModel>
+
+@{
+    ViewData["Title"] = "Hóa đơn quá hạn";
+}
+
+@section menu{
+
+}
+
+<h2>Danh sách hóa đơn</h2>
+
+<div class="row" id="context">
+    <div class="sixteen wide column" style="padding:0">
+        <table class="ui selectable teal table">
+            <thead>
+                <tr>
+                    <th style="">
+                        Số hóa đơn
+                    </th>
+                    <th style="width: 15%">
+                        Ngày in
+                    </th>
+                    <th style="width: 15%">
+                        Ngày thanh toán
+                    </th>
+                    <th style="width: 15%">
+                        Trị giá
+                    </th>
+                    <th style="width: 15%">
+                        Tên khách hàng
+                    </th>
+                    <th style="width: 15%">
+                        Tên nhân viên
+                    </th>
+                    <th style="width: 15%">
+                        Hạn hóa đơn
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                    <tr class="selectable">
+                        <td style="padding-left: 11px">
+                            <a asp-action="Details" asp-route-id="@customer.sohd">
+                                @customer.sohd
+                            </a>
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.ngin.ToString("dd/MM/yyyy")
+                        </td>
+                        <td style="padding-left: 11px">
+                            @if (customer.ngthanhtoan.HasValue)
+                            {
+                                <div class="ui green horizontal label">
+                                    @customer.ngthanhtoan.Value.ToString("dd/MM/yyyy")
+                                </div>
+
+                            }
+                            @if (!customer.ngthanhtoan.HasValue)
+                            {
+                                <div class="ui red horizontal label">
+                                    Chưa thanh toán
+                                </div>
+
+                            }
+                        </td>
+                        <td style="padding-left: 11px">
+                            @(((int)customer.trigia).ToString("N0") + " ₫")
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tenkh
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.tennv
+                        </td>
+                        <td style="padding-left: 11px">
+                            @customer.hanhoadon.ToShortDateString()
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.Partial("_Paginated", Model)
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#thongke").addClass("ui active");
+
+    })
+</script>
+
+
+
+
+
